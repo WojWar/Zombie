@@ -1,0 +1,3 @@
+punkty zycia playera:15
+punkty zycia zombie:4
+nazwa pliku mapy:map_01.png
