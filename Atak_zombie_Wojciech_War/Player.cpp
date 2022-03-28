@@ -17,6 +17,8 @@ Player::Player(int points_of_health) :
 	ispixel = false;
 	pos_x = 50;
 	pos_y = 400;
+	shooting_direction = true;
+	nr = 0;
 }
 
 

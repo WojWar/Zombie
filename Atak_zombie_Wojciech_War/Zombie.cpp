@@ -14,6 +14,8 @@ Zombie::Zombie(int points_of_health, sf::Vector2f _pos):
 	pos_x = pos_y = 0;
 	setPosition(_pos);
 	velocity.y =  velocity.x = 0;
+	intersectsSomething = false;
+	nr = 0;
 }
 
 
