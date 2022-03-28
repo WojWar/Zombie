@@ -8,6 +8,7 @@
 #include "Zombie.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Parameters.h"
 #include <ctime> 
 #include <time.h>
 #include <fstream> 
@@ -38,60 +39,6 @@ int nr_of_object[1024][576]; // tutaj nr obiektu w vectorze ktory jest w danym p
 char tab_RED[1024][576]; // tutaj wartosc 0 lub 1 czy jest sciana
 int nr_of_object_RED[1024][576]; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
 
-
-std::string linianr3; //globalny ciag znakow - nazwa pliku mapy
- 
-void load_health_from_file(int &player_health,int &zombie_health){
-	std::string linia;
-	std::fstream plik;
-	std::string linianr1;
-	std::string linianr2;
-	plik.open("parameters.txt", std::ios::in);
-
-	if (plik.good() == true)
-	{
-			///////////////////////////////pierwsza linia - zycie playera
-			getline(plik, linia);
-			std::cout <<"Pierwsza linia z pliku tekstowego: \""<< linia <<"\""<< std::endl;  
-			size_t znalezionaPozycja = linia.find(":");
-			if (znalezionaPozycja == std::string::npos) {
-				std::cout << "Nie znaleziono znaku ':' w tekscie. Nie wczytano punktow zycia playera." << std::endl;
-			}
-			else if (linia.at(znalezionaPozycja)==':') { 
-				linianr1 = linia.substr(znalezionaPozycja+1,linia.back());
-				player_health= atoi(linianr1.c_str());
-				std::cout << "Wczytano punkty zycia playera: " << player_health << std::endl << std::endl; //wyświetlenie linii
-
-			} 
-			///////////////////////////////druga linia - zycie zombie
-			getline(plik, linia);
-			std::cout << "Druga linia z pliku tekstowego: \"" << linia << "\"" << std::endl; //wyświetlenie linii
-			size_t znalezionaPozycja2 = linia.find(":");
-			if (znalezionaPozycja2 == std::string::npos) {
-				std::cout << "Nie znaleziono znaku ':' w tekscie. Nie wczytano punktow zycia zombie." << std::endl;
-			}
-			else if (linia.at(znalezionaPozycja2) == ':') {
-				linianr2 = linia.substr(znalezionaPozycja2 + 1, linia.back());
-				zombie_health = atoi(linianr2.c_str());
-				std::cout << "Wczytano punkty zycia zombie: " << zombie_health << std::endl << std::endl; //wyświetlenie linii
-			}
-			///////////////////////////////trzecia linia - nazwa pliku z mapa
-			getline(plik, linia);
-			std::cout << "Trzecia linia z pliku tekstowego: \"" << linia << "\"" << std::endl; //wyświetlenie linii
-			size_t znalezionaPozycja3 = linia.find(":");
-			if (znalezionaPozycja3 == std::string::npos) {
-				std::cout << "Nie znaleziono znaku ':' w tekscie. Nie wczytano nazwy pliku z mapa." << std::endl;
-			}
-			else if (linia.at(znalezionaPozycja3) == ':') {
-				linianr3 = linia.substr(znalezionaPozycja3 + 1, linia.back());
-				//zombie_health = atoi(linianr2.c_str());
-				std::cout << "Wczytano plik mapy: " << linianr3 << std::endl << std::endl; //wyświetlenie linii
-			}
-
-		
-		plik.close();
-	}
-}
 
 void makeSomeZombies(RenderWindow &_oknoint,const int  &_zombie_health) {
 
@@ -195,7 +142,7 @@ void walls_for_zombies(RenderTexture &_texture) {
 	 
 }
 
-void objects_to_vector_and_texture(sf::RenderTexture &_textura) {
+void objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string _map_name) {
 
 	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
 
@@ -209,7 +156,7 @@ void objects_to_vector_and_texture(sf::RenderTexture &_textura) {
 
 	//if (!_mapImage.loadFromFile("map_01.png"))
 
-	if (!_mapImage.loadFromFile(linianr3))
+	if (!_mapImage.loadFromFile(_map_name))
 	{
 		std::cout << "BLAD" << std::endl;
 		system("pause");
@@ -331,7 +278,7 @@ int main()
 	int player_health=15;
 	float movespeed = 0.1f, jumpspeed = 0.4f;
 
-	load_health_from_file(player_health, zombie_health);
+	Parameters _parametry(player_health, zombie_health);
 
 	Player player(player_health);
 
@@ -343,7 +290,7 @@ int main()
 
 
 	//////////////////////////tworzenie obiektow/////////////////////////////
-	objects_to_vector_and_texture(texture);
+	objects_to_vector_and_texture(texture, _parametry.map_name);
 	walls_for_zombies(texture_walls_for_zombies);  
 	initialize_health_bar(okno, texture_health_of_player,player);
 	makeSomeZombies(okno,zombie_health);
