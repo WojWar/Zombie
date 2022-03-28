@@ -526,7 +526,8 @@ int main()
 	{
 		if (!pTexture_game_over.loadFromFile("game_over.png"))
 		{
-			std::cout << "BLAD" << std::endl;
+			std::cout << "Game over!" << std::endl;
+			std::cout << "cant load from file: game_over.png" << std::endl;
 			system("pause");
 		}
 		pSprite_koniec_gry.setTexture(pTexture_game_over);
@@ -535,7 +536,8 @@ int main()
 	{
 		if (!pTexture_you_win.loadFromFile("koniec_gry.png"))
 		{
-			std::cout << "BLAD" << std::endl;
+			std::cout << "You Win!" << std::endl;
+			std::cout << "cant load from file: koniec_gry.png" << std::endl;
 			system("pause");
 		}
 		pSprite_koniec_gry.setTexture(pTexture_you_win);
@@ -551,6 +553,15 @@ int main()
 			}
 		}
 
+		for (auto i : vectorHealth) {
+			delete i;
+		}
+		for (auto i : vectorZombie) {
+			delete i;
+		}
+		for (auto i : vectorBullets) {
+			delete i;
+		}
 
 		vectorHealth.clear();	//std::vector <RectangleShape*>
 		vectorZombie.clear();	//std::vector <Zombie*>
