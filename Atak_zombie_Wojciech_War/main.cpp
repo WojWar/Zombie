@@ -311,7 +311,7 @@ void initialize_health_bar(RenderWindow &_okno, sf::RenderTexture &_textura,cons
 
 int main()
 {
-	RenderWindow okno(sf::VideoMode(1024, 576), "Atak Zombiaków");
+	RenderWindow okno(sf::VideoMode(1024, 576), "Zombie Attack!");
 
 	sf::Clock clock;
 	sf::Clock clock_for_zombies;
