@@ -75,7 +75,7 @@ void Player::collision(std::vector<RectangleShape> &_vectorObjects, char _tab[][
 		if (ispixel)
 		{
 
-			for (int i = 0; i < numery.size(); i++) {
+			for (unsigned int i = 0; i < numery.size(); i++) {
 				nr = numery[i];
 				if (this->getGlobalBounds().intersects(_vectorObjects[nr].getGlobalBounds())) {
 
@@ -144,7 +144,7 @@ void Player::are_close(std::vector<Zombie*>& _Objects, float frame_time)
 {
 	//bool is = false;
 
-	for (int i = 0; i < _Objects.size(); i++) {
+	for (unsigned int i = 0; i < _Objects.size(); i++) {
 
 		if ((_Objects[i]->getPosition().x - position.x < 100) && (_Objects[i]->getPosition().x - position.x > -100)) {
 			if ((_Objects[i]->getPosition().y - position.y < 100) && (_Objects[i]->getPosition().y - position.y > -100)) {
@@ -166,7 +166,7 @@ void Player::are_close(std::vector<Zombie*>& _Objects, float frame_time)
 bool Player::zombie_bites_player(std::vector<Zombie*>& _Objects)
 {
 	bites_me = false;
-	for (int i = 0; i < _Objects.size(); i++) {
+	for (unsigned int i = 0; i < _Objects.size(); i++) {
 
 		if ((this->getGlobalBounds().intersects(_Objects[i]->getGlobalBounds()))&&(_Objects[i]->bite ==false)) {
 			_Objects[i]->bite = true;

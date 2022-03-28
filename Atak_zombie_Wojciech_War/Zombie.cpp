@@ -227,12 +227,12 @@ void Zombie::collision_wall(char _tab[][576])
 
 void Zombie::race_to_left(float frame_time)
 {
-	velocity.x = -movespeed * 0.6;// *600 * frame_time;
+	velocity.x = -movespeed * 0.6f;// *600 * frame_time;
 }
 
 void Zombie::race_to_right(float frame_time)
 {
-	velocity.x = movespeed * 0.6;// 600 * frame_time;
+	velocity.x = movespeed * 0.6f;// 600 * frame_time;
 }
 
 
