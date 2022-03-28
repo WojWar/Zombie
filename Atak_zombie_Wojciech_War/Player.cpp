@@ -13,6 +13,10 @@ Player::Player(int points_of_health) :
 	jumpCounter = 0;
 	intersectsSomething = false;
 	health = points_of_health;
+	bites_me = false;
+	ispixel = false;
+	pos_x = 50;
+	pos_y = 400;
 }
 
 
@@ -21,7 +25,7 @@ Player::~Player()
 }
 
 
-void Player::collision(std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576], float frame_time)
+void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576], float frame_time)
 {
 	ispixel = true;
 	while (ispixel)
@@ -86,7 +90,7 @@ void Player::collision(std::vector<RectangleShape> &_vectorObjects, char _tab[][
 					if (this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y)
 					{
 						this->move(velocity.x * 1000 * frame_time, 0);
-						velocity.y = 0, 05;
+						velocity.y = 0.05;
 						intersectsSomething = true;
 					}
 
@@ -140,7 +144,7 @@ void Player::collision(std::vector<RectangleShape> &_vectorObjects, char _tab[][
 
 }
 
-void Player::are_close(std::vector<Zombie*>& _Objects, float frame_time)
+void Player::are_close(const std::vector<Zombie*>& _Objects, float frame_time)
 {
 	//bool is = false;
 
@@ -163,7 +167,7 @@ void Player::are_close(std::vector<Zombie*>& _Objects, float frame_time)
 	//return is;
 }
 
-bool Player::zombie_bites_player(std::vector<Zombie*>& _Objects)
+bool Player::zombie_bites_player(const std::vector<Zombie*>& _Objects)
 {
 	bites_me = false;
 	for (unsigned int i = 0; i < _Objects.size(); i++) {

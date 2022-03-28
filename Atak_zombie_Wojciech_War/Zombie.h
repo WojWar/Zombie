@@ -10,12 +10,12 @@
 class Zombie: public sf::RectangleShape
 {
 public:
-	Zombie(int points_of_health);
+	Zombie(int points_of_health, sf::Vector2f _pos);
 	~Zombie();
 public:
 	void randVelocity();
 	void randsmallVelocity();
-	void collision(std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576],float fps_time);
+	void collision(const std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576],float fps_time);
 
 	void collision_wall(char _tab[][576]); 
 

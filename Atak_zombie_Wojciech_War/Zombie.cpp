@@ -2,7 +2,7 @@
 #include "Zombie.h"
 
 
-Zombie::Zombie(int points_of_health):
+Zombie::Zombie(int points_of_health, sf::Vector2f _pos):
 	RectangleShape(sf::Vector2f(5,10))
 {
 	size_of_player_x = 5;
@@ -10,6 +10,10 @@ Zombie::Zombie(int points_of_health):
 	this->setFillColor(sf::Color(255, 185, 0));
 	health = points_of_health;
 	bite = false;
+	ispixel = false;
+	pos_x = pos_y = 0;
+	setPosition(_pos);
+	velocity.y =  velocity.x = 0;
 }
 
 
@@ -33,7 +37,7 @@ void Zombie::randsmallVelocity()
 
 
 
-void Zombie::collision(std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576],float fps_time)
+void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576],float fps_time)
 {
 
 	ispixel = false;

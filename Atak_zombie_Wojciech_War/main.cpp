@@ -100,10 +100,8 @@ void makeSomeZombies(RenderWindow &_oknoint,const int  &_zombie_health) {
 	for (int k = 0; k < ilosc_y; k++) {
 		for (int i = 0; i < ilosc_x; i++) {
 			if ((Color::Blue) == _mapImage.getPixel(i, k)){
-				vectorZombie.push_back(new Zombie(_zombie_health));
-				vectorZombie.back()->setPosition(Vector2f((float)i, (float)k));
-				vectorZombie.back()->velocity.y = 0;
-				vectorZombie.back()->velocity.x = 0;
+				vectorZombie.push_back(new Zombie(_zombie_health, Vector2f((float)i, (float)k)));
+
 				vectorZombie.back()->randsmallVelocity(); // losuje predkosc w poziomie
 			}
 		}
@@ -435,7 +433,10 @@ int main()
 			//odjecie punktu zycia na pasku zycia:
 
 			texture_health_of_player.clear(sf::Color::White);
+
+			delete vectorHealth.back();
 			vectorHealth.pop_back();
+
 			for (unsigned int i = 0; i < vectorHealth.size(); i++)
 			{
 				texture_health_of_player.draw(*vectorHealth[i]);
@@ -549,6 +550,16 @@ int main()
 				okno.close();
 			}
 		}
+
+
+		vectorHealth.clear();	//std::vector <RectangleShape*>
+		vectorZombie.clear();	//std::vector <Zombie*>
+
+		vectorBullets.clear();	//std::forward_list <Bullet*>
+
+		vectorRec.clear();		//std::vector <RectangleShape> 
+		vectorWalls.clear();	//std::vector <RectangleShape>
+
 
 		okno.draw(pSprite_koniec_gry);
 		okno.display();
