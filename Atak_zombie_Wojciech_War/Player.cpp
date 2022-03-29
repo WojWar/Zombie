@@ -113,8 +113,8 @@ void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char _
 						intersectsSomething = true;
 						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
 						{
-							position.y = this->getPosition().y - 2;
-							this->setPosition(this->getPosition().x, position.y);
+							pos.y = this->getPosition().y - 2;
+							this->setPosition(this->getPosition().x, pos.y);
 						}
 
 					}
@@ -127,8 +127,8 @@ void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char _
 						intersectsSomething = true;
 						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
 						{
-							position.y = this->getPosition().y - 2;
-							this->setPosition(this->getPosition().x, position.y);
+							pos.y = this->getPosition().y - 2;
+							this->setPosition(this->getPosition().x, pos.y);
 						}
 
 					}
@@ -152,9 +152,9 @@ void Player::are_close(const std::vector<Zombie*>& _Objects, float frame_time)
 
 	for (unsigned int i = 0; i < _Objects.size(); i++) {
 
-		if ((_Objects[i]->getPosition().x - position.x < 100) && (_Objects[i]->getPosition().x - position.x > -100)) {
-			if ((_Objects[i]->getPosition().y - position.y < 100) && (_Objects[i]->getPosition().y - position.y > -100)) {
-				if (_Objects[i]->getPosition().x > position.x) {
+		if ((_Objects[i]->getPosition().x - pos.x < 100) && (_Objects[i]->getPosition().x - pos.x > -100)) {
+			if ((_Objects[i]->getPosition().y - pos.y < 100) && (_Objects[i]->getPosition().y - pos.y > -100)) {
+				if (_Objects[i]->getPosition().x > pos.x) {
 					_Objects[i]->race_to_left(frame_time);
 				}
 				else
