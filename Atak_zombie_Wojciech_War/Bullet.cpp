@@ -8,11 +8,11 @@ Bullet::Bullet(const Player &_player):
 	setFillColor(sf::Color::Black);
 	setPosition(_player.getPosition().x + 5, _player.getPosition().y + 7);
 	if (_player.shooting_direction) {
-		velocity.x = 0.3f;
+		velocity.x = 0.2f;
 	}
 	else {
 
-		velocity.x = -0.3f;
+		velocity.x = -0.2f;
 	}
 
 	is_shooted_value = false;
