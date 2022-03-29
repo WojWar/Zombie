@@ -5,10 +5,11 @@
 #include <list>
 #include <forward_list>
 #include <cmath>  
-#include "Zombie.h"
+#include "Zombies.h"
 #include "Player.h"
 #include "Bullet.h"
 #include "Parameters.h"
+#include "Globals.h"
 #include <ctime> 
 #include <time.h>
 #include <fstream> 
@@ -17,12 +18,12 @@
 
 using namespace sf;
 
+
+
 //podloze i sciany ograniczajace:
 std::vector <RectangleShape> vectorRec;
 std::vector <RectangleShape> vectorWalls;
 
-//zombiaki i pociski:
-std::vector <Zombie*> vectorZombie;
 std::forward_list <Bullet*> vectorBullets;
 
 //pasek zycia:
@@ -40,20 +41,6 @@ char tab_RED[1024][576]; // tutaj wartosc 0 lub 1 czy jest sciana
 int nr_of_object_RED[1024][576]; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
 
 
-void makeSomeZombies(RenderWindow &_oknoint,const int  &_zombie_health) {
-
-	int ilosc_x = 1024, ilosc_y = 576;
-
-	for (int k = 0; k < ilosc_y; k++) {
-		for (int i = 0; i < ilosc_x; i++) {
-			if ((Color::Blue) == _mapImage.getPixel(i, k)){
-				vectorZombie.push_back(new Zombie(_zombie_health, Vector2f((float)i, (float)k)));
-
-				vectorZombie.back()->randsmallVelocity(); // losuje predkosc w poziomie
-			}
-		}
-	}
-}
  
 void walls_for_zombies(RenderTexture &_texture) {
 	std::cout << std::endl << "Trwa ladowanie scian." << std::endl;
@@ -263,24 +250,16 @@ int main()
 	sf::Clock clock;
 	sf::Clock clock_for_zombies;
 
-	//licznik - zombie, ktorego predkosc jest losowana:
-	unsigned int nr_zombie = 0;
-	//
 	srand((unsigned int)time(NULL));
 
 	sf::RenderTexture texture;//tekstura z calym podlozem (grunty)
 	sf::RenderTexture texture_walls_for_zombies;//tekstura z scianami
 	sf::RenderTexture texture_health_of_player;//tekstura z paskiem zycia
 
-
-	const float gravity = 0.001f; 
-	int zombie_health=5;
-	int player_health=15;
-	float movespeed = 0.1f, jumpspeed = 0.4f;
-
 	Parameters _parametry(player_health, zombie_health);
 
 	Player player(player_health);
+
 
 	/////////////make tab of keys//////////////
 	bool keys[256], keysReleased[256];
@@ -288,12 +267,14 @@ int main()
 		keys[j] = 0;
 	}
 
-
 	//////////////////////////tworzenie obiektow/////////////////////////////
 	objects_to_vector_and_texture(texture, _parametry.map_name);
 	walls_for_zombies(texture_walls_for_zombies);  
 	initialize_health_bar(okno, texture_health_of_player,player);
-	makeSomeZombies(okno,zombie_health);
+
+	//make some zombies
+
+	Zombies _zombies(okno, zombie_health, _mapImage);
 	 
 	
 	texture_walls_for_zombies.display();
@@ -309,7 +290,7 @@ int main()
 
 	okno.setFramerateLimit(90);
 	///////////////////////////////////MAIN LOOP////////////////////////////////
-	while (okno.isOpen() && vectorZombie.size() && player.health)
+	while (okno.isOpen() && _zombies.size() && player.health)
 	{
 		//pomiar fps
 		float ElapsedTime = clock.getElapsedTime().asSeconds();
@@ -330,13 +311,10 @@ int main()
 		}
 
 		okno.clear(sf::Color::White);
-		player.position.x = player.getPosition().x;
-		player.position.y = player.getPosition().y;
+		player.pos.x = player.getPosition().x;
+		player.pos.y = player.getPosition().y;
 		//sterowanie:
-//		if (keys['g'] && keysReleased[57])
-//		{
-//			std::cout << vectorZombie.size() << std::endl;
-//		}
+
 		if (keys[57] && keysReleased[57])
 		{
 			keysReleased[57] = false;
@@ -373,9 +351,9 @@ int main()
 		player.gravity_acceleration(gravity * 1000 * ElapsedTime, jumpspeed);// ElapsedTime);
 		player.collision(vectorRec, tab, nr_of_object, ElapsedTime);
 
-		player.are_close(vectorZombie, ElapsedTime);
 
-		if (player.zombie_bites_player(vectorZombie))
+
+		if (_zombies.zombieBitesPlayer(player))
 		{
 			//odjecie punktu zycia na pasku zycia:
 
@@ -398,50 +376,22 @@ int main()
 		okno.draw(player);
 
 
-		//losowanie predkosci i kierunku zombie, co 0.15 sekundy kolejny zombie
-		if (clock_for_zombies.getElapsedTime().asMilliseconds() > 150) {
-			
-			nr_zombie++;
-			if (!(nr_zombie < vectorZombie.size())) nr_zombie = 0;
 
-			vectorZombie[nr_zombie]->randVelocity();
-			clock_for_zombies.restart();
-			//std::cout << "vectorZombie: " << vectorZombie.size() << std::endl;
-			//std::cout << "vectorBullets: " << vectorBullets.max_size() << std::endl;
-			//std::cout << "vectorWalls: " << vectorWalls.size() << std::endl;
-			//std::cout << "vectorRec: " << vectorRec.size() << std::endl;
-		}
-
-		
 
 		//zombie
-		for (unsigned int i = 0; i < vectorZombie.size(); i++) {
 
-			//ruch zombie:
-			vectorZombie[i]->move((vectorZombie[i]->velocity.x) * 1000 * ElapsedTime, (vectorZombie[i]->velocity.y) * 1000 * ElapsedTime);
+		_zombies.randVelocity(clock_for_zombies);
 
+		_zombies.chaseThePlayer(player, ElapsedTime);
 
-			//odbicia od czerwonych scian:
-			vectorZombie[i]->collision_wall(tab_RED);
-
-			//kolizja z podlozem:
-			vectorZombie[i]->collision(vectorRec, tab, nr_of_object, ElapsedTime);
-
-			//nadanie przyspieszenia od grawitacji:
-			if ((vectorZombie[i]->velocity.y < 1.1*jumpspeed) && (vectorZombie[i]->intersectsSomething == false))
-			{
-				vectorZombie[i]->velocity.y += (gravity * 1000 * ElapsedTime);
-			}
-			vectorZombie[i]->intersectsSomething = false;
-			okno.draw(*vectorZombie[i]);
-		}
+		_zombies.moveAndDraw(ElapsedTime, vectorRec, tab_RED, tab, nr_of_object, okno);
 
 		//pociski    
 		if (!vectorBullets.empty()) {
 			int i = 0;
 			for (auto vB_it : vectorBullets)
 			{
-				if (((*vB_it).is_wall(tab)) || ((*vB_it).is_zombie(vectorZombie)))
+				if (((*vB_it).is_wall(tab)) || ((*vB_it).is_zombie(_zombies.vZombies)))
 				{
 					delete vB_it;
 					vectorBullets.remove(vB_it);
@@ -469,7 +419,7 @@ int main()
 
 	sf::Sprite pSprite_koniec_gry;
 
-	if (vectorZombie.size()) 
+	if (_zombies.size()) 
 	{
 		if (!pTexture_game_over.loadFromFile("game_over.png"))
 		{
@@ -503,15 +453,11 @@ int main()
 		for (auto i : vectorHealth) {
 			delete i;
 		}
-		for (auto i : vectorZombie) {
-			delete i;
-		}
 		for (auto i : vectorBullets) {
 			delete i;
 		}
 
 		vectorHealth.clear();	//std::vector <RectangleShape*>
-		vectorZombie.clear();	//std::vector <Zombie*>
 
 		vectorBullets.clear();	//std::forward_list <Bullet*>
 
