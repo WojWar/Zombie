@@ -38,22 +38,3 @@ bool Bullet::is_wall(char _tab[][576])
 	}
 }
 
-bool Bullet::is_zombie(std::vector<Zombie*> &_vectorZombies)
-{
-	for (std::vector<Zombie*>::iterator i= _vectorZombies.begin(); i != _vectorZombies.end(); ) {
-			if ((*i)->getGlobalBounds().contains(getPosition()))
-			{
-				(*i)->health--;
-				is_shooted_value = true;
-
-				if ((*i)->health <1) {
-					delete (*i); 
-					(_vectorZombies).erase((i));
-					break;
-				}
-				else ++i;
-			}
-			else ++i;
-		}
-		return	is_shooted_value; 
-}

@@ -99,3 +99,23 @@ void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleS
 		_okno.draw(*vZombies[i]);
 	}
 }
+
+bool Zombies::shootByBullet(Bullet &_bullet)
+{
+	for (std::vector<Zombie*>::iterator i = vZombies.begin(); i != vZombies.end(); ) {
+		if ((*i)->getGlobalBounds().contains(_bullet.getPosition()))
+		{
+			(*i)->health--;
+			_bullet.is_shooted_value = true;
+
+			if ((*i)->health < 1) {
+				delete (*i);
+				(vZombies).erase((i));
+				break;
+			}
+			else ++i;
+		}
+		else ++i;
+	}
+	return	_bullet.is_shooted_value;
+}

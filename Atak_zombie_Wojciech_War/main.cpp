@@ -391,7 +391,7 @@ int main()
 			int i = 0;
 			for (auto vB_it : vectorBullets)
 			{
-				if (((*vB_it).is_wall(tab)) || ((*vB_it).is_zombie(_zombies.vZombies)))
+				if (((*vB_it).is_wall(tab)) || _zombies.shootByBullet(*vB_it))
 				{
 					delete vB_it;
 					vectorBullets.remove(vB_it);
