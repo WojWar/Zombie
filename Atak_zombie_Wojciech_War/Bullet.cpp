@@ -8,11 +8,11 @@ Bullet::Bullet(const Player &_player):
 	setFillColor(sf::Color::Black);
 	setPosition(_player.getPosition().x + 5, _player.getPosition().y + 7);
 	if (_player.shooting_direction) {
-		velocity.x = 0.3f;
+		velocity.x = 0.2f;
 	}
 	else {
 
-		velocity.x = -0.3f;
+		velocity.x = -0.2f;
 	}
 
 	is_shooted_value = false;
@@ -38,22 +38,3 @@ bool Bullet::is_wall(char _tab[][576])
 	}
 }
 
-bool Bullet::is_zombie(std::vector<Zombie*> &_vectorZombies)
-{
-	for (std::vector<Zombie*>::iterator i= _vectorZombies.begin(); i != _vectorZombies.end(); ) {
-			if ((*i)->getGlobalBounds().contains(getPosition()))
-			{
-				(*i)->health--;
-				is_shooted_value = true;
-
-				if ((*i)->health <1) {
-					delete (*i); 
-					(_vectorZombies).erase((i));
-					break;
-				}
-				else ++i;
-			}
-			else ++i;
-		}
-		return	is_shooted_value; 
-}

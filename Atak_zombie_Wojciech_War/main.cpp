@@ -288,7 +288,7 @@ int main()
 	sprite_health_bar.move(437,500);
 	std::cout << "Pozostalo punktow zycia:" << std::endl;
 
-	okno.setFramerateLimit(90);
+	okno.setFramerateLimit(30);
 	///////////////////////////////////MAIN LOOP////////////////////////////////
 	while (okno.isOpen() && _zombies.size() && player.health)
 	{
@@ -348,8 +348,8 @@ int main()
 		//player:		 
 
 		player.move(player.velocity.x * 1000 * ElapsedTime, player.velocity.y * 1000 * ElapsedTime);
-		player.gravity_acceleration(gravity * 1000 * ElapsedTime, jumpspeed);// ElapsedTime);
 		player.collision(vectorRec, tab, nr_of_object, ElapsedTime);
+		player.gravity_acceleration(gravity * 1000 * ElapsedTime, jumpspeed);// ElapsedTime);
 
 
 
@@ -391,7 +391,7 @@ int main()
 			int i = 0;
 			for (auto vB_it : vectorBullets)
 			{
-				if (((*vB_it).is_wall(tab)) || ((*vB_it).is_zombie(_zombies.vZombies)))
+				if (((*vB_it).is_wall(tab)) || _zombies.shootByBullet(*vB_it))
 				{
 					delete vB_it;
 					vectorBullets.remove(vB_it);

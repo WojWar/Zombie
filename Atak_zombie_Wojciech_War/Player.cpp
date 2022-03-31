@@ -92,7 +92,7 @@ void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char _
 					if (this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y)
 					{
 						this->move(velocity.x * 1000 * frame_time, 0);
-						velocity.y = 0.05;
+						velocity.y = 0;
 						intersectsSomething = true;
 					}
 
