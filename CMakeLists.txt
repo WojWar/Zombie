@@ -21,7 +21,7 @@ set(SOURCES
 add_executable(ZombieAttack ${SOURCES})
 
 set(SFML_DIR SFML/lib/cmake/SFML)
-find_package(SFML 2.5.1 COMPONENTS audio graphics window system REQUIRED)
+find_package(SFML 2.5 COMPONENTS audio graphics window system REQUIRED)
 
 target_link_libraries(ZombieAttack sfml-audio sfml-graphics sfml-window sfml-system)
 
