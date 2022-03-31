@@ -1,7 +1,27 @@
 cmake_minimum_required(VERSION 3.10)
 
-# set the project name
 project(ZombieAttack)
-set(SFML_DIR Atak_zombie_Wojciech_War/SFML/lib/cmake/SFML)
-set(SFML_DOC_DIR Atak_zombie_Wojciech_War/SFML/doc)
-add_subdirectory(Atak_zombie_Wojciech_War)
+
+set(SOURCES
+    main.cpp
+	Parameters.cpp
+	Globals.cpp
+	Player.cpp
+	Zombie.cpp
+	Zombies.cpp
+	Bullet.cpp
+	Parameters.h
+	Globals.h
+	Player.h
+	Zombie.h
+	Zombies.h
+	Bullet.h
+)
+
+add_executable(ZombieAttack ${SOURCES})
+
+set(SFML_DIR SFML/lib/cmake/SFML)
+find_package(SFML COMPONENTS audio graphics window system REQUIRED)
+
+target_link_libraries(ZombieAttack sfml-audio sfml-graphics sfml-window sfml-system)
+

@@ -1,0 +1,10 @@
+Sterowanie: WSAD
+Strzelanie: klawisz n
+
+W pliku parameters nale¿y wpisaæ kolejno:
+-punkty ¿ycia playera
+-punkty ¿ycia zombie
+-nazwê pliku mapy (map_01.png, map_02.png, map_03.png)
+
+Wszystkie dane s¹ wczytywane po wykryciu dwukropka ":", wiêc nie nale¿y go usuwaæ. 
+Nie mo¿na mieszaæ kolejnoœci wierszy.
