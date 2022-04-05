@@ -26,7 +26,6 @@ public:
 	char health;
 	sf::Vector2f velocity;
 	sf::Vector2f position;
-	bool intersectsSomething;
 	int size_of_player_x;
 	int size_of_player_y;
 	int nr;
@@ -36,6 +35,7 @@ public:
 	bool bite;
 private:
 	const float movespeed = 0.1f;
+	sf::Vector2f size_of_zombie = sf::Vector2f(5.0f, 10.0f);
 
 
 };

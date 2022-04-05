@@ -2,9 +2,10 @@
 #include "Zombie.h"
 
 
-Zombie::Zombie(int points_of_health, sf::Vector2f _pos):
-	RectangleShape(sf::Vector2f(5,10))
+Zombie::Zombie(int points_of_health, sf::Vector2f _pos) :
+	RectangleShape()
 {
+	this->setSize(size_of_zombie);
 	size_of_player_x = 5;
 	size_of_player_y = 10;
 	this->setFillColor(sf::Color(255, 185, 0));
@@ -14,7 +15,6 @@ Zombie::Zombie(int points_of_health, sf::Vector2f _pos):
 	pos_x = pos_y = 0;
 	setPosition(_pos);
 	velocity.y =  velocity.x = 0;
-	intersectsSomething = false;
 	nr = 0;
 }
 
@@ -142,56 +142,53 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char _
 
 		for (unsigned int i = 0; i < numery.size(); i++) {
 			nr = numery[i];
-			if (this->getGlobalBounds().intersects(_vectorObjects[nr].getGlobalBounds())) {
+			if (getGlobalBounds().intersects(_vectorObjects[nr].getGlobalBounds())) {
 				
-				this->move(-velocity.x * 1000 * fps_time, -velocity.y * 1000 * fps_time);
+				move(-velocity.x * 1000 * fps_time, -velocity.y * 1000 * fps_time);
 
 				//jesli z gory
-				if (this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y)
+				if (getPosition().y + getSize().y < _vectorObjects[nr].getPosition().y)
 				{
-					this->move(velocity.x * 1000 * fps_time, 0);
+					move(velocity.x * 1000 * fps_time, 0);
 					velocity.y = 0;
-					intersectsSomething = true;
 				}
 
 				//jesli z dolu
-				if (this->getPosition().y > _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y)
+				if (getPosition().y > _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y)
 				{
-					this->move(velocity.x * 1000 * fps_time, 0);
+					move(velocity.x * 1000 * fps_time, 0);
 					velocity.y = 0;
 					//this->setPosition(this->getPosition().x, _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y);
-					intersectsSomething = true;
+					
 				}
 
 				//jesli z lewej
-				if (this->getPosition().x + size_of_player_x < _vectorObjects[nr].getPosition().x)
+				if (getPosition().x + size_of_player_x < _vectorObjects[nr].getPosition().x)
 				{
 					//std::cout << "lewa???" << std::endl;
-					this->move(0, velocity.y * 1000 * fps_time);
-					intersectsSomething = true;
-					if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
+					move(0, velocity.y * 1000 * fps_time);
+					if (getPosition().y + getSize().y > _vectorObjects[nr].getPosition().y && getPosition().y + getSize().y < _vectorObjects[nr].getPosition().y + 3)
 					{
-						position.y = this->getPosition().y - 2;
-						this->setPosition(this->getPosition().x, position.y);
+						position.y = getPosition().y - 2;
+						setPosition(getPosition().x, position.y);
 					}
 
-					if(this->getPosition().y>_vectorObjects[nr].getPosition().y)
+					if(getPosition().y>_vectorObjects[nr].getPosition().y)
 					velocity.x = -velocity.x;
 				}
 
 				//jesli z prawej 
-				if (this->getPosition().x > _vectorObjects[nr].getPosition().x + _vectorObjects[nr].getSize().x)
+				if (getPosition().x > _vectorObjects[nr].getPosition().x + _vectorObjects[nr].getSize().x)
 				{
 					//std::cout << "prawa???" << std::endl;
-					this->move(0, velocity.y * 1000 * fps_time);
-					intersectsSomething = true;
-					if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
+					move(0, velocity.y * 1000 * fps_time);
+					if (getPosition().y + getSize().y > _vectorObjects[nr].getPosition().y && getPosition().y + getSize().y < _vectorObjects[nr].getPosition().y + 3)
 					{
-						position.y = this->getPosition().y - 2;
-						this->setPosition(this->getPosition().x, position.y);
+						position.y = getPosition().y - 2;
+						setPosition(getPosition().x, position.y);
 					}
 
-					if (this->getPosition().y>_vectorObjects[nr].getPosition().y)
+					if (getPosition().y>_vectorObjects[nr].getPosition().y)
 						velocity.x = -velocity.x;
 				}
 

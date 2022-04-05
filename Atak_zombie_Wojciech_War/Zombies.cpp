@@ -91,11 +91,10 @@ void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleS
 		vZombies[i]->collision(_vGround, _tab, _nr_of_object, _elapsedTime);
 
 		//nadanie przyspieszenia od grawitacji:
-		if ((vZombies[i]->velocity.y < 1.1*jumpspeed) && (vZombies[i]->intersectsSomething == false))
+		if ((vZombies[i]->velocity.y < 1.1*jumpspeed))
 		{
 			vZombies[i]->velocity.y += (gravity * 1000 * _elapsedTime);
 		}
-		vZombies[i]->intersectsSomething = false;
 		_okno.draw(*vZombies[i]);
 	}
 }
