@@ -3,8 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-#include <cmath>  /*
-#include "Bullet.h"*/
+#include <cmath>  
 
  
 class Zombie: public sf::RectangleShape

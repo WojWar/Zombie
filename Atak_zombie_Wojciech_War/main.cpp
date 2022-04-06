@@ -7,8 +7,8 @@
 #include <cmath>  
 #include "Zombies.h"
 #include "Player.h"
-#include "Bullet.h"
 #include "Parameters.h"
+#include "Bullets.h"
 #include "Globals.h"
 #include <ctime> 
 #include <time.h>
@@ -24,7 +24,8 @@ using namespace sf;
 std::vector <RectangleShape> vectorRec;
 std::vector <RectangleShape> vectorWalls;
 
-std::forward_list <Bullet*> vectorBullets;
+//std::forward_list <Bullet*> vectorBullets;
+Bullets bullets;
 
 //pasek zycia:
 std::vector <RectangleShape*> vectorHealth;
@@ -129,7 +130,7 @@ void walls_for_zombies(RenderTexture &_texture) {
 	 
 }
 
-void objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string _map_name) {
+void objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string &_map_name) {
 
 	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
 
@@ -273,11 +274,10 @@ int main()
 	initialize_health_bar(okno, texture_health_of_player,player);
 
 	//make some zombies
-
 	Zombies _zombies(okno, zombie_health, _mapImage);
 	 
 	
-	texture_walls_for_zombies.display();
+	//texture_walls_for_zombies.display();
 	texture.display();
 	texture_health_of_player.display();
 
@@ -318,8 +318,7 @@ int main()
 		if (keys[57] && keysReleased[57])
 		{
 			keysReleased[57] = false;
-			//vectorBullets.push(new Bullet(player));
- 			vectorBullets.push_front(new Bullet(player));
+			bullets.fireBullet(player);
 		}
 
 		if (keys[0]) {
@@ -386,27 +385,8 @@ int main()
 
 		_zombies.moveAndDraw(ElapsedTime, vectorRec, tab_RED, tab, nr_of_object, okno);
 
-		//pociski    
-		if (!vectorBullets.empty()) {
-			int i = 0;
-			for (auto vB_it : vectorBullets)
-			{
-				if (((*vB_it).is_wall(tab)) || _zombies.shootByBullet(*vB_it))
-				{
-					delete vB_it;
-					vectorBullets.remove(vB_it);
-					break;
-				}
-				else
-				{
-					(*vB_it).move(((*vB_it).velocity.x) * 1000 * ElapsedTime, ((*vB_it).velocity.y) * 1000 * ElapsedTime);
-					okno.draw((*vB_it));
-				}
-				i++;
-			}
 
-			std::cout << "vectorBullets: " << i << std::endl;
-		}
+		bullets.moveAndHit(_zombies, ElapsedTime, okno, tab);
 		
 		okno.display(); 
 		
@@ -453,13 +433,10 @@ int main()
 		for (auto i : vectorHealth) {
 			delete i;
 		}
-		for (auto i : vectorBullets) {
-			delete i;
-		}
 
 		vectorHealth.clear();	//std::vector <RectangleShape*>
 
-		vectorBullets.clear();	//std::forward_list <Bullet*>
+		bullets.clearMemory();	//std::forward_list <Bullet*>
 
 		vectorRec.clear();		//std::vector <RectangleShape> 
 		vectorWalls.clear();	//std::vector <RectangleShape>
