@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>  
+#include "Globals.h"
 
  
 class Zombie: public sf::RectangleShape
@@ -33,7 +34,6 @@ public:
 	bool ispixel;
 	bool bite;
 private:
-	const float movespeed = 0.1f;
 	sf::Vector2f size_of_zombie = sf::Vector2f(5.0f, 10.0f);
 
 

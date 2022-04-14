@@ -20,7 +20,7 @@ public:
 	bool shootByBullet(Bullet &_bullet);
 
 private:
-	std::vector <Zombie*> vZombies;
+	std::vector <Zombie> vZombies;
 	//licznik - zombie, ktorego predkosc jest losowana:
 	unsigned int nr_zombie = 0;
 };

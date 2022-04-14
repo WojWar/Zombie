@@ -322,11 +322,11 @@ int main()
 		}
 
 		if (keys[0]) {
-			player.velocity.x = -movespeed;
+			player.velocity.x = -movespeedPlayer;
 			player.shooting_direction = false;
 		}
 		else if (keys[3]) {
-			player.velocity.x = movespeed ;
+			player.velocity.x = movespeedPlayer;
 			player.shooting_direction = true;
 		}
 		else {

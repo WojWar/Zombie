@@ -11,9 +11,9 @@ Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Ima
 	for (int k = 0; k < ilosc_y; k++) {
 		for (int i = 0; i < ilosc_x; i++) {
 			if ((sf::Color::Blue) == _mapImage.getPixel(i, k)) {
-				vZombies.push_back(new Zombie(_zombie_health, sf::Vector2f((float)i, (float)k)));
+				vZombies.push_back(Zombie(_zombie_health, sf::Vector2f((float)i, (float)k)));
 
-				vZombies.back()->randsmallVelocity(); // losuje predkosc w poziomie
+				vZombies.back().randsmallVelocity(); // losuje predkosc w poziomie
 			}
 		}
 	}
@@ -21,10 +21,10 @@ Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Ima
 
 Zombies::~Zombies()
 {
-	for (auto i : vZombies) {
-		delete i;
-	}
-	vZombies.clear();	//std::vector <Zombie*>
+	//for (auto i : vZombies) {
+	//	delete i;
+	//}
+	//vZombies.clear();	//std::vector <Zombie*>
 }
 
 int Zombies::size()
@@ -36,14 +36,14 @@ void Zombies::chaseThePlayer(Player & _player, float & frame_time)
 {
 	for (unsigned int i = 0; i < size(); i++) {
 
-		if ((vZombies[i]->getPosition().x - _player.pos.x < 100) && (vZombies[i]->getPosition().x - _player.pos.x > -100)) {
-			if ((vZombies[i]->getPosition().y - _player.pos.y < 100) && (vZombies[i]->getPosition().y - _player.pos.y > -100)) {
-				if (vZombies[i]->getPosition().x > _player.pos.x) {
-					vZombies[i]->race_to_left(frame_time);
+		if ((vZombies[i].getPosition().x - _player.pos.x < 100) && (vZombies[i].getPosition().x - _player.pos.x > -100)) {
+			if ((vZombies[i].getPosition().y - _player.pos.y < 100) && (vZombies[i].getPosition().y - _player.pos.y > -100)) {
+				if (vZombies[i].getPosition().x > _player.pos.x) {
+					vZombies[i].race_to_left(frame_time);
 				}
 				else
 				{
-					vZombies[i]->race_to_right(frame_time);
+					vZombies[i].race_to_right(frame_time);
 				}
 				//is = true;
 			}
@@ -58,7 +58,7 @@ void Zombies::randVelocity(sf::Clock & clock_for_zombies)
 	if (clock_for_zombies.getElapsedTime().asMilliseconds() > 150) {
 		nr_zombie++;
 		if (!(nr_zombie < size())) nr_zombie = 0;
-		vZombies[nr_zombie]->randVelocity();
+		vZombies[nr_zombie].randVelocity();
 		clock_for_zombies.restart();
 	}
 }
@@ -67,8 +67,8 @@ bool Zombies::zombieBitesPlayer(Player & _player)
 {
 	for (unsigned int i = 0; i < size(); i++) {
 
-		if ((_player.getGlobalBounds().intersects(vZombies[i]->getGlobalBounds())) && (vZombies[i]->bite == false)) {
-			vZombies[i]->bite = true;
+		if ((_player.getGlobalBounds().intersects(vZombies[i].getGlobalBounds())) && (vZombies[i].bite == false)) {
+			vZombies[i].bite = true;
 			_player.health--;
 			std::cout <<"player live points: "<< (int)(_player.health) << std::endl;
 			return true;
@@ -82,34 +82,34 @@ void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleS
 	for (unsigned int i = 0; i < size(); i++) {
 
 		//ruch zombie:
-		vZombies[i]->move((vZombies[i]->velocity.x) * 1000 * _elapsedTime, (vZombies[i]->velocity.y) * 1000 * _elapsedTime);
+		vZombies[i].move((vZombies[i].velocity.x) * 1000 * _elapsedTime, (vZombies[i].velocity.y) * 1000 * _elapsedTime);
 
 		//odbicia od czerwonych scian:
-		vZombies[i]->collision_wall(_tabRed);
+		vZombies[i].collision_wall(_tabRed);
 
 		//kolizja z podlozem:
-		vZombies[i]->collision(_vGround, _tab, _nr_of_object, _elapsedTime);
+		vZombies[i].collision(_vGround, _tab, _nr_of_object, _elapsedTime);
 
 		//nadanie przyspieszenia od grawitacji:
-		if ((vZombies[i]->velocity.y < 1.1*jumpspeed))
+		if ((vZombies[i].velocity.y < 1.1*jumpspeed))
 		{
-			vZombies[i]->velocity.y += (gravity * 1000 * _elapsedTime);
+			vZombies[i].velocity.y += (gravity * 1000 * _elapsedTime);
 		}
-		_okno.draw(*vZombies[i]);
+		_okno.draw(vZombies[i]);
 	}
 }
 
 bool Zombies::shootByBullet(Bullet &_bullet)
 {
-	for (std::vector<Zombie*>::iterator i = vZombies.begin(); i != vZombies.end(); ) {
-		if ((*i)->getGlobalBounds().contains(_bullet.getPosition()))
+	for (std::vector<Zombie>::iterator i = vZombies.begin(); i != vZombies.end(); ) {
+		if ((*i).getGlobalBounds().contains(_bullet.getPosition()))
 		{
-			(*i)->health--;
+			(*i).health--;
 			_bullet.is_shooted_value = true;
 
-			if ((*i)->health < 1) {
-				delete (*i);
-				(vZombies).erase((i));
+			if ((*i).health < 1) {
+				//delete (*i);
+				(vZombies).erase(i);
 				break;
 			}
 			else ++i;

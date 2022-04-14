@@ -44,8 +44,8 @@ void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindo
 
 void Bullets::clearMemory()
 {
-	for (auto &i : vectorBullets) {
-		delete &i;
-	}
+	//for (auto &i : vectorBullets) {
+	//	delete &i;						smart pointers - dont need to delete anymore
+	//}
 	vectorBullets.clear();	//std::forward_list <Bullet*>
 }
