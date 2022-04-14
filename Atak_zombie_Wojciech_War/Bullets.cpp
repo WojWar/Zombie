@@ -12,7 +12,7 @@ Bullets::~Bullets()
 void Bullets::fireBullet(const Player &_player)
 {
 	//if new
-	vectorBullets.push_front(new Bullet(_player));
+	vectorBullets.push_front(std::make_unique<Bullet>(_player));
 	//if there are waiting bullets in secondary vector then:
 	//move it to active vector
 }
@@ -22,12 +22,12 @@ void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindo
 	if (!vectorBullets.empty()) {
 		int i = 0;
 		// vB_it - vectorBullets iterator
-		for (auto vB_it : vectorBullets)
+		for (auto &vB_it : vectorBullets)
 		{
 			if (((*vB_it).is_wall(_tab)) || _zombies.shootByBullet(*vB_it))
 			{
-				delete vB_it;
-				vectorBullets.remove(vB_it);
+				//delete &vB_it;// dont need to delete object pointed by smart pointer 
+				(vectorBullets).remove(vB_it);
 				break;
 			}
 			else
@@ -44,8 +44,8 @@ void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindo
 
 void Bullets::clearMemory()
 {
-	for (auto i : vectorBullets) {
-		delete i;
+	for (auto &i : vectorBullets) {
+		delete &i;
 	}
 	vectorBullets.clear();	//std::forward_list <Bullet*>
 }
