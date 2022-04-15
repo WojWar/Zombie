@@ -1,8 +1,3 @@
-.vs/Atak_zombie_Wojciech_War/v15/.suo
-.vs/Atak_zombie_Wojciech_War/v15/Browse.VC.db
-.vs/Atak_zombie_Wojciech_War/v15/Browse.VC.opendb
-.vs/Atak_zombie_Wojciech_War/v15/ipch/AutoPCH/2f62e438703fe9c2/BULLET.ipch
-
 #extensions:
 *.obj
 *.iobj
@@ -20,16 +15,20 @@
 *.ipdb
 
 *.ilk
+
+*.xml
+
+#files:
+
+.vs/Atak_zombie_Wojciech_War/v15/.suo
+.vs/Atak_zombie_Wojciech_War/v15/Browse.VC.db
+.vs/Atak_zombie_Wojciech_War/v15/Browse.VC.opendb
+.vs/Atak_zombie_Wojciech_War/v15/ipch/AutoPCH/2f62e438703fe9c2/BULLET.ipch
+
 Atak_zombie_Wojciech_War/Debug/Atak_zom.4EB4C01F.tlog/unsuccessfulbuild
 Atak_zombie_Wojciech_War/Debug/Atak_zom.4EB4C01F.tlog/Atak_zombie_Wojciech_War.lastbuildstate
 
 Atak_zombie_Wojciech_War/allChecks.ruleset
-Atak_zombie_Wojciech_War/Debug/bullet.nativecodeanalysis.xml
-Atak_zombie_Wojciech_War/Debug/main.nativecodeanalysis.xml
-Atak_zombie_Wojciech_War/Debug/NativeCodeAnalysis.read.1.tlog
-Atak_zombie_Wojciech_War/Debug/player.nativecodeanalysis.xml
-Atak_zombie_Wojciech_War/Debug/vc.nativecodeanalysis.all.xml
-Atak_zombie_Wojciech_War/Debug/zombie.nativecodeanalysis.xml
 Debug/Atak_zombie_Wojciech_War.exe.lastcodeanalysissucceeded
 Atak_zombie_Wojciech_War/Atak_zombie_Wojciech_War.aps
 Atak_zombie_Wojciech_War/Atak_zombie_Wojciech_War.rc
