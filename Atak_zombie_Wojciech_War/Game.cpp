@@ -2,6 +2,18 @@
 
 Game::Game()
 {
+	tab = new char*[windowWidth]; //
+	nr_of_object = new int*[windowWidth]; //
+	tab_RED = new char*[windowWidth]; //
+	nr_of_object_RED = new int*[windowWidth]; //
+
+	for (int i = 0; i < windowWidth; ++i)
+	{
+		tab[i] = new char[windowHeight];
+		nr_of_object[i] = new int[windowHeight];
+		tab_RED[i] = new char[windowHeight];
+		nr_of_object_RED[i] = new int[windowHeight];
+	}
 }
 
 Game::~Game()

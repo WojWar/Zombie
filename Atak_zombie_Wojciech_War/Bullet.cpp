@@ -26,9 +26,21 @@ Bullet::~Bullet()
 }
 
 
-bool Bullet::is_wall(char _tab[][576])
+bool Bullet::is_wall(char **_tab)
 {
-	if (_tab[(int)(getPosition().x)][(int)(getPosition().y)]) 
+	//check if bullet goes outside of the window size: 
+	//it should be stopped when hit the ground or walls, but if its not it will try to read tab values outside of the scope
+	int x, y;
+	x = (int)getPosition().x;
+	y = (int)getPosition().y;
+
+	if ((int)getPosition().x > windowWidth)x = windowWidth;
+	if ((int)getPosition().y > windowHeight)y = windowHeight;
+
+	if ((int)getPosition().x <= 0)x = 1;
+	if ((int)getPosition().y <= 0)y = 1;
+
+	if (_tab[x][y]) 
 	{
 		return true; 
 	}
@@ -36,5 +48,16 @@ bool Bullet::is_wall(char _tab[][576])
 	{
 		return false;
 	}
+}
+
+void Bullet::setPosition(float x, float y)
+{
+	if (x > windowWidth)x = windowWidth;
+	if (y > windowHeight)y = windowHeight;
+
+	if (x <= 0)x = 1;
+	if (y <= 0)y = 1;
+
+	RectangleShape::setPosition(x, y);
 }
 

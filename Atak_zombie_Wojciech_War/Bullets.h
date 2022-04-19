@@ -9,7 +9,7 @@ public:
 	Bullets();
 	~Bullets();
 	void fireBullet(const Player &_player);
-	void moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno, char _tab[][576]);
+	void moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno, char **_tab);
 	void clearMemory();
 private:
 	//active bullets

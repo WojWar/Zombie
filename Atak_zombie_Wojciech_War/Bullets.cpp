@@ -17,7 +17,7 @@ void Bullets::fireBullet(const Player &_player)
 	//move it to active vector
 }
 
-void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno, char _tab[][576])
+void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno, char **_tab)
 {		//pociski    
 	if (!vectorBullets.empty()) {
 		int i = 0;

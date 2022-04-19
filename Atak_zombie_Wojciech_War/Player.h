@@ -14,7 +14,7 @@ public:
 	sf::Vector2f velocity;
 	sf::Vector2f pos;
 	char jumpCounter = 0;
-	void collision(const std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576], float frame_time);
+	void collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time);
 	void are_close(const std::vector<Zombie*> &_Objects,float frame_time);
 	bool intersectsSomething;
 	bool zombie_bites_player(const std::vector<Zombie*> &_Objects);

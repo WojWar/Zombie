@@ -15,9 +15,9 @@ public:
 public:
 	void randVelocity();
 	void randsmallVelocity();
-	void collision(const std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576],float fps_time);
+	void collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object,float fps_time);
 
-	void collision_wall(char _tab[][576]); 
+	void collision_wall(char **_tab); 
 
 	void race_to_left(float frame_time);
 	void race_to_right(float frame_time);

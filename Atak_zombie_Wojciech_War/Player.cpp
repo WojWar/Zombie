@@ -27,7 +27,7 @@ Player::~Player()
 }
 
 
-void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576], float frame_time)
+void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
 {
 	ispixel = true;
 	while (ispixel)

@@ -39,7 +39,7 @@ void Zombie::randsmallVelocity()
 
 
 
-void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char _tab[][576], int _nr_of_object[][576],float fps_time)
+void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float fps_time)
 {
 
 	ispixel = false;
@@ -205,7 +205,7 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char _
 
 
 
-void Zombie::collision_wall(char _tab[][576])
+void Zombie::collision_wall(char **_tab)
 {
 
 	ispixel = false;

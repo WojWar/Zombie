@@ -12,7 +12,9 @@ public:
 	sf::Vector2f velocity;
 
 	//methods
-	bool is_wall(char _tab[][576]);
+	bool is_wall(char **_tab);
+
+	void setPosition(float x, float y);
 
 
 	//attributes

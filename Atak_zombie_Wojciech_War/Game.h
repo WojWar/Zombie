@@ -29,7 +29,7 @@ public:
 
 	void play();
 
-//private:
+private:
 	//podloze i sciany ograniczajace:
 	std::vector <RectangleShape> vectorRec;
 	std::vector <RectangleShape> vectorWalls;
@@ -44,12 +44,12 @@ public:
 	Image _mapImage;
 
 	//tablice dla podloza:
-	char tab[1024][576]; // tutaj wartosc 0 lub 1 czy jest grunt
-	int nr_of_object[1024][576]; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
+	char **tab; // tutaj wartosc 0 lub 1 czy jest grunt
+	int **nr_of_object; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
 
 	//tablice dla scian ograniczajacych:
-	char tab_RED[1024][576]; // tutaj wartosc 0 lub 1 czy jest sciana
-	int nr_of_object_RED[1024][576]; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
+	char **tab_RED; // tutaj wartosc 0 lub 1 czy jest sciana
+	int **nr_of_object_RED; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
 
 
 	//methods 
