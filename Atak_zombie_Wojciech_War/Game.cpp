@@ -7,17 +7,31 @@ Game::Game()
 	tab_RED = new char*[windowWidth]; //
 	nr_of_object_RED = new int*[windowWidth]; //
 
-	for (int i = 0; i < windowWidth; ++i)
+	for (int i = 0; i < windowWidth; i++)
 	{
 		tab[i] = new char[windowHeight];
 		nr_of_object[i] = new int[windowHeight];
 		tab_RED[i] = new char[windowHeight];
 		nr_of_object_RED[i] = new int[windowHeight];
 	}
+	
 }
 
 Game::~Game()
 {
+
+	for (int i = 0; i < windowWidth; i++)
+	{
+		delete [] tab[i];
+		delete [] nr_of_object[i];
+		delete [] tab_RED[i];
+		delete [] nr_of_object_RED[i];
+	}
+
+	delete tab;
+	delete nr_of_object;
+	delete tab_RED;
+	delete nr_of_object_RED;
 }
 
 void Game::play()
@@ -336,8 +350,8 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	unsigned int ilosc_x = 1024, ilosc_y = 576;
 	_textura.create(1024, 576);
 
-	float constant_x_size = _textura.getSize().x / (float)ilosc_x;
-	float constant_y_size = _textura.getSize().y / (float)ilosc_y;
+	float constant_x_size = _textura.getSize().x / (float)ilosc_x;//windowWidth
+	float constant_y_size = _textura.getSize().y / (float)ilosc_y;//windowHeight
 	float current_x_size;
 	float current_y_size;
 
