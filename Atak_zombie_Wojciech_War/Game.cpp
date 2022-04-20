@@ -240,7 +240,6 @@ void Game::play()
 
 
 void Game::walls_for_zombies() {
-	sf::RenderTexture _texture;
 	std::cout << std::endl << "Trwa ladowanie scian." << std::endl;
 	bool flag = true;
 	for (int i = 0; i < windowWidth; i++) {
@@ -249,8 +248,6 @@ void Game::walls_for_zombies() {
 			nr_of_object_RED[i][j] = 0;
 		}
 	}
-
-	_texture.create(windowWidth, windowHeight);
 
 	float constant_x_size = 1;
 	float constant_y_size = 1;
@@ -310,7 +307,6 @@ void Game::walls_for_zombies() {
 					}
 				}
 				{
-					_texture.draw(pix);
 					vectorWalls.push_back(pix);
 				}
 				i = temp_i;
