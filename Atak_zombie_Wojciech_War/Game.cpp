@@ -36,7 +36,7 @@ Game::~Game()
 
 void Game::play()
 {
-	RenderWindow okno(sf::VideoMode(1024, 576), "Zombie Attack!");
+	RenderWindow okno(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
 
 	sf::Clock clock;
 	sf::Clock clock_for_zombies;
@@ -244,17 +244,14 @@ void Game::play()
 void Game::walls_for_zombies(RenderTexture &_texture) {
 	std::cout << std::endl << "Trwa ladowanie scian." << std::endl;
 	bool flag = true;
-	for (int i = 0; i < 1024; i++) {
-		for (int j = 0; j < 576; j++) {
+	for (int i = 0; i < windowWidth; i++) {
+		for (int j = 0; j < windowHeight; j++) {
 			tab_RED[i][j] = 0;
 			nr_of_object_RED[i][j] = 0;
 		}
 	}
 
-
-	int ilosc_x = 1024, ilosc_y = 576;
-
-	_texture.create(1024, 576);
+	_texture.create(windowWidth, windowHeight);
 
 	float constant_x_size = 1;
 	float constant_y_size = 1;
@@ -267,8 +264,8 @@ void Game::walls_for_zombies(RenderTexture &_texture) {
 	int temp_i;
 	int temp_k;
 	//int add_count = 1;
-	for (int k = 0; k < ilosc_y; k++) {
-		for (int i = 0; i < ilosc_x; i++) {
+	for (int k = 0; k < windowHeight; k++) {
+		for (int i = 0; i < windowWidth; i++) {
 
 			pix.setPosition((float)i, (float)k);
 			if (((Color::Red) == _mapImage.getPixel(i, k)) && (tab_RED[i][k] == 0)) {
@@ -278,7 +275,7 @@ void Game::walls_for_zombies(RenderTexture &_texture) {
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
-				while (((Color::Red) == _mapImage.getPixel(temp_i, k) && (temp_i < ilosc_x - 1) && (tab_RED[temp_i][k] == 0)) || (temp_i == i)) {
+				while (((Color::Red) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab_RED[temp_i][k] == 0)) || (temp_i == i)) {
 					tab_RED[temp_i][k] = 1;
 					nr_of_object_RED[temp_i][k] = (int)(vectorWalls.size());
 					pix.setSize(Vector2f(current_x_size + constant_x_size, current_y_size));
@@ -286,7 +283,7 @@ void Game::walls_for_zombies(RenderTexture &_texture) {
 					temp_i++;
 				}
 
-				while (flag && (temp_k < ilosc_y - 1)) {
+				while (flag && (temp_k < windowHeight - 1)) {
 					flag = true;
 					for (int c = i; c < temp_i; c++) {
 						if (((Color::Red) == _mapImage.getPixel(c, temp_k) && (tab_RED[c][temp_k] == 0)) || (temp_k == k)) {
@@ -333,8 +330,8 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
 
 	bool flag = true;
-	for (int i = 0; i < 1024; i++) {
-		for (int j = 0; j < 576; j++) {
+	for (int i = 0; i < windowWidth; i++) {
+		for (int j = 0; j < windowHeight; j++) {
 			tab[i][j] = 0;
 			nr_of_object[i][j] = 0;
 		}
@@ -347,24 +344,23 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 		std::cout << "BLAD" << std::endl;
 		system("pause");
 	}
-	unsigned int ilosc_x = 1024, ilosc_y = 576;
-	_textura.create(1024, 576);
+	_textura.create(windowWidth, windowHeight);
 
-	float constant_x_size = _textura.getSize().x / (float)ilosc_x;//windowWidth
-	float constant_y_size = _textura.getSize().y / (float)ilosc_y;//windowHeight
+	float constant_x_size = _textura.getSize().x / (float)windowWidth;//windowWidth
+	float constant_y_size = _textura.getSize().y / (float)windowHeight;//windowHeight
 	float current_x_size;
 	float current_y_size;
 
-	RectangleShape shape(Vector2f((float)_textura.getSize().x / ilosc_x, (float)_textura.getSize().y / ilosc_y));
+	RectangleShape shape(Vector2f((float)_textura.getSize().x / windowWidth, (float)_textura.getSize().y / windowHeight));
 	shape.setFillColor(Color(139, 69, 19));
 
 	unsigned int temp_i;
 	unsigned int temp_k;
 	//int add_count = 1;
-	for (unsigned int k = 0; k < ilosc_y; k++) {
-		for (unsigned int i = 0; i < ilosc_x; i++) {
+	for (unsigned int k = 0; k < windowHeight; k++) {
+		for (unsigned int i = 0; i < windowWidth; i++) {
 
-			shape.setPosition((float)_textura.getSize().x*i / ilosc_x, (float)_textura.getSize().y*k / ilosc_y);
+			shape.setPosition((float)_textura.getSize().x*i / windowWidth, (float)_textura.getSize().y*k / windowHeight);
 			if (((Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
 				tab[i][k] = 1;
 				nr_of_object[i][k] = (int)(vectorRec.size());
@@ -372,7 +368,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
-				while (((Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < ilosc_x - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
+				while (((Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
 					tab[temp_i][k] = 1;
 					nr_of_object[temp_i][k] = (int)(vectorRec.size());
 					shape.setSize(Vector2f(current_x_size + constant_x_size, current_y_size));
@@ -380,7 +376,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 					temp_i++;
 				}
 
-				while (flag && (temp_k < ilosc_y - 1)) {
+				while (flag && (temp_k < windowHeight - 1)) {
 					flag = true;
 					for (unsigned int c = i; c < temp_i; c++) {
 						if (((Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {

@@ -5,11 +5,9 @@ Zombies::Zombies()
 }
 
 Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage) {
-
-	int ilosc_x = 1024, ilosc_y = 576;
-
-	for (int k = 0; k < ilosc_y; k++) {
-		for (int i = 0; i < ilosc_x; i++) {
+	
+	for (int k = 0; k < windowHeight; k++) {
+		for (int i = 0; i < windowWidth; i++) {
 			if ((sf::Color::Blue) == _mapImage.getPixel(i, k)) {
 				vZombies.push_back(Zombie(_zombie_health, sf::Vector2f((float)i, (float)k)));
 
@@ -45,7 +43,6 @@ void Zombies::chaseThePlayer(Player & _player, float & frame_time)
 				{
 					vZombies[i].race_to_right(frame_time);
 				}
-				//is = true;
 			}
 		}
 
