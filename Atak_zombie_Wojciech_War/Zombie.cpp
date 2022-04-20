@@ -5,9 +5,8 @@
 Zombie::Zombie(int points_of_health, sf::Vector2f _pos) :
 	RectangleShape()
 {
-	this->setSize(size_of_zombie);
-	size_of_player_x = 5;
-	size_of_player_y = 10;
+	this->setSize(fsize_of_zombie);
+
 	this->setFillColor(sf::Color(255, 185, 0));
 	health = points_of_health;
 	bite = false;
@@ -45,50 +44,7 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 	ispixel = false;
 
 	 
-/*
-		if (1 == _tab[(int)(this->getPosition().x)][(int)(this->getPosition().y)])
-		{
-			ispixel = true;
-			pos_x = (int)(this->getPosition().x) ;
-			pos_y = (int)(this->getPosition().y);
-			if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-				numery.push_back(_nr_of_object[pos_x][pos_y]);
-			}
-		}
-		if (1 == _tab[(int)(this->getPosition().x) ][(int)(this->getPosition().y) + size_of_player_y])
-		{
-			ispixel = true;
-			pos_x = (int)(this->getPosition().x) ;
-			pos_y = (int)(this->getPosition().y) + size_of_player_y;
-			if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-				numery.push_back(_nr_of_object[pos_x][pos_y]);
-			}
-		}
-
-	
-	
-		if (1 == _tab[(int)(this->getPosition().x) + size_of_player_x][(int)(this->getPosition().y )])
-		{
-			ispixel = true;
-			pos_x = (int)(this->getPosition().x + size_of_player_x);
-			pos_y = (int)(this->getPosition().y) ;
-			if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-				numery.push_back(_nr_of_object[pos_x][pos_y]);
-			}
-		}
-		if (1 == _tab[(int)(this->getPosition().x) + size_of_player_x][(int)(this->getPosition().y) + size_of_player_y])
-		{
-			ispixel = true;
-			pos_x = (int)(this->getPosition().x) + size_of_player_x;
-			pos_y = (int)(this->getPosition().y) + size_of_player_y;
-			if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-				numery.push_back(_nr_of_object[pos_x][pos_y]);
-			}
-		}
-*/
-	
-
-	for (int i = 0; i<size_of_player_x + 1; i++) {
+	for (int i = 0; i< size_of_zombie.x + 1; i++) {
 
 		if (1 == _tab[(int)(this->getPosition().x) + i][(int)(this->getPosition().y)])
 		{
@@ -99,18 +55,18 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 				numery.push_back(_nr_of_object[pos_x][pos_y]);
 			}
 		}
-		if (1 == _tab[(int)(this->getPosition().x) + i][(int)(this->getPosition().y) + size_of_player_y])
+		if (1 == _tab[(int)(this->getPosition().x) + i][(int)(this->getPosition().y) + size_of_zombie.y])
 		{
 			ispixel = true;
 			pos_x = (int)(this->getPosition().x) + i;
-			pos_y = (int)(this->getPosition().y) + size_of_player_y;
+			pos_y = (int)(this->getPosition().y) + size_of_zombie.y;
 			if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
 				numery.push_back(_nr_of_object[pos_x][pos_y]);
 			}
 		}
 
 	}
-	for (int j = 0; j<size_of_player_y + 1; j++) {
+	for (int j = 0; j< size_of_zombie.y + 1; j++) {
 		if (1 == _tab[(int)(this->getPosition().x)][(int)(this->getPosition().y + j)])
 		{
 			ispixel = true;
@@ -120,10 +76,10 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 				numery.push_back(_nr_of_object[pos_x][pos_y]);
 			}
 		}
-		if (1 == _tab[(int)(this->getPosition().x) + size_of_player_x][(int)(this->getPosition().y) + j])
+		if (1 == _tab[(int)(this->getPosition().x) + size_of_zombie.x][(int)(this->getPosition().y) + j])
 		{
 			ispixel = true;
-			pos_x = (int)(this->getPosition().x) + size_of_player_x;
+			pos_x = (int)(this->getPosition().x) + size_of_zombie.x;
 			pos_y = (int)(this->getPosition().y) + j;
 			if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
 				numery.push_back(_nr_of_object[pos_x][pos_y]);
@@ -163,7 +119,7 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 				}
 
 				//jesli z lewej
-				if (getPosition().x + size_of_player_x < _vectorObjects[nr].getPosition().x)
+				if (getPosition().x + size_of_zombie.x < _vectorObjects[nr].getPosition().x)
 				{
 					//std::cout << "lewa???" << std::endl;
 					move(0, velocity.y * 1000 * fps_time);
@@ -207,24 +163,13 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 
 void Zombie::collision_wall(char **_tab)
 {
-
-	ispixel = false;
-
-	 
-	for (int j = 0; j<size_of_player_y + 1; j++) {
-		if (1 == _tab[(int)(this->getPosition().x)][(int)(this->getPosition().y + j)])
-		{
-			ispixel = true;
-		}
-		if (1 == _tab[(int)(this->getPosition().x) + size_of_player_x][(int)(this->getPosition().y) + j])
-		{
-			ispixel = true;
-		}
-
-	}
-	if (ispixel)
+	if (1 == _tab[(int)(this->getPosition().x)][(int)(this->getPosition().y)])
 	{
-		velocity.x = -velocity.x; 
+		velocity.x = -velocity.x;
+	}
+	else if (1 == _tab[(int)(this->getPosition().x) + size_of_zombie.x][(int)(this->getPosition().y)])
+	{
+		velocity.x = -velocity.x;
 	}
 }
 

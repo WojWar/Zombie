@@ -26,15 +26,14 @@ public:
 	char health;
 	sf::Vector2f velocity;
 	sf::Vector2f position;
-	int size_of_player_x;
-	int size_of_player_y;
 	int nr;
 	std::vector <int> numery;
 	int pos_x, pos_y;
 	bool ispixel;
 	bool bite;
 private:
-	sf::Vector2f size_of_zombie = sf::Vector2f(5.0f, 10.0f);
+	sf::Vector2i size_of_zombie = sf::Vector2i(5, 10);
+	sf::Vector2f fsize_of_zombie = sf::Vector2f(5.0f, 10.0f);
 
 
 };
