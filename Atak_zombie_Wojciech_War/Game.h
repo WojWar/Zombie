@@ -54,7 +54,7 @@ private:
 
 	//methods 
 
-	void walls_for_zombies(RenderTexture &_texture);
+	void walls_for_zombies();
 	void objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string &_map_name);
 	void initialize_health_bar(RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player);
 

@@ -44,7 +44,6 @@ void Game::play()
 	srand((unsigned int)time(NULL));
 
 	sf::RenderTexture texture;//tekstura z calym podlozem (grunty)
-	sf::RenderTexture texture_walls_for_zombies;//tekstura z scianami
 	sf::RenderTexture texture_health_of_player;//tekstura z paskiem zycia
 
 	Parameters _parametry(player_health, zombie_health);
@@ -60,14 +59,13 @@ void Game::play()
 
 	//////////////////////////tworzenie obiektow/////////////////////////////
 	objects_to_vector_and_texture(texture, _parametry.map_name);
-	walls_for_zombies(texture_walls_for_zombies);
+	walls_for_zombies();
 	initialize_health_bar(okno, texture_health_of_player, player);
 
 	//make some zombies
 	Zombies _zombies(okno, zombie_health, _mapImage);
 
 
-	//texture_walls_for_zombies.display();
 	texture.display();
 	texture_health_of_player.display();
 
@@ -241,7 +239,8 @@ void Game::play()
 
 
 
-void Game::walls_for_zombies(RenderTexture &_texture) {
+void Game::walls_for_zombies() {
+	sf::RenderTexture _texture;
 	std::cout << std::endl << "Trwa ladowanie scian." << std::endl;
 	bool flag = true;
 	for (int i = 0; i < windowWidth; i++) {
