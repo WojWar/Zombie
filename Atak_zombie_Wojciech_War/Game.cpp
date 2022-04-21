@@ -4,15 +4,11 @@ Game::Game()
 {
 	tab = new char*[windowWidth]; //
 	nr_of_object = new int*[windowWidth]; //
-	tab_RED = new char*[windowWidth]; //
-	nr_of_object_RED = new int*[windowWidth]; //
 
 	for (int i = 0; i < windowWidth; i++)
 	{
 		tab[i] = new char[windowHeight];
 		nr_of_object[i] = new int[windowHeight];
-		tab_RED[i] = new char[windowHeight];
-		nr_of_object_RED[i] = new int[windowHeight];
 	}
 	
 }
@@ -24,14 +20,10 @@ Game::~Game()
 	{
 		delete [] tab[i];
 		delete [] nr_of_object[i];
-		delete [] tab_RED[i];
-		delete [] nr_of_object_RED[i];
 	}
 
 	delete tab;
 	delete nr_of_object;
-	delete tab_RED;
-	delete nr_of_object_RED;
 }
 
 void Game::play()
@@ -59,12 +51,11 @@ void Game::play()
 
 	//////////////////////////tworzenie obiektow/////////////////////////////
 	objects_to_vector_and_texture(texture, _parametry.map_name);
-	walls_for_zombies();
 	initialize_health_bar(okno, texture_health_of_player, player);
 
 	//make some zombies
 	Zombies _zombies(okno, zombie_health, _mapImage);
-
+	_zombies.loadTheWalls(_mapImage);
 
 	texture.display();
 	texture_health_of_player.display();
@@ -171,7 +162,7 @@ void Game::play()
 
 		_zombies.chaseThePlayer(player, ElapsedTime);
 
-		_zombies.moveAndDraw(ElapsedTime, vectorRec, tab_RED, tab, nr_of_object, okno);
+		_zombies.moveAndDraw(ElapsedTime, vectorRec, tab, nr_of_object, okno);
 
 
 		bullets.moveAndHit(_zombies, ElapsedTime, okno, tab);
@@ -236,89 +227,6 @@ void Game::play()
 	//return 0;
 }
 
-
-
-
-void Game::walls_for_zombies() {
-	std::cout << std::endl << "Trwa ladowanie scian." << std::endl;
-	bool flag = true;
-	for (int i = 0; i < windowWidth; i++) {
-		for (int j = 0; j < windowHeight; j++) {
-			tab_RED[i][j] = 0;
-			nr_of_object_RED[i][j] = 0;
-		}
-	}
-
-	float constant_x_size = 1;
-	float constant_y_size = 1;
-	float current_x_size;
-	float current_y_size;
-
-	RectangleShape pix(Vector2f(1, 1));
-	pix.setFillColor(Color::Red);
-
-	int temp_i;
-	int temp_k;
-	//int add_count = 1;
-	for (int k = 0; k < windowHeight; k++) {
-		for (int i = 0; i < windowWidth; i++) {
-
-			pix.setPosition((float)i, (float)k);
-			if (((Color::Red) == _mapImage.getPixel(i, k)) && (tab_RED[i][k] == 0)) {
-				tab_RED[i][k] = 1;
-				nr_of_object_RED[i][k] = (int)(vectorWalls.size());
-				current_x_size = 0;
-				current_y_size = 0;
-				temp_i = i;
-				temp_k = k;
-				while (((Color::Red) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab_RED[temp_i][k] == 0)) || (temp_i == i)) {
-					tab_RED[temp_i][k] = 1;
-					nr_of_object_RED[temp_i][k] = (int)(vectorWalls.size());
-					pix.setSize(Vector2f(current_x_size + constant_x_size, current_y_size));
-					current_x_size = current_x_size + constant_x_size;
-					temp_i++;
-				}
-
-				while (flag && (temp_k < windowHeight - 1)) {
-					flag = true;
-					for (int c = i; c < temp_i; c++) {
-						if (((Color::Red) == _mapImage.getPixel(c, temp_k) && (tab_RED[c][temp_k] == 0)) || (temp_k == k)) {
-							tab_RED[c][temp_k] = 1;
-							nr_of_object_RED[c][temp_k] = (int)(vectorWalls.size());
-						}
-						else
-						{
-							flag = false;
-						}
-					}
-					if (flag == false) {
-						for (int c = i; c < temp_i; c++) {
-							tab_RED[c][temp_k] = 0;
-							nr_of_object_RED[c][temp_k] = 0;
-						}
-					}
-
-					if (flag == true) {
-						pix.setSize(Vector2f(current_x_size, current_y_size + constant_y_size));
-						current_y_size = current_y_size + constant_y_size;
-
-						//if (temp_k<ilosc_y)
-						temp_k++;
-					}
-				}
-				{
-					vectorWalls.push_back(pix);
-				}
-				i = temp_i;
-				flag = true;
-			}
-
-		}
-	}
-
-	std::cout << "Ladowanie scian zakonczone. Ilosc obiektow scian: " << vectorWalls.size() << std::endl << std::endl;
-
-}
 
 void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string &_map_name) {
 

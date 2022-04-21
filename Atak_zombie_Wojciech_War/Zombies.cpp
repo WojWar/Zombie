@@ -23,6 +23,7 @@ Zombies::~Zombies()
 	//	delete i;
 	//}
 	//vZombies.clear();	//std::vector <Zombie*>
+
 }
 
 int Zombies::size()
@@ -74,7 +75,7 @@ bool Zombies::zombieBitesPlayer(Player & _player)
 	return false;
 }
 
-void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleShape>& _vGround, char **_tabRed, char **_tab, int **_nr_of_object, sf::RenderWindow &_okno)
+void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleShape>& _vGround, char **_tab, int **_nr_of_object, sf::RenderWindow &_okno)
 {
 	for (unsigned int i = 0; i < size(); i++) {
 
@@ -82,7 +83,7 @@ void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleS
 		vZombies[i].move((vZombies[i].velocity.x) * 1000 * _elapsedTime, (vZombies[i].velocity.y) * 1000 * _elapsedTime);
 
 		//odbicia od czerwonych scian:
-		vZombies[i].collision_wall(_tabRed);
+		vZombies[i].collision_wall(bgWalls.getBgWallsTab());
 
 		//kolizja z podlozem:
 		vZombies[i].collision(_vGround, _tab, _nr_of_object, _elapsedTime);
@@ -114,4 +115,9 @@ bool Zombies::shootByBullet(Bullet &_bullet)
 		else ++i;
 	}
 	return	_bullet.is_shooted_value;
+}
+
+void Zombies::loadTheWalls(sf::Image & _mapImage)
+{
+	bgWalls.Init(_mapImage);
 }
