@@ -10,7 +10,8 @@ Game::Game()
 		tab[i] = new char[windowHeight];
 		nr_of_object[i] = new int[windowHeight];
 	}
-	
+
+	okno = new RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
 }
 
 Game::~Game()
@@ -22,13 +23,13 @@ Game::~Game()
 		delete [] nr_of_object[i];
 	}
 
+	delete okno;
 	delete tab;
 	delete nr_of_object;
 }
 
 void Game::play()
 {
-	RenderWindow okno(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
 
 	sf::Clock clock;
 	sf::Clock clock_for_zombies;
@@ -51,10 +52,10 @@ void Game::play()
 
 	//////////////////////////tworzenie obiektow/////////////////////////////
 	objects_to_vector_and_texture(texture, _parametry.map_name);
-	initialize_health_bar(okno, texture_health_of_player, player);
+	initialize_health_bar(*okno, texture_health_of_player, player);
 
 	//make some zombies
-	Zombies _zombies(okno, zombie_health, _mapImage);
+	Zombies _zombies(*okno, zombie_health, _mapImage);
 	_zombies.loadTheWalls(_mapImage);
 
 	texture.display();
@@ -67,16 +68,16 @@ void Game::play()
 	sprite_health_bar.move(437, 500);
 	std::cout << "Pozostalo punktow zycia:" << std::endl;
 
-	okno.setFramerateLimit(30);
+	okno->setFramerateLimit(30);
 	///////////////////////////////////MAIN LOOP////////////////////////////////
-	while (okno.isOpen() && _zombies.size() && player.health)
+	while (okno->isOpen() && _zombies.size() && player.health)
 	{
 		//pomiar fps
 		float ElapsedTime = clock.getElapsedTime().asSeconds();
 		clock.restart();
 
 		Event event;
-		while (okno.pollEvent(event)) {
+		while (okno->pollEvent(event)) {
 			if (event.type == sf::Event::EventType::KeyPressed) {
 				keys[event.key.code] = true;
 			}
@@ -85,11 +86,11 @@ void Game::play()
 				keys[event.key.code] = false;
 			}
 			else if (event.type == sf::Event::Closed) {
-				okno.close();
+				okno->close();
 			}
 		}
 
-		okno.clear(sf::Color::White);
+		okno->clear(sf::Color::White);
 		player.pos.x = player.getPosition().x;
 		player.pos.y = player.getPosition().y;
 		//sterowanie:
@@ -126,7 +127,7 @@ void Game::play()
 		//player:		 
 
 		player.move(player.velocity.x * 1000 * ElapsedTime, player.velocity.y * 1000 * ElapsedTime);
-		player.collision(vectorRec, tab, nr_of_object, ElapsedTime);
+		player.collision(groundRectangles, tab, nr_of_object, ElapsedTime);
 		player.gravity_acceleration(gravity * 1000 * ElapsedTime, jumpspeed);// ElapsedTime);
 
 
@@ -149,9 +150,9 @@ void Game::play()
 
 
 		//draw textures:
-		okno.draw(sprite);
-		okno.draw(sprite_health_bar);
-		okno.draw(player);
+		okno->draw(sprite);
+		okno->draw(sprite_health_bar);
+		okno->draw(player);
 
 
 
@@ -162,12 +163,12 @@ void Game::play()
 
 		_zombies.chaseThePlayer(player, ElapsedTime);
 
-		_zombies.moveAndDraw(ElapsedTime, vectorRec, tab, nr_of_object, okno);
+		_zombies.moveAndDraw(ElapsedTime, groundRectangles, tab, nr_of_object, *okno);
 
 
-		bullets.moveAndHit(_zombies, ElapsedTime, okno, tab);
+		bullets.moveAndHit(_zombies, ElapsedTime, *okno, tab);
 
-		okno.display();
+		okno->display();
 
 	} //while
 
@@ -200,12 +201,12 @@ void Game::play()
 	}
 
 
-	okno.draw(pSprite_koniec_gry);
-	while (okno.isOpen()) {
+	okno->draw(pSprite_koniec_gry);
+	while (okno->isOpen()) {
 		Event event2;
-		while (okno.pollEvent(event2)) {
+		while (okno->pollEvent(event2)) {
 			if (event2.type == sf::Event::Closed) {
-				okno.close();
+				okno->close();
 			}
 		}
 
@@ -217,12 +218,11 @@ void Game::play()
 
 		bullets.clearMemory();	//std::forward_list <Bullet*>
 
-		vectorRec.clear();		//std::vector <RectangleShape> 
-		vectorWalls.clear();	//std::vector <RectangleShape>
+		groundRectangles.clear();		//std::vector <RectangleShape> 
 
 
-		okno.draw(pSprite_koniec_gry);
-		okno.display();
+		okno->draw(pSprite_koniec_gry);
+		okno->display();
 	}
 	//return 0;
 }
@@ -266,14 +266,14 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 			shape.setPosition((float)_textura.getSize().x*i / windowWidth, (float)_textura.getSize().y*k / windowHeight);
 			if (((Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
 				tab[i][k] = 1;
-				nr_of_object[i][k] = (int)(vectorRec.size());
+				nr_of_object[i][k] = (int)(groundRectangles.size());
 				current_x_size = 0;
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
 				while (((Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
 					tab[temp_i][k] = 1;
-					nr_of_object[temp_i][k] = (int)(vectorRec.size());
+					nr_of_object[temp_i][k] = (int)(groundRectangles.size());
 					shape.setSize(Vector2f(current_x_size + constant_x_size, current_y_size));
 					current_x_size = current_x_size + constant_x_size;
 					temp_i++;
@@ -284,7 +284,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 					for (unsigned int c = i; c < temp_i; c++) {
 						if (((Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
 							tab[c][temp_k] = 1;
-							nr_of_object[c][temp_k] = (int)(vectorRec.size());
+							nr_of_object[c][temp_k] = (int)(groundRectangles.size());
 						}
 						else
 						{
@@ -310,7 +310,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 				{
 					//std::cout <<"Ladowanie wiersza: "<< k << std::endl;
 					_textura.draw(shape);
-					vectorRec.push_back(shape);
+					groundRectangles.push_back(shape);
 				}
 				i = temp_i;
 				flag = true;
@@ -320,7 +320,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	}
 
 
-	std::cout << "Ladowanie mapy zakonczone. Ilosc obiektow podloza: " << vectorRec.size() << std::endl;
+	std::cout << "Ladowanie mapy zakonczone. Ilosc obiektow podloza: " << groundRectangles.size() << std::endl;
 
 
 }
