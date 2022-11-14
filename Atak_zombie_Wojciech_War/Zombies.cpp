@@ -102,18 +102,15 @@ bool Zombies::shootByBullet(Bullet &_bullet)
 		if ((*i).getGlobalBounds().contains(_bullet.getPosition()))
 		{
 			(*i).health--;
-			_bullet.is_shooted_value = true;
 
 			if ((*i).health < 1) {
-				//delete (*i);
 				(vZombies).erase(i);
-				break;
+				return true;
 			}
-			else ++i;
+			return true;
 		}
-		else ++i;
+		++i;
 	}
-	return	_bullet.is_shooted_value;
 }
 
 void Zombies::loadTheWalls(sf::Image & _mapImage)

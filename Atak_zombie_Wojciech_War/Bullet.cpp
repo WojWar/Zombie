@@ -14,9 +14,6 @@ Bullet::Bullet(const Player &_player):
 
 		velocity.x = -0.2f;
 	}
-
-	is_shooted_value = false;
-
 }
 
 
@@ -30,24 +27,19 @@ bool Bullet::is_wall(char **_tab)
 {
 	//check if bullet goes outside of the window size: 
 	//it should be stopped when hit the ground or walls, but if its not it will try to read tab values outside of the scope
-	int x, y;
-	x = (int)getPosition().x;
-	y = (int)getPosition().y;
+	int x = (int)getPosition().x;
+	int y = (int)getPosition().y;
 
-	if ((int)getPosition().x > windowWidth)x = windowWidth;
-	if ((int)getPosition().y > windowHeight)y = windowHeight;
-
-	if ((int)getPosition().x <= 0)x = 1;
-	if ((int)getPosition().y <= 0)y = 1;
-
-	if (_tab[x][y]) 
+	if (_tab[x][y]
+		or x > windowWidth
+		or y > windowHeight
+		or x <= 0
+		or y <= 0)
 	{
-		return true; 
+		velocity.x = velocity.y = 0;
+		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 void Bullet::setPosition(float x, float y)

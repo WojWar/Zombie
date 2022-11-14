@@ -16,9 +16,5 @@ public:
 
 	void setPosition(float x, float y);
 
-
-	//attributes
-	bool is_shooted_value;
-
 };
 
