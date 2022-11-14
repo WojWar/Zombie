@@ -26,14 +26,9 @@ Zombies::~Zombies()
 
 }
 
-int Zombies::size()
-{
-	return vZombies.size();
-}
-
 void Zombies::chaseThePlayer(Player & _player, float & frame_time)
 {
-	for (unsigned int i = 0; i < size(); i++) {
+	for (unsigned int i = 0; i < vZombies.size(); i++) {
 
 		if ((vZombies[i].getPosition().x - _player.pos.x < 100) && (vZombies[i].getPosition().x - _player.pos.x > -100)) {
 			if ((vZombies[i].getPosition().y - _player.pos.y < 100) && (vZombies[i].getPosition().y - _player.pos.y > -100)) {
@@ -55,7 +50,7 @@ void Zombies::randVelocity(sf::Clock & clock_for_zombies)
 	//losowanie predkosci i kierunku zombie, co 0.15 sekundy kolejny zombie
 	if (clock_for_zombies.getElapsedTime().asMilliseconds() > 150) {
 		nr_zombie++;
-		if (!(nr_zombie < size())) nr_zombie = 0;
+		if (!(nr_zombie < vZombies.size())) nr_zombie = 0;
 		vZombies[nr_zombie].randVelocity();
 		clock_for_zombies.restart();
 	}
@@ -63,7 +58,7 @@ void Zombies::randVelocity(sf::Clock & clock_for_zombies)
 
 bool Zombies::zombieBitesPlayer(Player & _player)
 {
-	for (unsigned int i = 0; i < size(); i++) {
+	for (unsigned int i = 0; i < vZombies.size(); i++) {
 
 		if ((_player.getGlobalBounds().intersects(vZombies[i].getGlobalBounds())) && (vZombies[i].bite == false)) {
 			vZombies[i].bite = true;
@@ -76,7 +71,12 @@ bool Zombies::zombieBitesPlayer(Player & _player)
 
 void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleShape>& _vGround, char **_tab, int **_nr_of_object, sf::RenderWindow &_okno)
 {
-	for (unsigned int i = 0; i < size(); i++) {
+	for (unsigned int i = 0; i < vZombies.size(); i++) {
+
+		if (vZombies[i].health < 1) {
+			vZombies.erase(vZombies.begin() + i);
+			break;
+		}
 
 		//ruch zombie:
 		vZombies[i].move((vZombies[i].velocity.x) * 1000 * _elapsedTime, (vZombies[i].velocity.y) * 1000 * _elapsedTime);
@@ -102,15 +102,15 @@ bool Zombies::shootByBullet(Bullet &_bullet)
 		if ((*i).getGlobalBounds().contains(_bullet.getPosition()))
 		{
 			(*i).health--;
-
-			if ((*i).health < 1) {
-				(vZombies).erase(i);
-				return true;
-			}
 			return true;
 		}
 		++i;
 	}
+}
+
+bool Zombies::areAlive()
+{
+	return (bool)vZombies.size();
 }
 
 void Zombies::loadTheWalls(sf::Image & _mapImage)

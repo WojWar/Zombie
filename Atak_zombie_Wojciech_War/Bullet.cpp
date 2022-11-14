@@ -27,16 +27,14 @@ bool Bullet::is_wall(char **_tab)
 {
 	//check if bullet goes outside of the window size: 
 	//it should be stopped when hit the ground or walls, but if its not it will try to read tab values outside of the scope
-	int x = (int)getPosition().x;
-	int y = (int)getPosition().y;
+	unsigned int x = (unsigned int)getPosition().x;
+	unsigned int y = (unsigned int)getPosition().y;
 
-	if (_tab[x][y]
-		or x > windowWidth
+	if (x > windowWidth
 		or y > windowHeight
-		or x <= 0
-		or y <= 0)
+		or _tab[x][y])
 	{
-		velocity.x = velocity.y = 0;
+		//velocity.x = velocity.y = 0;
 		return true;
 	}
 	return false;

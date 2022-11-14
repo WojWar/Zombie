@@ -70,7 +70,7 @@ void Game::play()
 
 	okno->setFramerateLimit(30);
 	///////////////////////////////////MAIN LOOP////////////////////////////////
-	while (okno->isOpen() && _zombies.size() && player.isAlive())
+	while (okno->isOpen() && _zombies.areAlive() && player.isAlive())
 	{
 		//pomiar fps
 		float ElapsedTime = clock.getElapsedTime().asSeconds();
@@ -179,7 +179,7 @@ void Game::play()
 
 	sf::Sprite pSprite_koniec_gry;
 
-	if (_zombies.size())
+	if (_zombies.areAlive())
 	{
 		if (!pTexture_game_over.loadFromFile("game_over.png"))
 		{
@@ -244,7 +244,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 
 	if (!_mapImage.loadFromFile(_map_name))
 	{
-		std::cout << "BLAD" << std::endl;
+		std::cout << "Error occured during map loading" << std::endl;
 		system("pause");
 	}
 	_textura.create(windowWidth, windowHeight);

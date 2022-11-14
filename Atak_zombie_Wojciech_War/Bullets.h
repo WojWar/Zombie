@@ -13,7 +13,7 @@ public:
 	void clearMemory();
 private:
 	//active bullets
-	std::forward_list <std::unique_ptr<Bullet>> vectorBullets;
+	std::vector <Bullet> vectorBullets;
 	//inactive bullets
 	std::forward_list <Bullet*> vectorWaitingBullets;
 	//std::unique_ptr<Bullet> unibull;
