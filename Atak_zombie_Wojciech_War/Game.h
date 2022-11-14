@@ -9,7 +9,6 @@
 #include <cmath>  
 #include "Zombies.h"
 #include "Player.h"
-#include "Parameters.h"
 #include "Bullets.h"
 #include "Globals.h"
 #include <ctime> 

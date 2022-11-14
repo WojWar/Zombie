@@ -39,7 +39,7 @@ void Game::play()
 	sf::RenderTexture texture;//tekstura z calym podlozem (grunty)
 	sf::RenderTexture texture_health_of_player;//tekstura z paskiem zycia
 
-	Parameters _parametry(player_health, zombie_health);
+	//Parameters _parametry(player_health, zombie_health);
 
 	Player player(player_health);
 
@@ -51,7 +51,7 @@ void Game::play()
 	}
 
 	//////////////////////////tworzenie obiektow/////////////////////////////
-	objects_to_vector_and_texture(texture, _parametry.map_name);
+	objects_to_vector_and_texture(texture, map_name);
 	initialize_health_bar(*okno, texture_health_of_player, player);
 
 	//make some zombies

@@ -137,7 +137,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Parameters.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="Zombies.cpp" />
@@ -148,7 +147,6 @@
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="Parameters.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="Zombies.h" />
