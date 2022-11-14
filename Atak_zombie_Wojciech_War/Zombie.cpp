@@ -161,13 +161,13 @@ void Zombie::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 
 
 
-void Zombie::collision_wall(char **_tab)
+void Zombie::collision_wall(BgWalls &_walls)
 {
-	if (1 == _tab[(int)(this->getPosition().x)][(int)(this->getPosition().y)])
+	if (_walls.isWall((int)(this->getPosition().x), (int)(this->getPosition().y)))
 	{
 		velocity.x = -velocity.x;
 	}
-	else if (1 == _tab[(int)(this->getPosition().x) + size_of_zombie.x][(int)(this->getPosition().y)])
+	else if (_walls.isWall(((int)(this->getPosition().x) + size_of_zombie.x), (int)(this->getPosition().y)))
 	{
 		velocity.x = -velocity.x;
 	}

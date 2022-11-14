@@ -3,8 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-#include <cmath>  
+#include <cmath>
+#include <map>
 #include "Globals.h"
+#include "BgWalls.h"
 
  
 class Zombie: public sf::RectangleShape
@@ -17,7 +19,7 @@ public:
 	void randsmallVelocity();
 	void collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object,float fps_time);
 
-	void collision_wall(char **_tab); 
+	void collision_wall(BgWalls &_walls);
 
 	void race_to_left(float frame_time);
 	void race_to_right(float frame_time);

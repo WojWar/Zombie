@@ -83,7 +83,7 @@ void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleS
 		vZombies[i].move((vZombies[i].velocity.x) * 1000 * _elapsedTime, (vZombies[i].velocity.y) * 1000 * _elapsedTime);
 
 		//odbicia od czerwonych scian:
-		vZombies[i].collision_wall(bgWalls.getBgWallsTab());
+		vZombies[i].collision_wall(bgWalls);
 
 		//kolizja z podlozem:
 		vZombies[i].collision(_vGround, _tab, _nr_of_object, _elapsedTime);

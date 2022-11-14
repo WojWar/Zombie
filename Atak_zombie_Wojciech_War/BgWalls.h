@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 #include "Globals.h"
 
 using namespace sf;
@@ -14,13 +15,14 @@ public:
 	~BgWalls();
 
 	void Init(sf::Image &_mapImage);
-
-	char **getBgWallsTab();
+	bool isWall(int x, int y);
 
 private:
+	int wallsMapWidth;
+	int wallsMapHeight;
 
-	//tablice dla scian ograniczajacych:
-	char **tab_RED; // tutaj wartosc 0 lub 1 czy jest sciana
-
+	// 2D mapa scian ograniczajacych:
+	// wartosc 0 lub 1 czy jest sciana
+	std::vector<std::vector<bool>> map2d;
 };
 
