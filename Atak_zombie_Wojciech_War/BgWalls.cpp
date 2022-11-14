@@ -9,9 +9,7 @@ BgWalls::BgWalls() :
 
 void BgWalls::Init(sf::Image &_mapImage)
 {
-	std::cout << std::endl << "Trwa ladowanie scian." << std::endl;
-
-	int walls_count = 0;
+	std::cout << std::endl << "BgWalls: Loading walls for zombies.." << std::endl;
 
 	for (int k = 1; k < windowHeight; k++) {
 		for (int i = 1; i < windowWidth; i++) {
@@ -25,9 +23,7 @@ void BgWalls::Init(sf::Image &_mapImage)
 			}
 		}
 	}
-
-	std::cout << "Ladowanie scian zakonczone. Ilosc obiektow scian: " << walls_count << std::endl << std::endl;
-
+	std::cout << "BgWalls: Walls for zombies loaded. Count: " << walls_count << std::endl << std::endl;
 }
 
 bool BgWalls::isWall(int x, int y)

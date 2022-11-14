@@ -67,8 +67,7 @@ bool Zombies::zombieBitesPlayer(Player & _player)
 
 		if ((_player.getGlobalBounds().intersects(vZombies[i].getGlobalBounds())) && (vZombies[i].bite == false)) {
 			vZombies[i].bite = true;
-			_player.health--;
-			std::cout <<"player live points: "<< (int)(_player.health) << std::endl;
+			_player.loseOneLivePoint();
 			return true;
 		}
 	}

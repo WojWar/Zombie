@@ -169,20 +169,15 @@ void Player::are_close(const std::vector<Zombie*>& _Objects, float frame_time)
 	//return is;
 }
 
-bool Player::zombie_bites_player(const std::vector<Zombie*>& _Objects)
+bool Player::isAlive()
 {
-	bites_me = false;
-	for (unsigned int i = 0; i < _Objects.size(); i++) {
+	return (bool)health;
+}
 
-		if ((this->getGlobalBounds().intersects(_Objects[i]->getGlobalBounds()))&&(_Objects[i]->bite ==false)) {
-			_Objects[i]->bite = true;
-			bites_me = true;
-			health--;
-			std::cout << (int)(health) << std::endl;
-		}
-
-	}
-	return bites_me;
+void Player::loseOneLivePoint()
+{
+	health--;
+	std::cout << "player live points: " << health << std::endl;
 }
 
 void Player::gravity_acceleration(float _gravity,float _jumpspeed)

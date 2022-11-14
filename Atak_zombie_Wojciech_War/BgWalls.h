@@ -18,6 +18,8 @@ public:
 	bool isWall(int x, int y);
 
 private:
+
+	int walls_count{ 0 };
 	int wallsMapWidth;
 	int wallsMapHeight;
 

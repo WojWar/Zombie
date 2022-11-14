@@ -70,7 +70,7 @@ void Game::play()
 
 	okno->setFramerateLimit(30);
 	///////////////////////////////////MAIN LOOP////////////////////////////////
-	while (okno->isOpen() && _zombies.size() && player.health)
+	while (okno->isOpen() && _zombies.size() && player.isAlive())
 	{
 		//pomiar fps
 		float ElapsedTime = clock.getElapsedTime().asSeconds();
@@ -328,13 +328,12 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 void Game::initialize_health_bar(RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player) {
 
 	_textura.create(150, 15);
-	char full_health = _player.health;
 
-	for (int i = 0; i < full_health; i++) {
+	for (int i = 0; i < player_health; i++) {
 
 		vectorHealth.push_back(new RectangleShape());
-		vectorHealth.back()->setSize(sf::Vector2f(150 / (float)full_health + 1, 15));
-		vectorHealth.back()->setPosition(Vector2f(i * 150 / (float)full_health, 0));
+		vectorHealth.back()->setSize(sf::Vector2f(150 / (float)player_health + 1, 15));
+		vectorHealth.back()->setPosition(Vector2f(i * 150 / (float)player_health, 0));
 		vectorHealth.back()->setFillColor(Color::Red);
 
 		_textura.draw(*vectorHealth.back());

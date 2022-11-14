@@ -17,10 +17,10 @@ public:
 	void collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time);
 	void are_close(const std::vector<Zombie*> &_Objects,float frame_time);
 	bool intersectsSomething;
-	bool zombie_bites_player(const std::vector<Zombie*> &_Objects);
+	bool isAlive();
+	void loseOneLivePoint();
 	void gravity_acceleration(float _gravity, float _jumpspeed);
 public:
-	char health;
 	bool shooting_direction;
 	int size_of_player_x;
 	int size_of_player_y;
@@ -29,6 +29,7 @@ public:
 	int pos_x, pos_y;
 	bool ispixel;
 private:
+	short health;
 	bool bites_me;
 };
 
