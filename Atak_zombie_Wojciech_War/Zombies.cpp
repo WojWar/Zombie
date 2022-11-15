@@ -19,10 +19,6 @@ Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Ima
 
 Zombies::~Zombies()
 {
-	//for (auto i : vZombies) {
-	//	delete i;
-	//}
-	//vZombies.clear();	//std::vector <Zombie*>
 
 }
 

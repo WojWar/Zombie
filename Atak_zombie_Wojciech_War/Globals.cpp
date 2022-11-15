@@ -12,4 +12,4 @@ int windowHeight = 576;
 int windowWidth = 1024;
 
 std::string map_names[3] = { "map_01.png", "map_02.png", "map_03.png" };
-std::string map_name = map_names[2];
+std::string map_name = map_names[0];

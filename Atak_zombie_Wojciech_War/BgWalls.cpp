@@ -11,11 +11,15 @@ void BgWalls::Init(sf::Image &_mapImage)
 {
 	std::cout << std::endl << "BgWalls: Loading walls for zombies.." << std::endl;
 
-	for (int k = 1; k < windowHeight; k++) {
-		for (int i = 1; i < windowWidth; i++) {
+	for (int k = 2; k < windowHeight-2; k++) {
+		for (int i = 2; i < windowWidth-2; i++) {
 
 			if ((Color::Red) == _mapImage.getPixel(i, k)) {
 				map2d[i][k] = 1;
+				map2d[i-1][k] = 1;
+				map2d[i-2][k] = 1;
+				map2d[i+1][k] = 1;
+				map2d[i+2][k] = 1;
 				if (!map2d[i-1][k] and !map2d[i][k-1])
 				{
 					walls_count++;
