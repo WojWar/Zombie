@@ -3,22 +3,15 @@
 
 
 Player::Player(int points_of_health) :
-	RectangleShape(sf::Vector2f(10, 15))
+	RectangleShape(sf::Vector2f(10, 15)),
+	health(points_of_health)
 {
-	size_of_player_x = 10;
-	size_of_player_y = 15;
 	this->setFillColor(sf::Color::Blue);
 
 	this->setPosition(50, 400);
-	jumpCounter = 0;
-	intersectsSomething = false;
-	health = points_of_health;
-	bites_me = false;
-	ispixel = false;
 	pos_x = 50;
 	pos_y = 400;
-	shooting_direction = true;
-	nr = 0;
+	
 }
 
 
