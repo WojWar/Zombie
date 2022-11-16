@@ -19,7 +19,7 @@ public:
 
 private:
 
-	int walls_count{ 0 };
+	int wallsCount{ 0 };
 	int wallsMapWidth;
 	int wallsMapHeight;
 

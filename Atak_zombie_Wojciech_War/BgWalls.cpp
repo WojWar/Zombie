@@ -22,12 +22,12 @@ void BgWalls::Init(sf::Image &_mapImage)
 				map2d[i+2][k] = 1;
 				if (!map2d[i-1][k] and !map2d[i][k-1])
 				{
-					walls_count++;
+					wallsCount++;
 				}
 			}
 		}
 	}
-	std::cout << "BgWalls: Walls for zombies loaded. Count: " << walls_count << std::endl << std::endl;
+	std::cout << "BgWalls: Walls for zombies loaded. Count: " << wallsCount << std::endl << std::endl;
 }
 
 bool BgWalls::isWall(int x, int y)
