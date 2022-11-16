@@ -102,6 +102,7 @@ bool Zombies::shootByBullet(Bullet &_bullet)
 		}
 		++i;
 	}
+	return false;
 }
 
 bool Zombies::areAlive()
