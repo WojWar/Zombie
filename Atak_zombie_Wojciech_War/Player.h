@@ -9,6 +9,7 @@ class Player: public sf::RectangleShape
 {
 public:
 	Player(int points_of_health);
+	Player();
 	~Player();
 public:
 	sf::Vector2f velocity;

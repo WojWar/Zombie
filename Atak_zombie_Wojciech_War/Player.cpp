@@ -14,6 +14,10 @@ Player::Player(int points_of_health) :
 	
 }
 
+Player::Player()
+{
+}
+
 
 Player::~Player()
 {
