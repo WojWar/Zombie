@@ -3,7 +3,7 @@
 
 
 Player::Player(int points_of_health) :
-	RectangleShape(sf::Vector2f(10, 15)),
+	RectangleShape(sf::Vector2f(10, 14)),
 	health(points_of_health)
 {
 	this->setFillColor(sf::Color::Blue);
@@ -23,6 +23,11 @@ Player::~Player()
 {
 }
 
+
+sf::Vector2i Player::getCenterCoordinates()
+{
+	return sf::Vector2i(size_of_player_x/2, size_of_player_y/2);
+}
 
 void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
 {

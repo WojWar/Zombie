@@ -3,7 +3,8 @@
 
 Map::Map():
 	mapName(map_name),
-	map2d(windowWidth, std::vector<bool>(windowHeight, false))
+	mapWidth(windowWidth),
+	mapHeight(windowHeight)
 {
 }
 
@@ -209,12 +210,21 @@ void Map::loadGround()
 {
 	std::cout << std::endl << "Loading the ground map" << std::endl;
 	Player tempPlayer;
+	int hOffset = tempPlayer.getCenterCoordinates().x;
+	int vOffset = tempPlayer.getCenterCoordinates().y;
 
-	for (int k = 2; k < windowHeight - 2; k++) {
-		for (int i = 2; i < windowWidth - 2; i++) {
+	for (int y = 0; y < windowHeight; y++) {
+		for (int x = 0; x < windowWidth ; x++) {
 
-			if ((sf::Color::Black) == _mapImage.getPixel(i, k)) {
-				map2d[i][k] = 1;
+			if ((sf::Color::Black) == _mapImage.getPixel(x, y)) {
+				
+				for (int y_local = y - hOffset; y_local < y + hOffset; y_local++)
+				{
+					for (int x_local = x - vOffset; x_local < x + vOffset; x_local++)
+					{
+						hardGround.setPoint(x_local, y_local);
+					}
+				}
 			}
 		}
 	}

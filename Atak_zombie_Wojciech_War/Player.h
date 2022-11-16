@@ -14,6 +14,7 @@ public:
 public:
 	sf::Vector2f velocity;
 	sf::Vector2f pos;
+	sf::Vector2i getCenterCoordinates();
 	char jumpCounter{ 0 };
 	void collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time);
 	void are_close(const std::vector<Zombie*> &_Objects,float frame_time);
@@ -24,7 +25,8 @@ public:
 public:
 	bool shooting_direction{ true };
 	int size_of_player_x{ 10 };
-	int size_of_player_y{ 15 };
+	float size_x{ 10 };
+	int size_of_player_y{ 14 };  // change this value to bigger - game is frozen. why?
 	int nr{ 0 };
 	std::vector <int> numery;
 	int pos_x, pos_y;

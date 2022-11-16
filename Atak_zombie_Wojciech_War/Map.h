@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Globals.h"
+#include "Matrix2d.h"
 
 class Map
 {
@@ -30,7 +31,7 @@ private:
 
 	//podloze i sciany ograniczajace:
 	std::vector <sf::RectangleShape> groundRectangles;
-	std::vector<std::vector<bool>> map2d;
+	Matrix2d hardGround;
 	//std::vector<std::vector<bool>> map2d;
 
 };
