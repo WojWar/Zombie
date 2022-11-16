@@ -12,12 +12,14 @@ public:
 	~Map();
 public:
 	bool isGround(int x, int y);
-	void initialise(sf::RenderTexture &_textura, std::string &_map_name);
+	void initialise(sf::RenderTexture &_textura);
+	void loadGroundObjects();
+	void loadGround();
 private:
 
-	std::vector<std::vector<bool>> map2d;
 	int mapWidth;
 	int mapHeight;
+	std::string mapName;
 
 	//mapa:
 	sf::Image _mapImage;
@@ -28,6 +30,8 @@ private:
 
 	//podloze i sciany ograniczajace:
 	std::vector <sf::RectangleShape> groundRectangles;
+	std::vector<std::vector<bool>> map2d;
+	//std::vector<std::vector<bool>> map2d;
 
 };
 

@@ -1,6 +1,9 @@
 #include "Map.h"
+#include "Player.h"
 
-Map::Map()
+Map::Map():
+	mapName(map_name),
+	map2d(windowWidth, std::vector<bool>(windowHeight, false))
 {
 }
 
@@ -13,7 +16,7 @@ bool Map::isGround(int x, int y)
 	return false;
 }
 
-void Map::initialise(sf::RenderTexture &_textura, std::string &_map_name) {
+void Map::initialise(sf::RenderTexture &_textura) {
 
 	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
 
@@ -27,7 +30,7 @@ void Map::initialise(sf::RenderTexture &_textura, std::string &_map_name) {
 
 	//if (!_mapImage.loadFromFile("map_01.png"))
 
-	if (!_mapImage.loadFromFile(_map_name))
+	if (!_mapImage.loadFromFile(mapName))
 	{
 		std::cout << "Error occured during map loading" << std::endl;
 		system("pause");
@@ -108,4 +111,112 @@ void Map::initialise(sf::RenderTexture &_textura, std::string &_map_name) {
 	std::cout << "Ladowanie mapy zakonczone. Ilosc obiektow podloza: " << groundRectangles.size() << std::endl;
 
 
+}
+
+
+void Map::loadGroundObjects() {
+
+	std::cout << std::endl << "Loading the ground map" << std::endl;
+
+	bool flag = true;
+	for (int i = 0; i < windowWidth; i++) {
+		for (int j = 0; j < windowHeight; j++) {
+			tab[i][j] = 0;
+			nr_of_object[i][j] = 0;
+		}
+	}
+
+	if (!_mapImage.loadFromFile(mapName))
+	{
+		std::cout << "Error occured during map loading" << std::endl;
+		system("pause");
+	}
+
+	float current_x_size;
+	float current_y_size;
+
+	sf::RectangleShape shape(sf::Vector2f(1, 1));
+	shape.setFillColor(sf::Color(139, 69, 19));
+
+	unsigned int temp_i;
+	unsigned int temp_k;
+	//int add_count = 1;
+	for (unsigned int k = 0; k < windowHeight; k++) {
+		for (unsigned int i = 0; i < windowWidth; i++) {
+
+			shape.setPosition(i, k);
+			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
+				tab[i][k] = 1;
+				nr_of_object[i][k] = (int)(groundRectangles.size());
+				current_x_size = 1;
+				current_y_size = 1;
+				temp_i = i;
+				temp_k = k;
+				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
+					tab[temp_i][k] = 1;
+					nr_of_object[temp_i][k] = (int)(groundRectangles.size());
+					current_x_size++;
+					shape.setSize(sf::Vector2f(current_x_size, current_y_size));
+					temp_i++;
+				}
+
+				while (flag && (temp_k < windowHeight - 1)) {
+					flag = true;
+					for (unsigned int c = i; c < temp_i; c++) {
+						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
+							tab[c][temp_k] = 1;
+							nr_of_object[c][temp_k] = (int)(groundRectangles.size());
+						}
+						else
+						{
+							flag = false;
+						}
+					}
+					if (flag == false) {
+						for (unsigned int c = i; c < temp_i; c++) {
+							tab[c][temp_k] = 0;
+							nr_of_object[c][temp_k] = 0;
+						}
+					}
+
+					if (flag == true) {
+						current_y_size++;
+						shape.setSize(sf::Vector2f(current_x_size, current_y_size));
+
+						//if (temp_k<ilosc_y)
+						temp_k++;
+					}
+				}
+
+				{
+					groundRectangles.push_back(shape);
+				}
+				i = temp_i;
+				flag = true;
+			}
+
+		}
+	}
+
+
+	std::cout << "Ground map loading finished." << std::endl;
+
+
+}
+
+
+void Map::loadGround()
+{
+	std::cout << std::endl << "Loading the ground map" << std::endl;
+	Player tempPlayer;
+
+	for (int k = 2; k < windowHeight - 2; k++) {
+		for (int i = 2; i < windowWidth - 2; i++) {
+
+			if ((sf::Color::Black) == _mapImage.getPixel(i, k)) {
+				map2d[i][k] = 1;
+			}
+		}
+	}
+	std::cout << "Ground map loading finished." << std::endl;
 }
