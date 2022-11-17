@@ -11,7 +11,7 @@ void Matrix2d::setPoint(int x, int y)
 {
 	if(checkBounds(x,y))
 	{
-		map2d[x][y] = true;
+		map2d[x][y] = 1;
 	}
 	
 }
@@ -27,8 +27,8 @@ bool Matrix2d::getPoint(int x, int y)
 
 bool Matrix2d::checkBounds(int x, int y)
 {
-	if (x > mapWidth
-		or y > mapHeight
+	if (x > windowWidth
+		or y > windowHeight
 		or x < 0
 		or y < 0)
 	{

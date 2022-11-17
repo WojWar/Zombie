@@ -11,6 +11,8 @@ Player::Player(int points_of_health) :
 	this->setPosition(50, 400);
 	pos_x = 50;
 	pos_y = 400;
+
+	groundMap.loadGround();
 	
 }
 
@@ -24,9 +26,9 @@ Player::~Player()
 }
 
 
-sf::Vector2i Player::getCenterCoordinates()
+sf::Vector2i Player::getSize()
 {
-	return sf::Vector2i(size_of_player_x/2, size_of_player_y/2);
+	return sf::Vector2i(size_of_player_x, size_of_player_y);
 }
 
 void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
@@ -147,6 +149,84 @@ void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 	}
 
 }
+
+
+void Player::collision2(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
+{
+	ispixel = true;
+	while (ispixel)
+	{
+		ispixel = groundMap.isGround((int)(this->getPosition().x), (int)(this->getPosition().y));
+
+
+		if (ispixel)
+		{
+
+			for (unsigned int i = 0; i < numery.size(); i++) {
+				nr = numery[i];
+				if (this->getGlobalBounds().intersects(_vectorObjects[nr].getGlobalBounds())) {
+
+
+					this->move(-velocity.x * 1000 * frame_time, -velocity.y * 1000 * frame_time);
+
+					//jesli z gory
+					if (this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y)
+					{
+						this->move(velocity.x * 1000 * frame_time, 0);
+						velocity.y = 0;
+						intersectsSomething = true;
+					}
+
+					//jesli z dolu
+					if (this->getPosition().y > _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y)
+					{
+						this->move(velocity.x * 1000 * frame_time, 0);
+						velocity.y = 0;
+						//this->setPosition(this->getPosition().x, _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y);
+
+					}
+
+					//jesli z lewej
+					if (this->getPosition().x + size_of_player_x < _vectorObjects[nr].getPosition().x)
+					{
+						//std::cout << "lewa???" << std::endl;
+						this->move(0, velocity.y * 1000 * frame_time);
+						intersectsSomething = true;
+						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
+						{
+							pos.y = this->getPosition().y - 2;
+							this->setPosition(this->getPosition().x, pos.y);
+						}
+
+					}
+
+					//jesli z prawej od playera jest kolizja
+					if (this->getPosition().x > _vectorObjects[nr].getPosition().x + _vectorObjects[nr].getSize().x)
+					{
+						//std::cout << "prawa???" << std::endl;
+						this->move(0, velocity.y * 1000 * frame_time);
+						intersectsSomething = true;
+						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
+						{
+							pos.y = this->getPosition().y - 2;
+							this->setPosition(this->getPosition().x, pos.y);
+						}
+
+					}
+
+
+				}
+
+			}
+
+
+		}
+
+		numery.clear();
+	}
+
+}
+
 
 void Player::are_close(const std::vector<Zombie*>& _Objects, float frame_time)
 {

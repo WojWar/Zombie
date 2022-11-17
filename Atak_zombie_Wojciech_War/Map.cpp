@@ -1,11 +1,17 @@
 #include "Map.h"
-#include "Player.h"
 
-Map::Map():
+Map::Map(sf::Vector2i playerSize):
 	mapName(map_name),
 	mapWidth(windowWidth),
-	mapHeight(windowHeight)
+	mapHeight(windowHeight),
+	playerOffset(sf::Vector2i(playerSize.x/2, playerSize.y/2))
 {
+	if (!_mapImage.loadFromFile(mapName))
+	{
+		std::cout << "Error occured during map loading" << std::endl;
+		system("pause");
+	}
+
 }
 
 Map::~Map()
@@ -14,7 +20,7 @@ Map::~Map()
 
 bool Map::isGround(int x, int y)
 {
-	return false;
+	return hardGround.getPoint(x, y);
 }
 
 void Map::initialise(sf::RenderTexture &_textura) {
@@ -30,12 +36,12 @@ void Map::initialise(sf::RenderTexture &_textura) {
 	}
 
 	//if (!_mapImage.loadFromFile("map_01.png"))
-
 	if (!_mapImage.loadFromFile(mapName))
 	{
 		std::cout << "Error occured during map loading" << std::endl;
 		system("pause");
 	}
+
 	_textura.create(windowWidth, windowHeight);
 
 	float constant_x_size = _textura.getSize().x / (float)windowWidth;//windowWidth
@@ -209,20 +215,21 @@ void Map::loadGroundObjects() {
 void Map::loadGround()
 {
 	std::cout << std::endl << "Loading the ground map" << std::endl;
-	Player tempPlayer;
-	int hOffset = tempPlayer.getCenterCoordinates().x;
-	int vOffset = tempPlayer.getCenterCoordinates().y;
+	int hOffset = playerOffset.x;
+	int vOffset = playerOffset.y;
 
 	for (int y = 0; y < windowHeight; y++) {
 		for (int x = 0; x < windowWidth ; x++) {
 
 			if ((sf::Color::Black) == _mapImage.getPixel(x, y)) {
-				
+				hardGround.setPoint(x, y);
+				printf("setPoint");
 				for (int y_local = y - hOffset; y_local < y + hOffset; y_local++)
 				{
 					for (int x_local = x - vOffset; x_local < x + vOffset; x_local++)
 					{
-						hardGround.setPoint(x_local, y_local);
+						//hardGround.setPoint(x_local, y_local);
+						//printf("setPoint");
 					}
 				}
 			}

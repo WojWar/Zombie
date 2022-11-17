@@ -9,7 +9,7 @@
 class Map
 {
 public:
-	Map();
+	Map(sf::Vector2i playerSize);
 	~Map();
 public:
 	bool isGround(int x, int y);
@@ -18,6 +18,7 @@ public:
 	void loadGround();
 private:
 
+	sf::Vector2i playerOffset;
 	int mapWidth;
 	int mapHeight;
 	std::string mapName;

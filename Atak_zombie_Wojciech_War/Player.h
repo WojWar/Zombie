@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>  
 #include "Zombie.h"
+#include "Map.h"
 
 class Player: public sf::RectangleShape
 {
@@ -14,9 +15,10 @@ public:
 public:
 	sf::Vector2f velocity;
 	sf::Vector2f pos;
-	sf::Vector2i getCenterCoordinates();
+	sf::Vector2i getSize();
 	char jumpCounter{ 0 };
 	void collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time);
+	void collision2(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time);
 	void are_close(const std::vector<Zombie*> &_Objects,float frame_time);
 	bool intersectsSomething{ false };
 	bool isAlive();
@@ -32,6 +34,8 @@ public:
 	int pos_x, pos_y;
 	bool ispixel{ false };
 private:
+
+	Map groundMap{ sf::Vector2i(size_of_player_x, size_of_player_y) };
 	short health;
 	bool bites_me{ false };
 };
