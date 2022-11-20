@@ -31,8 +31,6 @@ Game::~Game()
 void Game::play()
 {
 
-	sf::Clock clock;
-	sf::Clock clock_for_zombies;
 
 	srand((unsigned int)time(NULL));
 
@@ -69,6 +67,9 @@ void Game::play()
 	std::cout << "Pozostalo punktow zycia:" << std::endl;
 
 	okno->setFramerateLimit(30);
+
+	sf::Clock clock;
+	sf::Clock clock_for_zombies;
 	///////////////////////////////////MAIN LOOP////////////////////////////////
 	while (okno->isOpen() && _zombies.areAlive() && player.isAlive())
 	{
@@ -127,7 +128,7 @@ void Game::play()
 		//player:		 
 
 		player.move(player.velocity.x * 1000 * ElapsedTime, player.velocity.y * 1000 * ElapsedTime);
-		player.collision(groundRectangles, tab, nr_of_object, ElapsedTime);
+		player.collision(ElapsedTime);
 		player.gravity_acceleration(gravity * 1000 * ElapsedTime, jumpspeed);// ElapsedTime);
 
 

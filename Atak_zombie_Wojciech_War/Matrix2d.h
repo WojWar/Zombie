@@ -8,10 +8,12 @@ class Matrix2d
 public:
 	Matrix2d();
 	~Matrix2d() = default;
-	void setPoint(int x, int y);
-	bool getPoint(int x, int y);
+	void setPoint(unsigned int x, unsigned int y);
+	bool getPoint(unsigned int x, unsigned int y);
+	// getPointFast have no boundary checks!
+	bool getPointFast(unsigned int x, unsigned int y);
 private:
-	bool checkBounds(int x, int y);
+	bool checkBounds(unsigned int x, unsigned int y);
 	std::vector<std::vector<bool>> map2d;
 	int mapWidth;
 	int mapHeight;

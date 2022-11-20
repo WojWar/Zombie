@@ -31,7 +31,7 @@ sf::Vector2i Player::getSize()
 	return sf::Vector2i(size_of_player_x, size_of_player_y);
 }
 
-void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
+void Player::collision3(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
 {
 	ispixel = true;
 	while (ispixel)
@@ -151,79 +151,56 @@ void Player::collision(const std::vector<RectangleShape> &_vectorObjects, char *
 }
 
 
-void Player::collision2(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
+void Player::collision(float frame_time)
 {
 	ispixel = true;
-	while (ispixel)
+	sf::Vector2i thisPosition = sf::Vector2i((int)(this->getPosition().x), (int)(this->getPosition().y));
+	
+	ispixel = groundMap.isGround(thisPosition.x, thisPosition.y);
+
+
+	//jesli z gory
+	if (groundMap.isGround(thisPosition.x, thisPosition.y - 1))
 	{
-		ispixel = groundMap.isGround((int)(this->getPosition().x), (int)(this->getPosition().y));
-
-
-		if (ispixel)
-		{
-
-			for (unsigned int i = 0; i < numery.size(); i++) {
-				nr = numery[i];
-				if (this->getGlobalBounds().intersects(_vectorObjects[nr].getGlobalBounds())) {
-
-
-					this->move(-velocity.x * 1000 * frame_time, -velocity.y * 1000 * frame_time);
-
-					//jesli z gory
-					if (this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y)
-					{
-						this->move(velocity.x * 1000 * frame_time, 0);
-						velocity.y = 0;
-						intersectsSomething = true;
-					}
-
-					//jesli z dolu
-					if (this->getPosition().y > _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y)
-					{
-						this->move(velocity.x * 1000 * frame_time, 0);
-						velocity.y = 0;
-						//this->setPosition(this->getPosition().x, _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y);
-
-					}
-
-					//jesli z lewej
-					if (this->getPosition().x + size_of_player_x < _vectorObjects[nr].getPosition().x)
-					{
-						//std::cout << "lewa???" << std::endl;
-						this->move(0, velocity.y * 1000 * frame_time);
-						intersectsSomething = true;
-						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
-						{
-							pos.y = this->getPosition().y - 2;
-							this->setPosition(this->getPosition().x, pos.y);
-						}
-
-					}
-
-					//jesli z prawej od playera jest kolizja
-					if (this->getPosition().x > _vectorObjects[nr].getPosition().x + _vectorObjects[nr].getSize().x)
-					{
-						//std::cout << "prawa???" << std::endl;
-						this->move(0, velocity.y * 1000 * frame_time);
-						intersectsSomething = true;
-						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
-						{
-							pos.y = this->getPosition().y - 2;
-							this->setPosition(this->getPosition().x, pos.y);
-						}
-
-					}
-
-
-				}
-
-			}
-
-
-		}
-
-		numery.clear();
+		this->move(velocity.x * 1000 * frame_time, 0);
+		velocity.y = 0;
+		intersectsSomething = true;
 	}
+
+	//jesli z dolu
+	if (groundMap.isGround(thisPosition.x, thisPosition.y + 1))
+	{
+		this->move(velocity.x * 1000 * frame_time, 0);
+		velocity.y = 0;
+	}
+
+	//jesli z lewej
+	if (groundMap.isGround(thisPosition.x - 1, thisPosition.y))
+	{
+		this->move(0, velocity.y * 1000 * frame_time);
+		intersectsSomething = true;
+		//if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
+		//{
+		//	pos.y = this->getPosition().y - 2;
+		//	this->setPosition(this->getPosition().x, pos.y);
+		//}
+
+	}
+
+	//jesli z prawej od playera jest kolizja
+	if (groundMap.isGround(thisPosition.x + 1, thisPosition.y))
+	{
+		this->move(0, velocity.y * 1000 * frame_time);
+		intersectsSomething = true;
+		//if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
+		//{
+		//	pos.y = this->getPosition().y - 2;
+		//	this->setPosition(this->getPosition().x, pos.y);
+		//}
+
+	}
+
+
 
 }
 

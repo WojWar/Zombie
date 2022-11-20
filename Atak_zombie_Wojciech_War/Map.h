@@ -17,7 +17,18 @@ public:
 	void loadGroundObjects();
 	void loadGround();
 private:
+	bool getPoint(unsigned int point_x, unsigned int point_y);
+	void setUp(unsigned int point_x, unsigned int point_y);
+	void setDown(unsigned int point_x, unsigned int point_y);
+	void setLeft(unsigned int point_x, unsigned int point_y);
+	void setRight(unsigned int point_x, unsigned int point_y);
 
+	void setRightUp(unsigned int point_x, unsigned int point_y);
+	void setLeftUp(unsigned int point_x, unsigned int point_y);
+	void setRightDown(unsigned int point_x, unsigned int point_y);
+	void setLeftDown(unsigned int point_x, unsigned int point_y);
+
+private:
 	sf::Vector2i playerOffset;
 	int mapWidth;
 	int mapHeight;
@@ -27,8 +38,8 @@ private:
 	sf::Image _mapImage;
 
 	//tablice dla podloza:
-	char **tab; // tutaj wartosc 0 lub 1 czy jest grunt
-	int **nr_of_object; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
+	char **m_tab; // tutaj wartosc 0 lub 1 czy jest grunt
+	int **m_nr_of_object; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
 
 	//podloze i sciany ograniczajace:
 	std::vector <sf::RectangleShape> groundRectangles;

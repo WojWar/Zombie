@@ -7,7 +7,7 @@ Matrix2d::Matrix2d():
 {
 }
 
-void Matrix2d::setPoint(int x, int y)
+void Matrix2d::setPoint(unsigned int x, unsigned int y)
 {
 	if(checkBounds(x,y))
 	{
@@ -16,7 +16,7 @@ void Matrix2d::setPoint(int x, int y)
 	
 }
 
-bool Matrix2d::getPoint(int x, int y)
+bool Matrix2d::getPoint(unsigned int x, unsigned int y)
 {
 	if (checkBounds(x, y))
 	{
@@ -25,12 +25,14 @@ bool Matrix2d::getPoint(int x, int y)
 	return true;
 }
 
-bool Matrix2d::checkBounds(int x, int y)
+bool Matrix2d::getPointFast(unsigned int x, unsigned int y)
 {
-	if (x > map2d.size()-1
-		or y > map2d[x].size()-1
-		or x < 0
-		or y < 0)
+	return map2d[x][y];
+}
+
+bool Matrix2d::checkBounds(unsigned int x, unsigned int y)
+{
+	if (x > map2d.size()-1 or y > map2d[x].size()-1)
 	{
 		return false;
 	}

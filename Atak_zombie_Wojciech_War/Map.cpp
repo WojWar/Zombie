@@ -16,7 +16,8 @@ Map::~Map()
 
 bool Map::isGround(int x, int y)
 {
-	return false;
+	std::cout << "x: " << x << ", y: " << y << std::endl;
+	return hardGround.getPoint(x, y);
 }
 
 void Map::initialise(sf::RenderTexture &_textura) {
@@ -26,8 +27,8 @@ void Map::initialise(sf::RenderTexture &_textura) {
 	bool flag = true;
 	for (int i = 0; i < windowWidth; i++) {
 		for (int j = 0; j < windowHeight; j++) {
-			tab[i][j] = 0;
-			nr_of_object[i][j] = 0;
+			m_tab[i][j] = 0;
+			m_nr_of_object[i][j] = 0;
 		}
 	}
 
@@ -55,16 +56,16 @@ void Map::initialise(sf::RenderTexture &_textura) {
 		for (unsigned int i = 0; i < windowWidth; i++) {
 
 			shape.setPosition((float)_textura.getSize().x*i / windowWidth, (float)_textura.getSize().y*k / windowHeight);
-			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
-				tab[i][k] = 1;
-				nr_of_object[i][k] = (int)(groundRectangles.size());
+			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (m_tab[i][k] == 0)) {
+				m_tab[i][k] = 1;
+				m_nr_of_object[i][k] = (int)(groundRectangles.size());
 				current_x_size = 0;
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
-				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
-					tab[temp_i][k] = 1;
-					nr_of_object[temp_i][k] = (int)(groundRectangles.size());
+				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (m_tab[temp_i][k] == 0)) || (temp_i == i)) {
+					m_tab[temp_i][k] = 1;
+					m_nr_of_object[temp_i][k] = (int)(groundRectangles.size());
 					shape.setSize(sf::Vector2f(current_x_size + constant_x_size, current_y_size));
 					current_x_size = current_x_size + constant_x_size;
 					temp_i++;
@@ -73,9 +74,9 @@ void Map::initialise(sf::RenderTexture &_textura) {
 				while (flag && (temp_k < windowHeight - 1)) {
 					flag = true;
 					for (unsigned int c = i; c < temp_i; c++) {
-						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
-							tab[c][temp_k] = 1;
-							nr_of_object[c][temp_k] = (int)(groundRectangles.size());
+						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (m_tab[c][temp_k] == 0)) || (temp_k == k)) {
+							m_tab[c][temp_k] = 1;
+							m_nr_of_object[c][temp_k] = (int)(groundRectangles.size());
 						}
 						else
 						{
@@ -84,8 +85,8 @@ void Map::initialise(sf::RenderTexture &_textura) {
 					}
 					if (flag == false) {
 						for (unsigned int c = i; c < temp_i; c++) {
-							tab[c][temp_k] = 0;
-							nr_of_object[c][temp_k] = 0;
+							m_tab[c][temp_k] = 0;
+							m_nr_of_object[c][temp_k] = 0;
 						}
 					}
 
@@ -124,8 +125,8 @@ void Map::loadGroundObjects() {
 	bool flag = true;
 	for (int i = 0; i < windowWidth; i++) {
 		for (int j = 0; j < windowHeight; j++) {
-			tab[i][j] = 0;
-			nr_of_object[i][j] = 0;
+			m_tab[i][j] = 0;
+			m_nr_of_object[i][j] = 0;
 		}
 	}
 
@@ -147,17 +148,17 @@ void Map::loadGroundObjects() {
 	for (unsigned int k = 0; k < windowHeight; k++) {
 		for (unsigned int i = 0; i < windowWidth; i++) {
 
-			shape.setPosition(i, k);
-			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
-				tab[i][k] = 1;
-				nr_of_object[i][k] = (int)(groundRectangles.size());
+			shape.setPosition((float)i, (float)k);
+			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (m_tab[i][k] == 0)) {
+				m_tab[i][k] = 1;
+				m_nr_of_object[i][k] = (int)(groundRectangles.size());
 				current_x_size = 1;
 				current_y_size = 1;
 				temp_i = i;
 				temp_k = k;
-				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
-					tab[temp_i][k] = 1;
-					nr_of_object[temp_i][k] = (int)(groundRectangles.size());
+				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (m_tab[temp_i][k] == 0)) || (temp_i == i)) {
+					m_tab[temp_i][k] = 1;
+					m_nr_of_object[temp_i][k] = (int)(groundRectangles.size());
 					current_x_size++;
 					shape.setSize(sf::Vector2f(current_x_size, current_y_size));
 					temp_i++;
@@ -166,9 +167,9 @@ void Map::loadGroundObjects() {
 				while (flag && (temp_k < windowHeight - 1)) {
 					flag = true;
 					for (unsigned int c = i; c < temp_i; c++) {
-						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
-							tab[c][temp_k] = 1;
-							nr_of_object[c][temp_k] = (int)(groundRectangles.size());
+						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (m_tab[c][temp_k] == 0)) || (temp_k == k)) {
+							m_tab[c][temp_k] = 1;
+							m_nr_of_object[c][temp_k] = (int)(groundRectangles.size());
 						}
 						else
 						{
@@ -177,8 +178,8 @@ void Map::loadGroundObjects() {
 					}
 					if (flag == false) {
 						for (unsigned int c = i; c < temp_i; c++) {
-							tab[c][temp_k] = 0;
-							nr_of_object[c][temp_k] = 0;
+							m_tab[c][temp_k] = 0;
+							m_nr_of_object[c][temp_k] = 0;
 						}
 					}
 
@@ -216,47 +217,139 @@ void Map::loadGround()
 
 	sf::Vector2u imageSize = _mapImage.getSize();
 
-	for (int y = 0; y < windowHeight - 1; y++) {
-		for (int x = 0; x < windowWidth - 1; x++) {
+	for (unsigned int y = 0; y < windowHeight - 1; y++) {
+		for (unsigned int x = 0; x < windowWidth - 1; x++) {
+			std::cout << ".."  << std::endl;
 
-			if ((sf::Color::Black) == _mapImage.getPixel(x, y)) {
-				
-				std::cout << "Ground map loading: x: " << x << ", y: " << y << std::endl;
+			if (getPoint(x, y)) 
+			{
+				hardGround.setPoint(x, y);
 
-				//for (int y_local = y - hOffset; y_local < y + hoffset; y_local++)
-				//{
-				//	for (int x_local = x - vOffset; x_local < x + voffset; x_local++)
-				//	{
-				//		//hardground.setpoint(x_local, y_local);
-				//		std::cout << "Ground map loading: x: " << x << ", y: " << y << std::endl;
-				//	}
-				//}
+				if (getPoint(x+1, y))
+				{
+					setRight(x, y);
+					if (getPoint(x, y + 1))
+					{
+						setUp(x, y);
+						setRightUp(x, y);
+					}
+					if (getPoint(x, y - 1))
+					{
+						setDown(x, y);
+						setRightDown(x, y);
+					}
+					break;
+				}
+				if (getPoint(x-1, y))
+				{
+					setLeft(x, y);
+					if (getPoint(x, y + 1))
+					{
+						setUp(x, y);
+						setLeftUp(x, y);
+					}
+					if (getPoint(x, y - 1))
+					{
+						setDown(x, y);
+						setLeftDown(x, y);
+					}
+					break;
+				}
+				if (getPoint(x, y+1))
+				{
+					setUp(x, y);
+				}
+				if (getPoint(x, y-1))
+				{
+					setDown(x, y);
+				}
 			}
 		}
 	}
 
-	std::cout << "imageSize x: " << imageSize.x << std::endl;
-	std::cout << "imageSize y: " << imageSize.y << std::endl;
-	std::cout << "windowHeight: " << windowHeight << std::endl;
-	std::cout << "windowWidth: " << windowWidth << std::endl;
-
-	if ((sf::Color::Black) == _mapImage.getPixel(0, 0))
-	{
-		std::cout << "Ground map loading finished. (0, 0)" << std::endl;
-	}
-	if ((sf::Color::Black) == _mapImage.getPixel(0, 575))
-	{
-		std::cout << "Ground map loading finished. (0, 576)" << std::endl;
-	}
-	if ((sf::Color::Black) == _mapImage.getPixel(1023, 0))
-	{
-		std::cout << "Ground map loading finished. (1024, 0)" << std::endl;
-	}
-	if ((sf::Color::Black) == _mapImage.getPixel(1023, 575))
-	{
-		std::cout << "Ground map loading finished. (1024, 576)" << std::endl;
-	}
-
+	// hardGround.setPoint(x, y);
+	//std::cout << "Ground map loading: x: " << x << ", y: " << y <<   std::endl;
 
 	std::cout << "Ground map loading finished." << std::endl;
+}
+
+bool Map::getPoint(unsigned int point_x, unsigned int point_y)
+{
+	if (point_x > _mapImage.getSize().x
+		or point_y > _mapImage.getSize().y)
+	{
+		return true;
+	}
+	if ((sf::Color::Black) == _mapImage.getPixel(point_x, point_y)) {
+		return true;
+	}
+	return false;
+}
+
+void Map::setUp(unsigned int point_x, unsigned int point_y)
+{
+	hardGround.setPoint(point_x, point_y + 1);
+	hardGround.setPoint(point_x, point_y + 2);
+	hardGround.setPoint(point_x, point_y + 3);
+	hardGround.setPoint(point_x, point_y + 4);
+	hardGround.setPoint(point_x, point_y + 5);
+	hardGround.setPoint(point_x, point_y + 6);
+}
+
+void Map::setDown(unsigned int point_x, unsigned int point_y)
+{
+	hardGround.setPoint(point_x, point_y - 1);
+	hardGround.setPoint(point_x, point_y - 2);
+	hardGround.setPoint(point_x, point_y - 3);
+	hardGround.setPoint(point_x, point_y - 4);
+	hardGround.setPoint(point_x, point_y - 5);
+	hardGround.setPoint(point_x, point_y - 6);
+}
+
+void Map::setRight(unsigned int point_x, unsigned int point_y)
+{
+	hardGround.setPoint(point_x + 1, point_y);
+	hardGround.setPoint(point_x + 2, point_y);
+	hardGround.setPoint(point_x + 3, point_y);
+	hardGround.setPoint(point_x + 4, point_y);
+}
+
+void Map::setLeft(unsigned int point_x, unsigned int point_y)
+{
+	hardGround.setPoint(point_x - 1, point_y);
+	hardGround.setPoint(point_x - 2, point_y);
+	hardGround.setPoint(point_x - 3, point_y);
+	hardGround.setPoint(point_x - 4, point_y);
+}
+
+void Map::setRightUp(unsigned int point_x, unsigned int point_y)
+{
+	setUp(point_x + 1, point_y);
+	setUp(point_x + 2, point_y);
+	setUp(point_x + 3, point_y);
+	setUp(point_x + 4, point_y);
+}
+
+void Map::setLeftUp(unsigned int point_x, unsigned int point_y)
+{
+	setUp(point_x - 1, point_y);
+	setUp(point_x - 2, point_y);
+	setUp(point_x - 3, point_y);
+	setUp(point_x - 4, point_y);
+}
+
+void Map::setRightDown(unsigned int point_x, unsigned int point_y)
+{
+	setDown(point_x + 1, point_y);
+	setDown(point_x + 2, point_y);
+	setDown(point_x + 3, point_y);
+	setDown(point_x + 4, point_y);
+}
+
+void Map::setLeftDown(unsigned int point_x, unsigned int point_y)
+{
+	setDown(point_x - 1, point_y);
+	setDown(point_x - 2, point_y);
+	setDown(point_x - 3, point_y);
+	setDown(point_x - 4, point_y);
 }
