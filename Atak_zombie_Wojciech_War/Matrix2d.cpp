@@ -27,8 +27,8 @@ bool Matrix2d::getPoint(int x, int y)
 
 bool Matrix2d::checkBounds(int x, int y)
 {
-	if (x > mapWidth
-		or y > mapHeight
+	if (x > map2d.size()-1
+		or y > map2d[x].size()-1
 		or x < 0
 		or y < 0)
 	{
