@@ -14,7 +14,7 @@ void BgWalls::Init(sf::Image &_mapImage)
 	for (int k = 2; k < windowHeight-2; k++) {
 		for (int i = 2; i < windowWidth-2; i++) {
 
-			if ((Color::Red) == _mapImage.getPixel(i, k)) {
+			if ((sf::Color::Red) == _mapImage.getPixel(i, k)) {
 				map2d[i][k] = 1;
 				map2d[i-1][k] = 1;
 				map2d[i-2][k] = 1;

@@ -1,17 +1,13 @@
 #include "Map.h"
+#include "Player.h"
 
 Map::Map(sf::Vector2i playerSize):
 	mapName(map_name),
 	mapWidth(windowWidth),
-	mapHeight(windowHeight),
-	playerOffset(sf::Vector2i(playerSize.x/2, playerSize.y/2))
+	playerOffset(sf::Vector2i(playerSize.x/2, playerSize.y/2)),
+	mapHeight(windowHeight)
 {
-	if (!_mapImage.loadFromFile(mapName))
-	{
-		std::cout << "Error occured during map loading" << std::endl;
-		system("pause");
-	}
-
+	_mapImage.loadFromFile(mapName);
 }
 
 Map::~Map()
@@ -20,7 +16,7 @@ Map::~Map()
 
 bool Map::isGround(int x, int y)
 {
-	return hardGround.getPoint(x, y);
+	return false;
 }
 
 void Map::initialise(sf::RenderTexture &_textura) {
@@ -36,12 +32,12 @@ void Map::initialise(sf::RenderTexture &_textura) {
 	}
 
 	//if (!_mapImage.loadFromFile("map_01.png"))
+
 	if (!_mapImage.loadFromFile(mapName))
 	{
 		std::cout << "Error occured during map loading" << std::endl;
 		system("pause");
 	}
-
 	_textura.create(windowWidth, windowHeight);
 
 	float constant_x_size = _textura.getSize().x / (float)windowWidth;//windowWidth
@@ -218,22 +214,49 @@ void Map::loadGround()
 	int hOffset = playerOffset.x;
 	int vOffset = playerOffset.y;
 
-	for (int y = 0; y < windowHeight; y++) {
-		for (int x = 0; x < windowWidth ; x++) {
+	sf::Vector2u imageSize = _mapImage.getSize();
+
+	for (int y = 0; y < windowHeight - 1; y++) {
+		for (int x = 0; x < windowWidth - 1; x++) {
 
 			if ((sf::Color::Black) == _mapImage.getPixel(x, y)) {
-				hardGround.setPoint(x, y);
-				printf("setPoint");
-				for (int y_local = y - hOffset; y_local < y + hOffset; y_local++)
-				{
-					for (int x_local = x - vOffset; x_local < x + vOffset; x_local++)
-					{
-						//hardGround.setPoint(x_local, y_local);
-						//printf("setPoint");
-					}
-				}
+				
+				std::cout << "Ground map loading: x: " << x << ", y: " << y << std::endl;
+
+				//for (int y_local = y - hOffset; y_local < y + hoffset; y_local++)
+				//{
+				//	for (int x_local = x - vOffset; x_local < x + voffset; x_local++)
+				//	{
+				//		//hardground.setpoint(x_local, y_local);
+				//		std::cout << "Ground map loading: x: " << x << ", y: " << y << std::endl;
+				//	}
+				//}
 			}
 		}
 	}
+
+	std::cout << "imageSize x: " << imageSize.x << std::endl;
+	std::cout << "imageSize y: " << imageSize.y << std::endl;
+	std::cout << "windowHeight: " << windowHeight << std::endl;
+	std::cout << "windowWidth: " << windowWidth << std::endl;
+
+	if ((sf::Color::Black) == _mapImage.getPixel(0, 0))
+	{
+		std::cout << "Ground map loading finished. (0, 0)" << std::endl;
+	}
+	if ((sf::Color::Black) == _mapImage.getPixel(0, 575))
+	{
+		std::cout << "Ground map loading finished. (0, 576)" << std::endl;
+	}
+	if ((sf::Color::Black) == _mapImage.getPixel(1023, 0))
+	{
+		std::cout << "Ground map loading finished. (1024, 0)" << std::endl;
+	}
+	if ((sf::Color::Black) == _mapImage.getPixel(1023, 575))
+	{
+		std::cout << "Ground map loading finished. (1024, 576)" << std::endl;
+	}
+
+
 	std::cout << "Ground map loading finished." << std::endl;
 }

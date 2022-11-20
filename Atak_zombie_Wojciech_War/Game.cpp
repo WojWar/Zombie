@@ -11,7 +11,7 @@ Game::Game()
 		nr_of_object[i] = new int[windowHeight];
 	}
 
-	okno = new RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
+	okno = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
 }
 
 Game::~Game()
@@ -76,7 +76,7 @@ void Game::play()
 		float ElapsedTime = clock.getElapsedTime().asSeconds();
 		clock.restart();
 
-		Event event;
+		sf::Event event;
 		while (okno->pollEvent(event)) {
 			if (event.type == sf::Event::EventType::KeyPressed) {
 				keys[event.key.code] = true;
@@ -203,7 +203,7 @@ void Game::play()
 
 	okno->draw(pSprite_koniec_gry);
 	while (okno->isOpen()) {
-		Event event2;
+		sf::Event event2;
 		while (okno->pollEvent(event2)) {
 			if (event2.type == sf::Event::Closed) {
 				okno->close();
@@ -254,8 +254,8 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	float current_x_size;
 	float current_y_size;
 
-	RectangleShape shape(Vector2f((float)_textura.getSize().x / windowWidth, (float)_textura.getSize().y / windowHeight));
-	shape.setFillColor(Color(139, 69, 19));
+	sf::RectangleShape shape(sf::Vector2f((float)_textura.getSize().x / windowWidth, (float)_textura.getSize().y / windowHeight));
+	shape.setFillColor(sf::Color(139, 69, 19));
 
 	unsigned int temp_i;
 	unsigned int temp_k;
@@ -264,17 +264,17 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 		for (unsigned int i = 0; i < windowWidth; i++) {
 
 			shape.setPosition((float)_textura.getSize().x*i / windowWidth, (float)_textura.getSize().y*k / windowHeight);
-			if (((Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
+			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
 				tab[i][k] = 1;
 				nr_of_object[i][k] = (int)(groundRectangles.size());
 				current_x_size = 0;
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
-				while (((Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
+				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
 					tab[temp_i][k] = 1;
 					nr_of_object[temp_i][k] = (int)(groundRectangles.size());
-					shape.setSize(Vector2f(current_x_size + constant_x_size, current_y_size));
+					shape.setSize(sf::Vector2f(current_x_size + constant_x_size, current_y_size));
 					current_x_size = current_x_size + constant_x_size;
 					temp_i++;
 				}
@@ -282,7 +282,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 				while (flag && (temp_k < windowHeight - 1)) {
 					flag = true;
 					for (unsigned int c = i; c < temp_i; c++) {
-						if (((Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
+						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
 							tab[c][temp_k] = 1;
 							nr_of_object[c][temp_k] = (int)(groundRectangles.size());
 						}
@@ -299,7 +299,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 					}
 
 					if (flag == true) {
-						shape.setSize(Vector2f(current_x_size, current_y_size + constant_y_size));
+						shape.setSize(sf::Vector2f(current_x_size, current_y_size + constant_y_size));
 						current_y_size = current_y_size + constant_y_size;
 
 						//if (temp_k<ilosc_y)
@@ -325,16 +325,16 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 
 }
 
-void Game::initialize_health_bar(RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player) {
+void Game::initialize_health_bar(sf::RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player) {
 
 	_textura.create(150, 15);
 
 	for (int i = 0; i < player_health; i++) {
 
-		vectorHealth.push_back(new RectangleShape());
+		vectorHealth.push_back(new sf::RectangleShape());
 		vectorHealth.back()->setSize(sf::Vector2f(150 / (float)player_health + 1, 15));
-		vectorHealth.back()->setPosition(Vector2f(i * 150 / (float)player_health, 0));
-		vectorHealth.back()->setFillColor(Color::Red);
+		vectorHealth.back()->setPosition(sf::Vector2f(i * 150 / (float)player_health, 0));
+		vectorHealth.back()->setFillColor(sf::Color::Red);
 
 		_textura.draw(*vectorHealth.back());
 	}

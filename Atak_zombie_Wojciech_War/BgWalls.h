@@ -6,8 +6,6 @@
 #include <vector>
 #include "Globals.h"
 
-using namespace sf;
-
 class BgWalls
 {
 public:

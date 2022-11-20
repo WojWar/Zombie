@@ -17,7 +17,6 @@
 #include <stdio.h>
 #include <sstream>
 
-using namespace sf;
 
 class Game
 {
@@ -30,16 +29,16 @@ public:
 
 private:
 	//podloze i sciany ograniczajace:
-	std::vector <RectangleShape> groundRectangles;
+	std::vector <sf::RectangleShape> groundRectangles;
 
 	//std::forward_list <Bullet*> vectorBullets;
 	Bullets bullets;
 
 	//pasek zycia:
-	std::vector <RectangleShape*> vectorHealth;
+	std::vector <sf::RectangleShape*> vectorHealth;
 
 	//mapa:
-	Image _mapImage;
+	sf::Image _mapImage;
 
 	//tablice dla podloza:
 	char **tab; // tutaj wartosc 0 lub 1 czy jest grunt
@@ -49,8 +48,8 @@ private:
 	//methods 
 
 	void objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string &_map_name);
-	void initialize_health_bar(RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player);
+	void initialize_health_bar(sf::RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player);
 
-	RenderWindow *okno;
+	sf::RenderWindow *okno;
 };
 
