@@ -13,7 +13,7 @@ public:
 	Player();
 	~Player();
 public:
-	sf::Vector2f velocity;
+	sf::Vector2f velocity{ sf::Vector2f(0.0f, 0.0f) };
 	sf::Vector2f pos;
 	sf::Vector2i getSize();
 	char jumpCounter{ 0 };
@@ -33,7 +33,9 @@ public:
 	int pos_x, pos_y;
 	bool ispixel{ false };
 private:
-	void gravity_acceleration();
+
+	sf::Vector2f playerOffset{ sf::Vector2f(size_of_player_x / 2, size_of_player_y / 2) };
+	void gravity_acceleration(float frame_time);
 
 	Map groundMap{ sf::Vector2i(size_of_player_x, size_of_player_y) };
 	short health;

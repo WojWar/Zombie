@@ -14,7 +14,7 @@ public:
 	//methods
 	bool is_wall(char **_tab);
 
-	void setPosition(float x, float y);
+	void setPosition(sf::Vector2f pos);
 
 };
 

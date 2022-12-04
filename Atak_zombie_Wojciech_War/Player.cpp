@@ -7,8 +7,8 @@ Player::Player(int points_of_health) :
 	health(points_of_health)
 {
 	this->setFillColor(sf::Color::Blue);
-
 	this->setPosition(50, 400);
+	this->setOrigin(playerOffset);
 	pos_x = 50;
 	pos_y = 400;
 
@@ -35,50 +35,84 @@ sf::Vector2i Player::getSize()
 void Player::performMove(float frame_time)
 {
 
-	gravity_acceleration();
 
-	ispixel = true;
-	sf::Vector2i thisPosition = sf::Vector2i((int)(this->getPosition().x), (int)(this->getPosition().y));
-	
-	ispixel = groundMap.isGround(thisPosition.x, thisPosition.y);
+	sf::Vector2f lastPosition = sf::Vector2f(this->getPosition());
 
-	std::cout << "position:  " << ispixel << std::endl;
+	sf::Vector2f diffPosition = sf::Vector2f(this->getPosition());
+
+	this->move(velocity * 1000.0f * frame_time);
+
+	sf::Vector2f newPosition = sf::Vector2f(this->getPosition());
+
+	//sf::Vector2i thisPosition = sf::Vector2i((int)(this->getPosition().x), (int)(this->getPosition().y));
+
+	//get out of collision
+	float diffx = newPosition.x - lastPosition.x;
+	float diffy = newPosition.y - lastPosition.y;
+	while (groundMap.isGround(newPosition.x, newPosition.y))
+	{
+		if (diffx > 0)
+		{
+			newPosition.x--;
+		}
+		if (diffy > 0)
+		{
+			newPosition.y--;
+		}
+		if (diffx < 0)
+		{
+			newPosition.x++;
+		}
+		if (diffy < 0)
+		{
+			newPosition.y++;
+		}
+
+	}
+	this->setPosition(sf::Vector2f(newPosition));
+
 
 	//jesli z gory
-	if (groundMap.isGround(thisPosition.x, thisPosition.y - 1))
+	if (groundMap.isGround(newPosition.x, newPosition.y - 1))
 	{
-		//velocity.y = 0;
-		intersectsSomething = true;
+		gravitySpeed = 0;
+		velocity.y = 0;
 	}
 
 	//jesli z dolu
-	if (groundMap.isGround(thisPosition.x, thisPosition.y + 1))
+	if (groundMap.isGround(newPosition.x, newPosition.y + 1))
 	{
-		if (jump)
-		{
-			velocity.y = -jumpspeed;
-			jump = false;
-		}
-		else
-			velocity.y = 0;
+		gravitySpeed = 0;
+		velocity.y = 0;
+		//while (groundMap.isGround(newPosition.x, newPosition.y))
+		//{
+		//	this->move(0, -1);
+		//	thisPosition = sf::Vector2i(this->getPosition()) + playerOffset;
+		//}
 	}
 
+	if (jump)
+	{
+		velocity.y = -jumpspeed;
+		jump = false;
+	}
 	//jesli z lewej
-	if (groundMap.isGround(thisPosition.x - 1, thisPosition.y))
-	{
-		this->move(0, velocity.y * 1000 * frame_time);
+	//if (groundMap.isGround(thisPosition.x - 1, thisPosition.y))
+	//{
+	//	this->move(0, velocity.y * 1000 * frame_time);
 
-	}
+	//}
 
-	//jesli z prawej od playera jest kolizja
-	if (groundMap.isGround(thisPosition.x + 1, thisPosition.y))
-	{
-		this->move(0, velocity.y * 1000 * frame_time);
+	////jesli z prawej od playera jest kolizja
+	//if (groundMap.isGround(thisPosition.x + 1, thisPosition.y))
+	//{
+	//	this->move(0, velocity.y * 1000 * frame_time);
 
 
-	}
+	//}
+	gravity_acceleration(frame_time);
 
-	this->move(velocity.x * 1000 * frame_time, velocity.y * 1000 * frame_time);
+	
 }
 
 void Player::jumpRequest()
@@ -121,8 +155,8 @@ void Player::loseOneLivePoint()
 	std::cout << "player live points: " << health << std::endl;
 }
 
-void Player::gravity_acceleration()
+void Player::gravity_acceleration(float frame_time)
 {
-	if ((gravitySpeed <1.1* jumpspeed))
-		gravitySpeed += gravity;
+	if ((velocity.y <1.1* jumpspeed))
+		velocity.y += (gravity * 1000 * frame_time);
 }
