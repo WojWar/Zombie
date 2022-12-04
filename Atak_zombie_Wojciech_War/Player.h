@@ -17,13 +17,12 @@ public:
 	sf::Vector2f pos;
 	sf::Vector2i getSize();
 	char jumpCounter{ 0 };
-	void collision3(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time);
-	void collision(float frame_time);
+	void performMove(float frame_time);
 	void are_close(const std::vector<Zombie*> &_Objects,float frame_time);
 	bool intersectsSomething{ false };
 	bool isAlive();
 	void loseOneLivePoint();
-	void gravity_acceleration(float _gravity, float _jumpspeed);
+	void jumpRequest();
 public:
 	bool shooting_direction{ true };
 	int size_of_player_x{ 10 };
@@ -34,9 +33,12 @@ public:
 	int pos_x, pos_y;
 	bool ispixel{ false };
 private:
+	void gravity_acceleration();
 
 	Map groundMap{ sf::Vector2i(size_of_player_x, size_of_player_y) };
 	short health;
 	bool bites_me{ false };
+	bool jump{ false };
+	float gravitySpeed{ 0.f };
 };
 

@@ -16,7 +16,7 @@ Map::~Map()
 
 bool Map::isGround(int x, int y)
 {
-	std::cout << "x: " << x << ", y: " << y << std::endl;
+	//std::cout << "x: " << x << ", y: " << y << std::endl;
 	return hardGround.getPoint(x, y);
 }
 
@@ -219,47 +219,49 @@ void Map::loadGround()
 
 	for (unsigned int y = 0; y < windowHeight - 1; y++) {
 		for (unsigned int x = 0; x < windowWidth - 1; x++) {
-			std::cout << ".."  << std::endl;
-
-			if (getPoint(x, y)) 
+			//if (getPoint(x, y)) 
+			//{
+			//	hardGround.setPoint(x, y);
+			//}
+			if (imageGetPoint(x, y))
 			{
 				hardGround.setPoint(x, y);
 
-				if (getPoint(x+1, y))
+				if (!imageGetPoint(x+1, y))
 				{
 					setRight(x, y);
-					if (getPoint(x, y + 1))
-					{
-						setUp(x, y);
-						setRightUp(x, y);
-					}
-					if (getPoint(x, y - 1))
-					{
-						setDown(x, y);
-						setRightDown(x, y);
-					}
-					break;
+					//if (getPoint(x, y + 1))
+					//{
+					//	setUp(x, y);
+					//	setRightUp(x, y);
+					//}
+					//if (getPoint(x, y - 1))
+					//{
+					//	setDown(x, y);
+					//	setRightDown(x, y);
+					//}
+					//break;
 				}
-				if (getPoint(x-1, y))
+				if (!imageGetPoint(x-1, y))
 				{
 					setLeft(x, y);
-					if (getPoint(x, y + 1))
-					{
-						setUp(x, y);
-						setLeftUp(x, y);
-					}
-					if (getPoint(x, y - 1))
-					{
-						setDown(x, y);
-						setLeftDown(x, y);
-					}
-					break;
+					//if (getPoint(x, y + 1))
+					//{
+					//	setUp(x, y);
+					//	setLeftUp(x, y);
+					//}
+					//if (getPoint(x, y - 1))
+					//{
+					//	setDown(x, y);
+					//	setLeftDown(x, y);
+					//}
+					//break;
 				}
-				if (getPoint(x, y+1))
+				if (!imageGetPoint(x, y+1))
 				{
 					setUp(x, y);
 				}
-				if (getPoint(x, y-1))
+				if (!imageGetPoint(x, y-1))
 				{
 					setDown(x, y);
 				}
@@ -267,20 +269,23 @@ void Map::loadGround()
 		}
 	}
 
-	// hardGround.setPoint(x, y);
+	 //hardGround.setPoint(x, y);
 	//std::cout << "Ground map loading: x: " << x << ", y: " << y <<   std::endl;
+
+	
 
 	std::cout << "Ground map loading finished." << std::endl;
 }
 
-bool Map::getPoint(unsigned int point_x, unsigned int point_y)
+bool Map::imageGetPoint(unsigned int point_x, unsigned int point_y)
 {
 	if (point_x > _mapImage.getSize().x
 		or point_y > _mapImage.getSize().y)
 	{
 		return true;
 	}
-	if ((sf::Color::Black) == _mapImage.getPixel(point_x, point_y)) {
+	if ((sf::Color::Black) == _mapImage.getPixel(point_x, point_y)) 
+	{
 		return true;
 	}
 	return false;

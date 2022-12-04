@@ -118,8 +118,10 @@ void Game::play()
 			{
 				player.jumpCounter = 0;
 			}
+			player.jumpCounter = 0;
+
 			keysReleased[22] = false;
-			player.velocity.y = -jumpspeed;// *1000 * ElapsedTime;
+			player.jumpRequest();
 			player.intersectsSomething = false;
 			player.jumpCounter++;
 		}
@@ -127,9 +129,7 @@ void Game::play()
 
 		//player:		 
 
-		player.move(player.velocity.x * 1000 * ElapsedTime, player.velocity.y * 1000 * ElapsedTime);
-		player.collision(ElapsedTime);
-		player.gravity_acceleration(gravity * 1000 * ElapsedTime, jumpspeed);// ElapsedTime);
+		player.performMove(ElapsedTime);
 
 
 

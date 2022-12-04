@@ -1,28 +1,21 @@
 #include "Matrix2d.h"
 
-Matrix2d::Matrix2d():
-	map2d(windowWidth, std::vector<bool>(windowHeight, false)),
-	mapWidth(windowWidth),
-	mapHeight(windowHeight)
+Matrix2d::Matrix2d()
+{
+}
+
+Matrix2d::~Matrix2d()
 {
 }
 
 void Matrix2d::setPoint(unsigned int x, unsigned int y)
 {
-	if(checkBounds(x,y))
+	if(!getPoint(x,y))
 	{
-		map2d[x][y] = true;
+		map2d.at(y).at(x) = true;
+		//printf("setPoint");
 	}
 	
-}
-
-bool Matrix2d::getPoint(unsigned int x, unsigned int y)
-{
-	if (checkBounds(x, y))
-	{
-		return map2d[x][y];
-	}
-	return true;
 }
 
 bool Matrix2d::getPointFast(unsigned int x, unsigned int y)
@@ -30,11 +23,12 @@ bool Matrix2d::getPointFast(unsigned int x, unsigned int y)
 	return map2d[x][y];
 }
 
-bool Matrix2d::checkBounds(unsigned int x, unsigned int y)
+bool Matrix2d::getPoint(unsigned int x, unsigned int y)
 {
-	if (x > map2d.size()-1 or y > map2d[x].size()-1)
-	{
-		return false;
+	try {
+		return map2d.at(y).at(x);
 	}
-	return true;
+	catch (const std::out_of_range& e) {
+		return true;
+	}
 }

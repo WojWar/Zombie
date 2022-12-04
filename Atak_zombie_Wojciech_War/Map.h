@@ -17,7 +17,8 @@ public:
 	void loadGroundObjects();
 	void loadGround();
 private:
-	bool getPoint(unsigned int point_x, unsigned int point_y);
+	bool imageGetPoint(unsigned int point_x, unsigned int point_y);
+
 	void setUp(unsigned int point_x, unsigned int point_y);
 	void setDown(unsigned int point_x, unsigned int point_y);
 	void setLeft(unsigned int point_x, unsigned int point_y);
@@ -45,6 +46,7 @@ private:
 	std::vector <sf::RectangleShape> groundRectangles;
 	Matrix2d hardGround;
 	//std::vector<std::vector<bool>> map2d;
+
 
 };
 

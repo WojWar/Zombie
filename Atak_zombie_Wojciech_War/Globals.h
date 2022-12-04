@@ -7,5 +7,5 @@ extern int zombie_health;
 extern int player_health;
 extern float movespeedPlayer, jumpspeed, movespeedZombie;
 
-extern int windowHeight, windowWidth;
+extern const int windowHeight, windowWidth;
 extern std::string map_name;

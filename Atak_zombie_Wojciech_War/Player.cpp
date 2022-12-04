@@ -31,159 +31,42 @@ sf::Vector2i Player::getSize()
 	return sf::Vector2i(size_of_player_x, size_of_player_y);
 }
 
-void Player::collision3(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object, float frame_time)
+
+void Player::performMove(float frame_time)
 {
-	ispixel = true;
-	while (ispixel)
-	{
-		ispixel = false;
 
-		for (int i = 0; i < size_of_player_x + 1; i++) {
+	gravity_acceleration();
 
-			if (1 == _tab[(int)(this->getPosition().x) + i][(int)(this->getPosition().y)])
-			{
-				ispixel = true;
-				pos_x = (int)(this->getPosition().x) + i;
-				pos_y = (int)(this->getPosition().y);
-				if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-					numery.push_back(_nr_of_object[pos_x][pos_y]);
-				}
-			}
-			if (1 == _tab[(int)(this->getPosition().x) + i][(int)(this->getPosition().y) + size_of_player_y])
-			{
-				ispixel = true;
-				pos_x = (int)(this->getPosition().x) + i;
-				pos_y = (int)(this->getPosition().y) + size_of_player_y;
-				if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-					numery.push_back(_nr_of_object[pos_x][pos_y]);
-				}
-			}
-
-		}
-		for (int j = 0; j < size_of_player_y + 1; j++) {
-			if (1 == _tab[(int)(this->getPosition().x)][(int)(this->getPosition().y + j)])
-			{
-				ispixel = true;
-				pos_x = (int)(this->getPosition().x);
-				pos_y = (int)(this->getPosition().y) + j;
-				if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-					numery.push_back(_nr_of_object[pos_x][pos_y]);
-				}
-			}
-			if (1 == _tab[(int)(this->getPosition().x) + size_of_player_x][(int)(this->getPosition().y) + j])
-			{
-				ispixel = true;
-				pos_x = (int)(this->getPosition().x) + size_of_player_x;
-				pos_y = (int)(this->getPosition().y) + j;
-				if (numery.size() == 0 || numery.back() != (_nr_of_object[pos_x][pos_y])) {
-					numery.push_back(_nr_of_object[pos_x][pos_y]);
-				}
-			}
-
-		}
-
-		if (ispixel)
-		{
-
-			for (unsigned int i = 0; i < numery.size(); i++) {
-				nr = numery[i];
-				if (this->getGlobalBounds().intersects(_vectorObjects[nr].getGlobalBounds())) {
-
-
-					this->move(-velocity.x * 1000 * frame_time, -velocity.y * 1000 * frame_time);
-
-					//jesli z gory
-					if (this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y)
-					{
-						this->move(velocity.x * 1000 * frame_time, 0);
-						velocity.y = 0;
-						intersectsSomething = true;
-					}
-
-					//jesli z dolu
-					if (this->getPosition().y > _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y)
-					{
-						this->move(velocity.x * 1000 * frame_time, 0);
-						velocity.y = 0;
-						//this->setPosition(this->getPosition().x, _vectorObjects[nr].getPosition().y + _vectorObjects[nr].getSize().y);
-
-					}
-
-					//jesli z lewej
-					if (this->getPosition().x + size_of_player_x < _vectorObjects[nr].getPosition().x)
-					{
-						//std::cout << "lewa???" << std::endl;
-						this->move(0, velocity.y * 1000 * frame_time);
-						intersectsSomething = true;
-						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
-						{
-							pos.y = this->getPosition().y - 2;
-							this->setPosition(this->getPosition().x, pos.y);
-						}
-
-					}
-
-					//jesli z prawej od playera jest kolizja
-					if (this->getPosition().x > _vectorObjects[nr].getPosition().x + _vectorObjects[nr].getSize().x)
-					{
-						//std::cout << "prawa???" << std::endl;
-						this->move(0, velocity.y * 1000 * frame_time);
-						intersectsSomething = true;
-						if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
-						{
-							pos.y = this->getPosition().y - 2;
-							this->setPosition(this->getPosition().x, pos.y);
-						}
-
-					}
-
-
-				}
-
-			}
-
-
-		}
-
-		numery.clear();
-	}
-
-}
-
-
-void Player::collision(float frame_time)
-{
 	ispixel = true;
 	sf::Vector2i thisPosition = sf::Vector2i((int)(this->getPosition().x), (int)(this->getPosition().y));
 	
 	ispixel = groundMap.isGround(thisPosition.x, thisPosition.y);
 
+	std::cout << "position:  " << ispixel << std::endl;
 
 	//jesli z gory
 	if (groundMap.isGround(thisPosition.x, thisPosition.y - 1))
 	{
-		this->move(velocity.x * 1000 * frame_time, 0);
-		velocity.y = 0;
+		//velocity.y = 0;
 		intersectsSomething = true;
 	}
 
 	//jesli z dolu
 	if (groundMap.isGround(thisPosition.x, thisPosition.y + 1))
 	{
-		this->move(velocity.x * 1000 * frame_time, 0);
-		velocity.y = 0;
+		if (jump)
+		{
+			velocity.y = -jumpspeed;
+			jump = false;
+		}
+		else
+			velocity.y = 0;
 	}
 
 	//jesli z lewej
 	if (groundMap.isGround(thisPosition.x - 1, thisPosition.y))
 	{
 		this->move(0, velocity.y * 1000 * frame_time);
-		intersectsSomething = true;
-		//if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
-		//{
-		//	pos.y = this->getPosition().y - 2;
-		//	this->setPosition(this->getPosition().x, pos.y);
-		//}
 
 	}
 
@@ -191,19 +74,18 @@ void Player::collision(float frame_time)
 	if (groundMap.isGround(thisPosition.x + 1, thisPosition.y))
 	{
 		this->move(0, velocity.y * 1000 * frame_time);
-		intersectsSomething = true;
-		//if (this->getPosition().y + this->getSize().y > _vectorObjects[nr].getPosition().y && this->getPosition().y + this->getSize().y < _vectorObjects[nr].getPosition().y + 3)
-		//{
-		//	pos.y = this->getPosition().y - 2;
-		//	this->setPosition(this->getPosition().x, pos.y);
-		//}
+
 
 	}
 
-
-
+	this->move(velocity.x * 1000 * frame_time, velocity.y * 1000 * frame_time);
 }
 
+void Player::jumpRequest()
+{
+	jump = true;
+	//velocity.y = -jumpspeed;// *1000 * ElapsedTime;
+}
 
 void Player::are_close(const std::vector<Zombie*>& _Objects, float frame_time)
 {
@@ -239,8 +121,8 @@ void Player::loseOneLivePoint()
 	std::cout << "player live points: " << health << std::endl;
 }
 
-void Player::gravity_acceleration(float _gravity,float _jumpspeed)
+void Player::gravity_acceleration()
 {
-	if ((velocity.y<1.1* _jumpspeed))
-		velocity.y += _gravity;
+	if ((gravitySpeed <1.1* jumpspeed))
+		gravitySpeed += gravity;
 }
