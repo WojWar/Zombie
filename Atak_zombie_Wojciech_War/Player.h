@@ -34,7 +34,7 @@ public:
 	bool ispixel{ false };
 private:
 
-	sf::Vector2f playerOffset{ sf::Vector2f(size_of_player_x / 2, size_of_player_y / 2) };
+	sf::Vector2f playerOffset{ sf::Vector2f((float)size_of_player_x / 2, (float)size_of_player_y / 2) };
 	void gravity_acceleration(float frame_time);
 
 	Map groundMap{ sf::Vector2i(size_of_player_x, size_of_player_y) };

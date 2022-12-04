@@ -38,32 +38,31 @@ void Player::performMove(float frame_time)
 
 	sf::Vector2f lastPosition = sf::Vector2f(this->getPosition());
 
-	sf::Vector2f diffPosition = sf::Vector2f(this->getPosition());
+	sf::Vector2f diffPosition = velocity * 1000.0f * frame_time;
 
-	this->move(velocity * 1000.0f * frame_time);
+	this->move(diffPosition);
 
-	sf::Vector2f newPosition = sf::Vector2f(this->getPosition());
+	//sf::Vector2f newPosition = sf::Vector2f(this->getPosition());
+	sf::Vector2f newPosition = lastPosition + diffPosition;
 
 	//sf::Vector2i thisPosition = sf::Vector2i((int)(this->getPosition().x), (int)(this->getPosition().y));
 
 	//get out of collision
-	float diffx = newPosition.x - lastPosition.x;
-	float diffy = newPosition.y - lastPosition.y;
-	while (groundMap.isGround(newPosition.x, newPosition.y))
+	while (groundMap.isGround(newPosition))
 	{
-		if (diffx > 0)
+		if (diffPosition.x > 0)
 		{
 			newPosition.x--;
 		}
-		if (diffy > 0)
+		if (diffPosition.y > 0)
 		{
 			newPosition.y--;
 		}
-		if (diffx < 0)
+		if (diffPosition.x < 0)
 		{
 			newPosition.x++;
 		}
-		if (diffy < 0)
+		if (diffPosition.y < 0)
 		{
 			newPosition.y++;
 		}
@@ -73,14 +72,14 @@ void Player::performMove(float frame_time)
 
 
 	//jesli z gory
-	if (groundMap.isGround(newPosition.x, newPosition.y - 1))
+	if (groundMap.isGround(newPosition.x, newPosition.y - 1.0f))
 	{
 		gravitySpeed = 0;
 		velocity.y = 0;
 	}
 
 	//jesli z dolu
-	if (groundMap.isGround(newPosition.x, newPosition.y + 1))
+	if (groundMap.isGround(newPosition.x, newPosition.y + 1.0f))
 	{
 		gravitySpeed = 0;
 		velocity.y = 0;
