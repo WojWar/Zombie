@@ -113,17 +113,21 @@ void Game::play()
 		else {
 			player.velocity.x = 0;
 		}
-		if (keys[22] && ((player.intersectsSomething) || ((player.velocity.y > 0.1*jumpspeed) && (player.jumpCounter < 3))) && (keysReleased[22])) {
-			if (player.intersectsSomething)
-			{
-				player.jumpCounter = 0;
-			}
-			player.jumpCounter = 0;
+		//if (keys[22] && ((player.intersectsSomething) || ((player.velocity.y > 0.1*jumpspeed) && (player.jumpCounter < 3))) && (keysReleased[22])) {
+		//	if (player.intersectsSomething)
+		//	{
+		//		player.jumpCounter = 0;
+		//	}
+		//	player.jumpCounter = 0;
 
+		//	keysReleased[22] = false;
+		//	player.jumpRequest();
+		//	player.intersectsSomething = false;
+		//	player.jumpCounter++;
+		//}
+		if (keys[22] && (keysReleased[22])) {
 			keysReleased[22] = false;
 			player.jumpRequest();
-			player.intersectsSomething = false;
-			player.jumpCounter++;
 		}
 
 
