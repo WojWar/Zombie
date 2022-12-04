@@ -9,3 +9,5 @@ extern float movespeedPlayer, jumpspeed, movespeedZombie;
 
 extern const int windowHeight, windowWidth;
 extern std::string map_name;
+
+extern short debug;

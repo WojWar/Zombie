@@ -10,6 +10,7 @@ float movespeedPlayer = 0.1f, jumpspeed = 0.4f;
 float movespeedZombie = 0.1f;
 const int windowHeight = 576;
 const int windowWidth = 1024;
+short debug = 1;
 
 std::string map_names[3] = { "map_01.png", "map_02.png", "map_03.png" };
 std::string map_name = map_names[0];

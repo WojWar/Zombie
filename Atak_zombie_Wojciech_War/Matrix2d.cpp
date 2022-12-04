@@ -29,11 +29,23 @@ bool Matrix2d::getPointFast(unsigned int x, unsigned int y)
 bool Matrix2d::getPoint(unsigned int x, unsigned int y)
 {
 	try {
-		return map2d.at(y).at(x);
+		return map2d.at((size_t)y).at((size_t)x);
 	}
 	catch (const std::out_of_range& ) 
 	{
-		std::cout << "matrix2d out of range" << std::endl;
+		std::cout << "matrix2d out of range y: " << y << ", x: " << x << "\r";
+		return true;
+	}
+}
+
+bool Matrix2d::getPoint(sf::Vector2f coords)
+{
+	try {
+		return map2d.at((size_t)coords.y).at((size_t)coords.x);
+	}
+	catch (const std::out_of_range&)
+	{
+		std::cout << "matrix2d out of range y: " << coords.y << ", x: " << coords.x << "\r";
 		return true;
 	}
 }

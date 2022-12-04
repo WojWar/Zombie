@@ -139,7 +139,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Matrix2d.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Zombie.cpp" />
@@ -151,7 +151,7 @@
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="GameMap.h" />
     <ClInclude Include="Matrix2d.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Zombie.h" />

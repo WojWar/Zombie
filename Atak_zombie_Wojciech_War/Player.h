@@ -4,12 +4,12 @@
 #include <vector>
 #include <cmath>  
 #include "Zombie.h"
-#include "Map.h"
+#include "GameMap.h"
 
 class Player: public sf::RectangleShape
 {
 public:
-	Player(int points_of_health);
+	Player(int points_of_health, GameMap &gameMap);
 	Player();
 	~Player();
 public:
@@ -30,14 +30,14 @@ public:
 	int size_of_player_y{ 14 };  // change this value to bigger - game is frozen. why?
 	int nr{ 0 };
 	std::vector <int> numery;
-	int pos_x, pos_y;
+	int pos_x{ 50 }, pos_y{400};
 	bool ispixel{ false };
 private:
-
-	sf::Vector2f playerOffset{ sf::Vector2f((float)size_of_player_x / 2, (float)size_of_player_y / 2) };
+	GameMap* groundMap;
+	//GameMap groundMap{ sf::Vector2i(size_of_player_x, size_of_player_y) };
+	sf::Vector2f playerOffset{ sf::Vector2f(5.0f, 7.0f) };
 	void gravity_acceleration(float frame_time);
 
-	Map groundMap{ sf::Vector2i(size_of_player_x, size_of_player_y) };
 	short health;
 	bool bites_me{ false };
 	bool jump{ false };

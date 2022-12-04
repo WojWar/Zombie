@@ -12,6 +12,8 @@ Game::Game()
 	}
 
 	okno = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
+
+	groundMap2.loadGround();
 }
 
 Game::~Game()
@@ -39,7 +41,7 @@ void Game::play()
 
 	//Parameters _parametry(player_health, zombie_health);
 
-	Player player(player_health);
+	Player player(player_health, groundMap2);
 
 
 	/////////////make tab of keys//////////////
@@ -254,13 +256,15 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	}
 	_textura.create(windowWidth, windowHeight);
 
-	float constant_x_size = _textura.getSize().x / (float)windowWidth;//windowWidth
-	float constant_y_size = _textura.getSize().y / (float)windowHeight;//windowHeight
+	float constant_x_size = 1.0f;
+	float constant_y_size = 1.0f;
 	float current_x_size;
 	float current_y_size;
 
-	sf::RectangleShape shape(sf::Vector2f((float)_textura.getSize().x / windowWidth, (float)_textura.getSize().y / windowHeight));
+	sf::RectangleShape shape(sf::Vector2f(1.0f, 1.0f));
+	sf::RectangleShape shapeMap(sf::Vector2f(1.0f, 1.0f));
 	shape.setFillColor(sf::Color(139, 69, 19));
+	shapeMap.setFillColor(sf::Color(50, 50, 19));
 
 	unsigned int temp_i;
 	unsigned int temp_k;
@@ -268,7 +272,8 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	for (unsigned int k = 0; k < (unsigned int)windowHeight; k++) {
 		for (unsigned int i = 0; i < (unsigned int)windowWidth; i++) {
 
-			shape.setPosition((float)_textura.getSize().x*i / windowWidth, (float)_textura.getSize().y*k / windowHeight);
+			shape.setPosition(1.0f*i, 1.0f*k);
+
 			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
 				tab[i][k] = 1;
 				nr_of_object[i][k] = (int)(groundRectangles.size());
@@ -312,11 +317,14 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 					}
 				}
 
-				{
-					//std::cout <<"Ladowanie wiersza: "<< k << std::endl;
-					_textura.draw(shape);
-					groundRectangles.push_back(shape);
-				}
+				
+				//std::cout <<"Ladowanie wiersza: "<< k << std::endl;
+				//srand(i);
+				//shape.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+					
+				//_textura.draw(shape);
+				groundRectangles.push_back(sf::RectangleShape(shape));
+				
 				i = temp_i;
 				flag = true;
 			}
@@ -324,6 +332,28 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 		}
 	}
 
+
+	//****************************************************************
+
+	for (unsigned int k = 0; k < (unsigned int)windowHeight-1; k++) {
+		for (unsigned int i = 0; i < (unsigned int)windowWidth-1; i++) {
+
+
+			//if ((sf::Color::Black) == _mapImage.getPixel(i, k)) {
+
+			//	_textura.draw(shapeMap);
+
+			//}
+			if (groundMap2.isGround((int)i, (int)k)) {
+
+				shapeMap.setPosition((float)i, (float)k);
+				_textura.draw(shapeMap);
+				//std::cout << "groundMap.isGround: "  << std::endl;
+			}
+
+		}
+	}
+	//****************************************************************
 
 	std::cout << "Ladowanie mapy zakonczone. Ilosc obiektow podloza: " << groundRectangles.size() << std::endl;
 

@@ -2,17 +2,16 @@
 #include "Player.h"
 
 
-Player::Player(int points_of_health) :
+Player::Player(int points_of_health, GameMap &gameMap) :
 	RectangleShape(sf::Vector2f(10, 14)),
-	health(points_of_health)
+	health(points_of_health),
+	groundMap(&gameMap)
 {
 	this->setFillColor(sf::Color::Blue);
 	this->setPosition(50, 400);
 	this->setOrigin(playerOffset);
-	pos_x = 50;
-	pos_y = 400;
 
-	groundMap.loadGround();
+	//groundMap.loadGround();
 	
 }
 
@@ -40,46 +39,43 @@ void Player::performMove(float frame_time)
 
 	sf::Vector2f diffPosition = velocity * 1000.0f * frame_time;
 
-	this->move(diffPosition);
 
 	//sf::Vector2f newPosition = sf::Vector2f(this->getPosition());
-	sf::Vector2f newPosition = lastPosition + diffPosition;
+	//sf::Vector2f newPosition = lastPosition + diffPosition;
 
 	//sf::Vector2i thisPosition = sf::Vector2i((int)(this->getPosition().x), (int)(this->getPosition().y));
 
+	std::cout << "GOOOD range y: " << lastPosition.y << ", x: " << lastPosition.x << "\r";
 	//get out of collision
-	while (groundMap.isGround(newPosition))
+	float y_it = diffPosition.y / 10;
+	float x_it = abs(diffPosition.x / 10);
+	while (groundMap->isGround(lastPosition + diffPosition))
 	{
-		if (diffPosition.x > 0)
-		{
-			newPosition.x--;
-		}
+		//if (diffPosition.x > 0)
+		//{
+		//	newPosition.x-= diffPosition.x/10;
+		//}
 		if (diffPosition.y > 0)
 		{
-			newPosition.y--;
+			diffPosition.y-= y_it;
 		}
-		if (diffPosition.x < 0)
-		{
-			newPosition.x++;
-		}
-		if (diffPosition.y < 0)
-		{
-			newPosition.y++;
-		}
+		else break;
 
 	}
-	this->setPosition(sf::Vector2f(newPosition));
+	//this->setPosition(sf::Vector2f(lastPosition + diffPosition));
 
+	sf::Vector2f newPosition = lastPosition + diffPosition;
+	this->move(diffPosition);
 
 	//jesli z gory
-	if (groundMap.isGround(newPosition.x, newPosition.y - 1.0f))
+	if (groundMap->isGround(newPosition.x, newPosition.y - 1.0f))
 	{
 		gravitySpeed = 0;
 		velocity.y = 0;
 	}
 
 	//jesli z dolu
-	if (groundMap.isGround(newPosition.x, newPosition.y + 1.0f))
+	if (groundMap->isGround(newPosition.x, newPosition.y + 1.0f))
 	{
 		gravitySpeed = 0;
 		velocity.y = 0;
@@ -119,6 +115,7 @@ void Player::jumpRequest()
 	jump = true;
 	//velocity.y = -jumpspeed;// *1000 * ElapsedTime;
 }
+
 
 void Player::are_close(const std::vector<Zombie*>& _Objects, float frame_time)
 {

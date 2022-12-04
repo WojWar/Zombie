@@ -5,18 +5,18 @@
 #include "Globals.h"
 #include "Matrix2d.h"
 
-class Map
+class GameMap
 {
 public:
-	Map(sf::Vector2i playerSize);
-	~Map();
+	GameMap(sf::Vector2i playerSize);
+	~GameMap();
 public:
 	bool isGround(int x, int y);
 	bool isGround(sf::Vector2f coordinates);
 	bool isGround(float x, float y);
 
-	void initialise(sf::RenderTexture &_textura);
-	void loadGroundObjects();
+	//void initialise(sf::RenderTexture &_textura);
+	//void loadGroundObjects();
 	void loadGround();
 private:
 	bool imageGetPoint(unsigned int point_x, unsigned int point_y);
@@ -41,11 +41,11 @@ private:
 	sf::Image _mapImage;
 
 	//tablice dla podloza:
-	char **m_tab; // tutaj wartosc 0 lub 1 czy jest grunt
-	int **m_nr_of_object; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
+	//char **m_tab; // tutaj wartosc 0 lub 1 czy jest grunt
+	//int **m_nr_of_object; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
 
 	//podloze i sciany ograniczajace:
-	std::vector <sf::RectangleShape> groundRectangles;
+	//std::vector <sf::RectangleShape> groundRectangles;
 	Matrix2d hardGround;
 	//std::vector<std::vector<bool>> map2d;
 
