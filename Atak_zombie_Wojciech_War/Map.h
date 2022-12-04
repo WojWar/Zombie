@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Globals.h"
 #include "Matrix2d.h"
 

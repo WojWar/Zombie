@@ -1,3 +1,6 @@
+
+
+#include <iostream>
 #include "Matrix2d.h"
 
 Matrix2d::Matrix2d()
@@ -30,6 +33,7 @@ bool Matrix2d::getPoint(unsigned int x, unsigned int y)
 	}
 	catch (const std::out_of_range& ) 
 	{
+		std::cout << "matrix2d out of range" << std::endl;
 		return true;
 	}
 }

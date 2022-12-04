@@ -1,3 +1,5 @@
+
+#include <iostream>
 #include "Map.h"
 #include "Player.h"
 
@@ -243,32 +245,26 @@ void Map::loadGround()
 				if (!imageGetPoint(x+1, y))
 				{
 					setRight(x, y);
-					//if (getPoint(x, y + 1))
-					//{
-					//	setUp(x, y);
-					//	setRightUp(x, y);
-					//}
-					//if (getPoint(x, y - 1))
-					//{
-					//	setDown(x, y);
-					//	setRightDown(x, y);
-					//}
-					//break;
+					if (!imageGetPoint(x, y + 1))
+					{
+						setRightUp(x, y);
+					}
+					if (!imageGetPoint(x, y - 1))
+					{
+						setRightDown(x, y);
+					}
 				}
 				if (!imageGetPoint(x-1, y))
 				{
 					setLeft(x, y);
-					//if (getPoint(x, y + 1))
-					//{
-					//	setUp(x, y);
-					//	setLeftUp(x, y);
-					//}
-					//if (getPoint(x, y - 1))
-					//{
-					//	setDown(x, y);
-					//	setLeftDown(x, y);
-					//}
-					//break;
+					if (!imageGetPoint(x, y + 1))
+					{
+						setLeftUp(x, y);
+					}
+					if (!imageGetPoint(x, y - 1))
+					{
+						setLeftDown(x, y);
+					}
 				}
 				if (!imageGetPoint(x, y+1))
 				{
