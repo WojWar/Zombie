@@ -20,6 +20,19 @@ bool Map::isGround(int x, int y)
 	return hardGround.getPoint(x, y);
 }
 
+bool Map::isGround(float x, float y)
+{
+	//std::cout << "x: " << x << ", y: " << y << std::endl;
+	return hardGround.getPoint((unsigned int)x, (unsigned int)y);
+}
+
+bool Map::isGround(sf::Vector2f coordinates)
+{
+	//std::cout << "x: " << x << ", y: " << y << std::endl;
+	return hardGround.getPoint((unsigned int)coordinates.x, (unsigned int)coordinates.y);
+}
+
+[[deprecated("Not needed anymore.")]]
 void Map::initialise(sf::RenderTexture &_textura) {
 
 	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
@@ -52,8 +65,8 @@ void Map::initialise(sf::RenderTexture &_textura) {
 	unsigned int temp_i;
 	unsigned int temp_k;
 	//int add_count = 1;
-	for (unsigned int k = 0; k < windowHeight; k++) {
-		for (unsigned int i = 0; i < windowWidth; i++) {
+	for (unsigned int k = 0; k < (unsigned int)windowHeight; k++) {
+		for (unsigned int i = 0; i < (unsigned int)windowWidth; i++) {
 
 			shape.setPosition((float)_textura.getSize().x*i / windowWidth, (float)_textura.getSize().y*k / windowHeight);
 			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (m_tab[i][k] == 0)) {
@@ -63,7 +76,7 @@ void Map::initialise(sf::RenderTexture &_textura) {
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
-				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (m_tab[temp_i][k] == 0)) || (temp_i == i)) {
+				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < (unsigned int)windowWidth - 1) && (m_tab[temp_i][k] == 0)) || (temp_i == i)) {
 					m_tab[temp_i][k] = 1;
 					m_nr_of_object[temp_i][k] = (int)(groundRectangles.size());
 					shape.setSize(sf::Vector2f(current_x_size + constant_x_size, current_y_size));
@@ -71,7 +84,7 @@ void Map::initialise(sf::RenderTexture &_textura) {
 					temp_i++;
 				}
 
-				while (flag && (temp_k < windowHeight - 1)) {
+				while (flag && (temp_k < (unsigned int)windowHeight - 1)) {
 					flag = true;
 					for (unsigned int c = i; c < temp_i; c++) {
 						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (m_tab[c][temp_k] == 0)) || (temp_k == k)) {
@@ -117,7 +130,7 @@ void Map::initialise(sf::RenderTexture &_textura) {
 
 }
 
-
+[[deprecated("Use loadGround() instead.")]]
 void Map::loadGroundObjects() {
 
 	std::cout << std::endl << "Loading the ground map" << std::endl;
@@ -145,8 +158,8 @@ void Map::loadGroundObjects() {
 	unsigned int temp_i;
 	unsigned int temp_k;
 	//int add_count = 1;
-	for (unsigned int k = 0; k < windowHeight; k++) {
-		for (unsigned int i = 0; i < windowWidth; i++) {
+	for (unsigned int k = 0; k < (unsigned int)windowHeight; k++) {
+		for (unsigned int i = 0; i < (unsigned int)windowWidth; i++) {
 
 			shape.setPosition((float)i, (float)k);
 			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (m_tab[i][k] == 0)) {
@@ -156,7 +169,7 @@ void Map::loadGroundObjects() {
 				current_y_size = 1;
 				temp_i = i;
 				temp_k = k;
-				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (m_tab[temp_i][k] == 0)) || (temp_i == i)) {
+				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < (unsigned int)windowWidth - 1) && (m_tab[temp_i][k] == 0)) || (temp_i == i)) {
 					m_tab[temp_i][k] = 1;
 					m_nr_of_object[temp_i][k] = (int)(groundRectangles.size());
 					current_x_size++;
@@ -164,7 +177,7 @@ void Map::loadGroundObjects() {
 					temp_i++;
 				}
 
-				while (flag && (temp_k < windowHeight - 1)) {
+				while (flag && (temp_k < (unsigned int)windowHeight - 1)) {
 					flag = true;
 					for (unsigned int c = i; c < temp_i; c++) {
 						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (m_tab[c][temp_k] == 0)) || (temp_k == k)) {
@@ -217,8 +230,8 @@ void Map::loadGround()
 
 	sf::Vector2u imageSize = _mapImage.getSize();
 
-	for (unsigned int y = 0; y < windowHeight - 1; y++) {
-		for (unsigned int x = 0; x < windowWidth - 1; x++) {
+	for (unsigned int y = 0; y < (unsigned int)windowHeight - 1; y++) {
+		for (unsigned int x = 0; x < (unsigned int)windowWidth - 1; x++) {
 			//if (getPoint(x, y)) 
 			//{
 			//	hardGround.setPoint(x, y);

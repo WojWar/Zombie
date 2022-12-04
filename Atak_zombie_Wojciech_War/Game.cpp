@@ -261,8 +261,8 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	unsigned int temp_i;
 	unsigned int temp_k;
 	//int add_count = 1;
-	for (unsigned int k = 0; k < windowHeight; k++) {
-		for (unsigned int i = 0; i < windowWidth; i++) {
+	for (unsigned int k = 0; k < (unsigned int)windowHeight; k++) {
+		for (unsigned int i = 0; i < (unsigned int)windowWidth; i++) {
 
 			shape.setPosition((float)_textura.getSize().x*i / windowWidth, (float)_textura.getSize().y*k / windowHeight);
 			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
@@ -272,7 +272,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
-				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
+				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < (unsigned int)windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
 					tab[temp_i][k] = 1;
 					nr_of_object[temp_i][k] = (int)(groundRectangles.size());
 					shape.setSize(sf::Vector2f(current_x_size + constant_x_size, current_y_size));
@@ -280,7 +280,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 					temp_i++;
 				}
 
-				while (flag && (temp_k < windowHeight - 1)) {
+				while (flag && (temp_k < (unsigned int)windowHeight - 1)) {
 					flag = true;
 					for (unsigned int c = i; c < temp_i; c++) {
 						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {

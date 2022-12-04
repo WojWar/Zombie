@@ -28,7 +28,8 @@ bool Matrix2d::getPoint(unsigned int x, unsigned int y)
 	try {
 		return map2d.at(y).at(x);
 	}
-	catch (const std::out_of_range& e) {
+	catch (const std::out_of_range& ) 
+	{
 		return true;
 	}
 }

@@ -13,6 +13,9 @@ public:
 	~Map();
 public:
 	bool isGround(int x, int y);
+	bool isGround(sf::Vector2f coordinates);
+	bool isGround(float x, float y);
+
 	void initialise(sf::RenderTexture &_textura);
 	void loadGroundObjects();
 	void loadGround();

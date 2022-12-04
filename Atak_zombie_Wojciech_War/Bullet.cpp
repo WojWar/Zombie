@@ -30,8 +30,8 @@ bool Bullet::is_wall(char **_tab)
 	unsigned int x = (unsigned int)getPosition().x;
 	unsigned int y = (unsigned int)getPosition().y;
 
-	if (x > windowWidth
-		or y > windowHeight
+	if (x > (unsigned int)windowWidth
+		or y > (unsigned int)windowHeight
 		or _tab[x][y])
 	{
 		//velocity.x = velocity.y = 0;
