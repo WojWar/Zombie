@@ -18,7 +18,7 @@ public:
 	sf::Vector2i getSize();
 	char jumpCounter{ 0 };
 	void performMove(float frame_time);
-	void are_close(const std::vector<Zombie*> &_Objects,float frame_time);
+	void areClose(const std::vector<Zombie*> &_Objects,float frame_time);
 	bool intersectsSomething{ false };
 	bool isAlive();
 	void loseOneLivePoint();
@@ -26,20 +26,20 @@ public:
 public:
 	bool shooting_direction{ true };
 	int size_of_player_x{ 10 };
-	float size_x{ 10 };
 	int size_of_player_y{ 14 };  // change this value to bigger - game is frozen. why?
+
 	int nr{ 0 };
 	std::vector <int> numery;
-	int pos_x{ 50 }, pos_y{400};
-	bool ispixel{ false };
+	sf::Vector2f playerSize{ sf::Vector2f(10.0f, 14.0f) };
+	sf::Vector2f startPosition{ sf::Vector2f(50.0f, 400.0f) };
 private:
 	GameMap* groundMap;
 	//GameMap groundMap{ sf::Vector2i(size_of_player_x, size_of_player_y) };
 	sf::Vector2f playerOffset{ sf::Vector2f(5.0f, 7.0f) };
-	void gravity_acceleration(float frame_time);
+	void gravityAcceleration(float frame_time);
 
 	short health;
-	bool bites_me{ false };
+	bool zombieBitesMe{ false };
 	bool jump{ false };
 	float gravitySpeed{ 0.f };
 };

@@ -3,12 +3,12 @@
 
 
 Player::Player(int points_of_health, GameMap &gameMap) :
-	RectangleShape(sf::Vector2f(10, 14)),
 	health(points_of_health),
 	groundMap(&gameMap)
 {
+	this->setSize(playerSize);
 	this->setFillColor(sf::Color::Blue);
-	this->setPosition(50, 400);
+	this->setPosition(startPosition);
 	this->setOrigin(playerOffset);
 
 	//groundMap.loadGround();
@@ -84,7 +84,7 @@ void Player::performMove(float frame_time)
 	//{
 	//	this->move(0, velocity.y * 1000 * frame_time);
 	//}
-	gravity_acceleration(frame_time);
+	gravityAcceleration(frame_time);
 
 	
 }
@@ -96,7 +96,7 @@ void Player::jumpRequest()
 }
 
 
-void Player::are_close(const std::vector<Zombie*>& _Objects, float frame_time)
+void Player::areClose(const std::vector<Zombie*>& _Objects, float frame_time)
 {
 	//bool is = false;
 
