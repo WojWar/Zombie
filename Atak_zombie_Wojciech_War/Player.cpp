@@ -34,35 +34,21 @@ sf::Vector2i Player::getSize()
 void Player::performMove(float frame_time)
 {
 
-
 	sf::Vector2f lastPosition = sf::Vector2f(this->getPosition());
-
 	sf::Vector2f diffPosition = velocity * 1000.0f * frame_time;
 
-
-	//sf::Vector2f newPosition = sf::Vector2f(this->getPosition());
-	//sf::Vector2f newPosition = lastPosition + diffPosition;
-
-	//sf::Vector2i thisPosition = sf::Vector2i((int)(this->getPosition().x), (int)(this->getPosition().y));
-
-	std::cout << "GOOOD range y: " << lastPosition.y << ", x: " << lastPosition.x << "\r";
-	//get out of collision
-	float y_it = diffPosition.y / 10;
-	float x_it = abs(diffPosition.x / 10);
 	while (groundMap->isGround(lastPosition + diffPosition))
 	{
-		//if (diffPosition.x > 0)
-		//{
-		//	newPosition.x-= diffPosition.x/10;
-		//}
-		if (diffPosition.y > 0)
+		if (!groundMap->isGround(lastPosition + diffPosition - sf::Vector2f(0.0f, 2.0f)))
 		{
-			diffPosition.y-= y_it;
+			diffPosition.y = diffPosition.y - 2.0f;
 		}
-		else break;
-
+		else
+		{
+			diffPosition.x = diffPosition.x / 2;
+			diffPosition.y = diffPosition.y / 2;
+		}
 	}
-	//this->setPosition(sf::Vector2f(lastPosition + diffPosition));
 
 	sf::Vector2f newPosition = lastPosition + diffPosition;
 	this->move(diffPosition);
@@ -79,11 +65,6 @@ void Player::performMove(float frame_time)
 	{
 		gravitySpeed = 0;
 		velocity.y = 0;
-		//while (groundMap.isGround(newPosition.x, newPosition.y))
-		//{
-		//	this->move(0, -1);
-		//	thisPosition = sf::Vector2i(this->getPosition()) + playerOffset;
-		//}
 	}
 
 	if (jump)
@@ -91,19 +72,17 @@ void Player::performMove(float frame_time)
 		velocity.y = -jumpspeed;
 		jump = false;
 	}
+
 	//jesli z lewej
 	//if (groundMap.isGround(thisPosition.x - 1, thisPosition.y))
 	//{
 	//	this->move(0, velocity.y * 1000 * frame_time);
-
 	//}
 
 	////jesli z prawej od playera jest kolizja
 	//if (groundMap.isGround(thisPosition.x + 1, thisPosition.y))
 	//{
 	//	this->move(0, velocity.y * 1000 * frame_time);
-
-
 	//}
 	gravity_acceleration(frame_time);
 
@@ -153,6 +132,9 @@ void Player::loseOneLivePoint()
 
 void Player::gravity_acceleration(float frame_time)
 {
-	if ((velocity.y <1.1* jumpspeed))
+	if (!groundMap->isGround(this->getPosition().x, this->getPosition().y + 1) and (velocity.y < 1.1* jumpspeed))
+	{
 		velocity.y += (gravity * 1000 * frame_time);
+	}
+
 }
