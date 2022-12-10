@@ -6,12 +6,13 @@
 #include "Zombie.h"
 #include "Globals.h"
 #include "BgWalls.h"
+#include "GameMap.h"
 
 class Zombies
 {
 public:
 	Zombies();
-	Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage);
+	Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap);
 	~Zombies();
 	void chaseThePlayer(Player &_player, float &frame_time);
 	void randVelocity(sf::Clock &clock_for_zombies);

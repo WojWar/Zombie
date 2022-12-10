@@ -130,7 +130,7 @@ void Player::loseOneLivePoint()
 	std::cout << "player live points: " << health << std::endl;
 }
 
-void Player::gravity_acceleration(float frame_time)
+void Player::gravityAcceleration(float frame_time)
 {
 	if (!groundMap->isGround(this->getPosition().x, this->getPosition().y + 1) and (velocity.y < 1.1* jumpspeed))
 	{

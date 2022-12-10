@@ -4,7 +4,7 @@ Zombies::Zombies()
 {
 }
 
-Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage) {
+Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap) {
 	
 	for (int k = 0; k < windowHeight; k++) {
 		for (int i = 0; i < windowWidth; i++) {

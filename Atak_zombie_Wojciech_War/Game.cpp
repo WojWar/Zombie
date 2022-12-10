@@ -55,7 +55,7 @@ void Game::play()
 	initialize_health_bar(*okno, texture_health_of_player, player);
 
 	//make some zombies
-	Zombies _zombies(*okno, zombie_health, _mapImage);
+	Zombies _zombies(*okno, zombie_health, _mapImage, groundMap2);
 	_zombies.loadTheWalls(_mapImage);
 
 	texture.display();
