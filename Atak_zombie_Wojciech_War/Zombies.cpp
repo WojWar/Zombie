@@ -4,7 +4,9 @@ Zombies::Zombies()
 {
 }
 
-Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap) {
+Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap) :
+	zombiesGroundMap(&gameMap)
+{
 	
 	for (int k = 0; k < windowHeight; k++) {
 		for (int i = 0; i < windowWidth; i++) {
@@ -15,6 +17,7 @@ Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Ima
 			}
 		}
 	}
+	randVelocityClock.restart();
 }
 
 Zombies::~Zombies()
@@ -41,14 +44,14 @@ void Zombies::chaseThePlayer(Player & _player, float & frame_time)
 	}
 }
 
-void Zombies::randVelocity(sf::Clock & clock_for_zombies)
+void Zombies::randVelocity()
 {
 	//losowanie predkosci i kierunku zombie, co 0.15 sekundy kolejny zombie
-	if (clock_for_zombies.getElapsedTime().asMilliseconds() > 150) {
+	if (randVelocityClock.getElapsedTime().asMilliseconds() > 150) {
 		nr_zombie++;
 		if (!(nr_zombie < vZombies.size())) nr_zombie = 0;
 		vZombies[nr_zombie].randVelocity();
-		clock_for_zombies.restart();
+		randVelocityClock.restart();
 	}
 }
 
@@ -67,6 +70,7 @@ bool Zombies::zombieBitesPlayer(Player & _player)
 
 void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleShape>& _vGround, char **_tab, int **_nr_of_object, sf::RenderWindow &_okno)
 {
+	this->randVelocity();
 	for (unsigned int i = 0; i < vZombies.size(); i++) {
 
 		if (vZombies[i].health < 1) {

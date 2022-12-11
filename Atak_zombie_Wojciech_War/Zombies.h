@@ -15,15 +15,17 @@ public:
 	Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap);
 	~Zombies();
 	void chaseThePlayer(Player &_player, float &frame_time);
-	void randVelocity(sf::Clock &clock_for_zombies);
 	bool zombieBitesPlayer(Player &_player);
 	void moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleShape>& _vGround, char **_tab, int **_nr_of_object, sf::RenderWindow &_okno);
 	bool shootByBullet(Bullet &_bullet);
 	bool areAlive();
 	void loadTheWalls(sf::Image &_mapImage);
 private:
+	GameMap* zombiesGroundMap;
+	void randVelocity();
 	BgWalls bgWalls;
 	std::vector <Zombie> vZombies;
 	//licznik - zombie, ktorego predkosc jest losowana:
 	unsigned int nr_zombie = 0;
+	sf::Clock randVelocityClock;
 };

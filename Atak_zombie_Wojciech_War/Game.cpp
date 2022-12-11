@@ -71,7 +71,6 @@ void Game::play()
 	okno->setFramerateLimit(30);
 
 	sf::Clock clock;
-	sf::Clock clock_for_zombies;
 	///////////////////////////////////MAIN LOOP////////////////////////////////
 	while (okno->isOpen() && _zombies.areAlive() && player.isAlive())
 	{
@@ -165,11 +164,7 @@ void Game::play()
 
 
 		//zombie
-
-		_zombies.randVelocity(clock_for_zombies);
-
 		_zombies.chaseThePlayer(player, ElapsedTime);
-
 		_zombies.moveAndDraw(ElapsedTime, groundRectangles, tab, nr_of_object, *okno);
 
 
