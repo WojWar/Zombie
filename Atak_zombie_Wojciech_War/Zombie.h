@@ -7,12 +7,13 @@
 #include <map>
 #include "Globals.h"
 #include "BgWalls.h"
+#include "GameMap.h"
 
  
 class Zombie: public sf::RectangleShape
 {
 public:
-	Zombie(int points_of_health, sf::Vector2f _pos);
+	Zombie(int points_of_health, sf::Vector2f _pos, GameMap &gameMap);
 	~Zombie();
 public:
 	void randVelocity();
@@ -36,6 +37,7 @@ public:
 private:
 	sf::Vector2i size_of_zombie = sf::Vector2i(5, 10);
 	sf::Vector2f fsize_of_zombie = sf::Vector2f(5.0f, 10.0f);
+	GameMap* zombieGroundMap;
 
 
 };

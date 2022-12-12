@@ -2,8 +2,9 @@
 #include "Zombie.h"
 
 
-Zombie::Zombie(int points_of_health, sf::Vector2f _pos) :
-	RectangleShape()
+Zombie::Zombie(int points_of_health, sf::Vector2f _pos, GameMap &gameMap) :
+	RectangleShape(),
+	zombieGroundMap(&gameMap)
 {
 	this->setSize(fsize_of_zombie);
 

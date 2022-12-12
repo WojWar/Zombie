@@ -11,7 +11,7 @@ Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Ima
 	for (int k = 0; k < windowHeight; k++) {
 		for (int i = 0; i < windowWidth; i++) {
 			if ((sf::Color::Blue) == _mapImage.getPixel(i, k)) {
-				vZombies.push_back(Zombie(_zombie_health, sf::Vector2f((float)i, (float)k)));
+				vZombies.push_back(Zombie(_zombie_health, sf::Vector2f((float)i, (float)k), *zombiesGroundMap));
 
 				vZombies.back().randsmallVelocity(); // losuje predkosc w poziomie
 			}
