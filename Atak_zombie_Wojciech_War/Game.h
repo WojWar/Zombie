@@ -29,8 +29,6 @@ public:
 	void play();
 
 private:
-	//podloze i sciany ograniczajace:
-	std::vector <sf::RectangleShape> groundRectangles;
 
 	//std::forward_list <Bullet*> vectorBullets;
 	Bullets bullets;
@@ -43,7 +41,6 @@ private:
 
 	//tablice dla podloza:
 	char **tab; // tutaj wartosc 0 lub 1 czy jest grunt
-	int **nr_of_object; // tutaj nr obiektu w vectorze ktory jest w danym pixelu
 
 
 	//methods 

@@ -68,7 +68,7 @@ bool Zombies::zombieBitesPlayer(Player & _player)
 	return false;
 }
 
-void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleShape>& _vGround, char **_tab, int **_nr_of_object, sf::RenderWindow &_okno)
+void Zombies::moveAndDraw(float & _elapsedTime, sf::RenderWindow &_okno)
 {
 	this->randVelocity();
 	for (unsigned int i = 0; i < vZombies.size(); i++) {
@@ -78,20 +78,14 @@ void Zombies::moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleS
 			break;
 		}
 
-		//ruch zombie:
-		vZombies[i].move((vZombies[i].velocity.x) * 1000 * _elapsedTime, (vZombies[i].velocity.y) * 1000 * _elapsedTime);
+
 
 		//odbicia od czerwonych scian:
 		vZombies[i].collision_wall(bgWalls);
 
 		//kolizja z podlozem:
-		vZombies[i].collision(_vGround, _tab, _nr_of_object, _elapsedTime);
+		vZombies[i].collision(_elapsedTime);
 
-		//nadanie przyspieszenia od grawitacji:
-		if ((vZombies[i].velocity.y < 1.1*jumpspeed))
-		{
-			vZombies[i].velocity.y += (gravity * 1000 * _elapsedTime);
-		}
 		_okno.draw(vZombies[i]);
 	}
 }

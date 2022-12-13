@@ -2,13 +2,11 @@
 
 Game::Game()
 {
-	tab = new char*[windowWidth]; //
-	nr_of_object = new int*[windowWidth]; //
+	tab = new char*[windowWidth]; 
 
 	for (int i = 0; i < windowWidth; i++)
 	{
 		tab[i] = new char[windowHeight];
-		nr_of_object[i] = new int[windowHeight];
 	}
 
 	okno = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
@@ -22,12 +20,10 @@ Game::~Game()
 	for (int i = 0; i < windowWidth; i++)
 	{
 		delete [] tab[i];
-		delete [] nr_of_object[i];
 	}
 
 	delete okno;
 	delete tab;
-	delete nr_of_object;
 }
 
 void Game::play()
@@ -165,10 +161,10 @@ void Game::play()
 
 		//zombie
 		_zombies.chaseThePlayer(player, ElapsedTime);
-		_zombies.moveAndDraw(ElapsedTime, groundRectangles, tab, nr_of_object, *okno);
+		_zombies.moveAndDraw(ElapsedTime, *okno);
 
 
-		bullets.moveAndHit(_zombies, ElapsedTime, *okno, tab);
+		bullets.moveAndHit(_zombies, ElapsedTime, *okno, tab); //TODO delete tab!
 
 		okno->display();
 
@@ -220,9 +216,6 @@ void Game::play()
 
 		bullets.clearMemory();	//std::forward_list <Bullet*>
 
-		groundRectangles.clear();		//std::vector <RectangleShape> 
-
-
 		okno->draw(pSprite_koniec_gry);
 		okno->display();
 	}
@@ -238,7 +231,6 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	for (int i = 0; i < windowWidth; i++) {
 		for (int j = 0; j < windowHeight; j++) {
 			tab[i][j] = 0;
-			nr_of_object[i][j] = 0;
 		}
 	}
 
@@ -271,14 +263,12 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 
 			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
 				tab[i][k] = 1;
-				nr_of_object[i][k] = (int)(groundRectangles.size());
 				current_x_size = 0;
 				current_y_size = 0;
 				temp_i = i;
 				temp_k = k;
 				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < (unsigned int)windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
 					tab[temp_i][k] = 1;
-					nr_of_object[temp_i][k] = (int)(groundRectangles.size());
 					shape.setSize(sf::Vector2f(current_x_size + constant_x_size, current_y_size));
 					current_x_size = current_x_size + constant_x_size;
 					temp_i++;
@@ -289,7 +279,6 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 					for (unsigned int c = i; c < temp_i; c++) {
 						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
 							tab[c][temp_k] = 1;
-							nr_of_object[c][temp_k] = (int)(groundRectangles.size());
 						}
 						else
 						{
@@ -299,7 +288,6 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 					if (flag == false) {
 						for (unsigned int c = i; c < temp_i; c++) {
 							tab[c][temp_k] = 0;
-							nr_of_object[c][temp_k] = 0;
 						}
 					}
 
@@ -318,7 +306,6 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 				//shape.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
 					
 				//_textura.draw(shape);
-				groundRectangles.push_back(sf::RectangleShape(shape));
 				
 				i = temp_i;
 				flag = true;
@@ -350,7 +337,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	}
 	//****************************************************************
 
-	std::cout << "Ladowanie mapy zakonczone. Ilosc obiektow podloza: " << groundRectangles.size() << std::endl;
+	std::cout << "Ladowanie mapy zakonczone. " << std::endl;
 
 
 }

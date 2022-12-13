@@ -16,7 +16,7 @@ public:
 	~Zombies();
 	void chaseThePlayer(Player &_player, float &frame_time);
 	bool zombieBitesPlayer(Player &_player);
-	void moveAndDraw(float & _elapsedTime, const std::vector<sf::RectangleShape>& _vGround, char **_tab, int **_nr_of_object, sf::RenderWindow &_okno);
+	void moveAndDraw(float & _elapsedTime, sf::RenderWindow &_okno);
 	bool shootByBullet(Bullet &_bullet);
 	bool areAlive();
 	void loadTheWalls(sf::Image &_mapImage);

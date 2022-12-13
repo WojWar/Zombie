@@ -18,7 +18,7 @@ public:
 public:
 	void randVelocity();
 	void randsmallVelocity();
-	void collision(const std::vector<RectangleShape> &_vectorObjects, char **_tab, int **_nr_of_object,float fps_time);
+	void collision(float fps_time);
 
 	void collision_wall(BgWalls &_walls);
 
@@ -35,8 +35,10 @@ public:
 	bool ispixel;
 	bool bite;
 private:
-	sf::Vector2i size_of_zombie = sf::Vector2i(5, 10);
-	sf::Vector2f fsize_of_zombie = sf::Vector2f(5.0f, 10.0f);
+	void gravityAcceleration(float frame_time);
+	sf::Vector2i size_of_zombie = sf::Vector2i(6, 10);
+	sf::Vector2f fsize_of_zombie = sf::Vector2f(6.0f, 10.0f);
+	sf::Vector2f zombieOffset{ sf::Vector2f(3.0f, 5.0f) };
 	GameMap* zombieGroundMap;
 
 
