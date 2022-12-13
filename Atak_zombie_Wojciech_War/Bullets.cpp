@@ -1,6 +1,7 @@
 #include "Bullets.h"
 
-Bullets::Bullets()
+Bullets::Bullets(GameMap &gameMap) :
+	bulletsGroundMap(&gameMap)
 {
 	
 }
@@ -17,14 +18,14 @@ void Bullets::fireBullet(const Player &_player)
 	//move it to active vector
 }
 
-void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno, char **_tab)
+void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno)
 {		//pociski    
 	if (!vectorBullets.empty()) {
 		int i = 0;
 		// vB_it - vectorBullets iterator
 		for (auto vB_it = begin(vectorBullets); vB_it != end(vectorBullets); ++vB_it)
 		{
-			if (_zombies.shootByBullet(*vB_it) || ((vB_it)->is_wall(_tab)))
+			if (_zombies.shootByBullet(*vB_it) || (bulletsGroundMap->isGround(vB_it->getPosition())))
 			{
 				vectorBullets.erase(vB_it);
 				break;

@@ -30,8 +30,6 @@ public:
 
 private:
 
-	//std::forward_list <Bullet*> vectorBullets;
-	Bullets bullets;
 
 	//pasek zycia:
 	std::vector <sf::RectangleShape*> vectorHealth;
@@ -55,5 +53,6 @@ private:
 	int Game_size_of_player_x{ 10 };
 	int Game_size_of_player_y{ 14 };
 	GameMap groundMap2{ sf::Vector2i(Game_size_of_player_x, Game_size_of_player_y) };
+	Bullets bullets{ groundMap2 };
 };
 

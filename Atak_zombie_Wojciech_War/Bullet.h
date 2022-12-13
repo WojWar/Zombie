@@ -11,8 +11,6 @@ public:
 	~Bullet();
 	sf::Vector2f velocity;
 
-	//methods
-	bool is_wall(char **_tab);
 
 	void setPosition(sf::Vector2f pos);
 

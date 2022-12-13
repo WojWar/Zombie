@@ -3,15 +3,17 @@
 #include <vector>
 #include "Bullet.h"
 #include "Zombies.h"
+#include "GameMap.h"
 class Bullets
 {
 public:
-	Bullets();
+	Bullets(GameMap &gameMap);
 	~Bullets();
 	void fireBullet(const Player &_player);
-	void moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno, char **_tab);
+	void moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno);
 	void clearMemory();
 private:
+	GameMap* bulletsGroundMap;
 	//active bullets
 	std::vector <Bullet> vectorBullets;
 	//inactive bullets

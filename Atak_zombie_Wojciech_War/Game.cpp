@@ -164,7 +164,7 @@ void Game::play()
 		_zombies.moveAndDraw(ElapsedTime, *okno);
 
 
-		bullets.moveAndHit(_zombies, ElapsedTime, *okno, tab); //TODO delete tab!
+		bullets.moveAndHit(_zombies, ElapsedTime, *okno);
 
 		okno->display();
 
@@ -305,7 +305,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 				//srand(i);
 				//shape.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
 					
-				//_textura.draw(shape);
+				_textura.draw(shape);
 				
 				i = temp_i;
 				flag = true;
@@ -329,7 +329,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 			if (groundMap2.isGround((int)i, (int)k)) {
 
 				shapeMap.setPosition((float)i, (float)k);
-				_textura.draw(shapeMap);
+				//_textura.draw(shapeMap);
 				//std::cout << "groundMap.isGround: "  << std::endl;
 			}
 

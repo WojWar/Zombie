@@ -132,9 +132,12 @@ void Player::loseOneLivePoint()
 
 void Player::gravityAcceleration(float frame_time)
 {
+	bool is = false;
 	if (!groundMap->isGround(this->getPosition().x, this->getPosition().y + 1) and (velocity.y < 1.1* jumpspeed))
 	{
+		is = true;
 		velocity.y += (gravity * 1000 * frame_time);
 	}
+	std::cout << "Gravity: " << (is ? "YES" : "NO ") << "\r";
 
 }
