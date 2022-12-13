@@ -2,13 +2,6 @@
 
 Game::Game()
 {
-	tab = new char*[windowWidth]; 
-
-	for (int i = 0; i < windowWidth; i++)
-	{
-		tab[i] = new char[windowHeight];
-	}
-
 	okno = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Zombie Attack!");
 
 	groundMap2.loadGround();
@@ -16,14 +9,7 @@ Game::Game()
 
 Game::~Game()
 {
-
-	for (int i = 0; i < windowWidth; i++)
-	{
-		delete [] tab[i];
-	}
-
 	delete okno;
-	delete tab;
 }
 
 void Game::play()
@@ -227,15 +213,6 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 
 	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
 
-	bool flag = true;
-	for (int i = 0; i < windowWidth; i++) {
-		for (int j = 0; j < windowHeight; j++) {
-			tab[i][j] = 0;
-		}
-	}
-
-	//if (!_mapImage.loadFromFile("map_01.png"))
-
 	if (!_mapImage.loadFromFile(_map_name))
 	{
 		std::cout << "Error occured during map loading" << std::endl;
@@ -243,102 +220,32 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 	}
 	_textura.create(windowWidth, windowHeight);
 
-	float constant_x_size = 1.0f;
-	float constant_y_size = 1.0f;
-	float current_x_size;
-	float current_y_size;
-
 	sf::RectangleShape shape(sf::Vector2f(1.0f, 1.0f));
-	sf::RectangleShape shapeMap(sf::Vector2f(1.0f, 1.0f));
 	shape.setFillColor(sf::Color(139, 69, 19));
-	shapeMap.setFillColor(sf::Color(50, 50, 19));
 
-	unsigned int temp_i;
-	unsigned int temp_k;
-	//int add_count = 1;
-	for (unsigned int k = 0; k < (unsigned int)windowHeight; k++) {
-		for (unsigned int i = 0; i < (unsigned int)windowWidth; i++) {
-
-			shape.setPosition(1.0f*i, 1.0f*k);
-
-			if (((sf::Color::Black) == _mapImage.getPixel(i, k)) && (tab[i][k] == 0)) {
-				tab[i][k] = 1;
-				current_x_size = 0;
-				current_y_size = 0;
-				temp_i = i;
-				temp_k = k;
-				while (((sf::Color::Black) == _mapImage.getPixel(temp_i, k) && (temp_i < (unsigned int)windowWidth - 1) && (tab[temp_i][k] == 0)) || (temp_i == i)) {
-					tab[temp_i][k] = 1;
-					shape.setSize(sf::Vector2f(current_x_size + constant_x_size, current_y_size));
-					current_x_size = current_x_size + constant_x_size;
-					temp_i++;
-				}
-
-				while (flag && (temp_k < (unsigned int)windowHeight - 1)) {
-					flag = true;
-					for (unsigned int c = i; c < temp_i; c++) {
-						if (((sf::Color::Black) == _mapImage.getPixel(c, temp_k) && (tab[c][temp_k] == 0)) || (temp_k == k)) {
-							tab[c][temp_k] = 1;
-						}
-						else
-						{
-							flag = false;
-						}
-					}
-					if (flag == false) {
-						for (unsigned int c = i; c < temp_i; c++) {
-							tab[c][temp_k] = 0;
-						}
-					}
-
-					if (flag == true) {
-						shape.setSize(sf::Vector2f(current_x_size, current_y_size + constant_y_size));
-						current_y_size = current_y_size + constant_y_size;
-
-						//if (temp_k<ilosc_y)
-						temp_k++;
-					}
-				}
-
-				
-				//std::cout <<"Ladowanie wiersza: "<< k << std::endl;
-				//srand(i);
-				//shape.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
-					
-				_textura.draw(shape);
-				
-				i = temp_i;
-				flag = true;
-			}
-
-		}
-	}
-
-
-	//****************************************************************
+	//for (unsigned int k = 0; k < (unsigned int)windowHeight; k++) {
+	//	for (unsigned int i = 0; i < (unsigned int)windowWidth; i++) {
+	//
+	//	}
+	//}
 
 	for (unsigned int k = 0; k < (unsigned int)windowHeight-1; k++) {
 		for (unsigned int i = 0; i < (unsigned int)windowWidth-1; i++) {
 
 
-			//if ((sf::Color::Black) == _mapImage.getPixel(i, k)) {
-
-			//	_textura.draw(shapeMap);
-
-			//}
-			if (groundMap2.isGround((int)i, (int)k)) {
-
-				shapeMap.setPosition((float)i, (float)k);
-				//_textura.draw(shapeMap);
-				//std::cout << "groundMap.isGround: "  << std::endl;
+			if ((sf::Color::Black) == _mapImage.getPixel(i, k)) {
+				shape.setPosition((float)i, (float)k);
+				_textura.draw(shape);
 			}
+			//if (groundMap2.isGround((int)i, (int)k)) {
+			//	shape.setPosition((float)i, (float)k);
+			//	_textura.draw(shape);
+			//}
 
 		}
 	}
-	//****************************************************************
 
 	std::cout << "Ladowanie mapy zakonczone. " << std::endl;
-
 
 }
 
