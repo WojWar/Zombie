@@ -2,6 +2,7 @@
 
 Zombies::Zombies()
 {
+	zombiesGroundMap = nullptr;
 }
 
 Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap) :

@@ -17,6 +17,8 @@ Player::Player(int points_of_health, GameMap &gameMap) :
 
 Player::Player()
 {
+	groundMap = nullptr;
+	health = 0;
 }
 
 
