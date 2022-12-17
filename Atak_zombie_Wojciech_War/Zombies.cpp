@@ -5,14 +5,14 @@ Zombies::Zombies()
 	zombiesGroundMap = nullptr;
 }
 
-Zombies::Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap) :
+Zombies::Zombies(sf::RenderWindow &_oknoint, sf::Image &_mapImage, GameMap &gameMap) :
 	zombiesGroundMap(&gameMap)
 {
 	
 	for (int k = 0; k < windowHeight; k++) {
 		for (int i = 0; i < windowWidth; i++) {
 			if ((sf::Color::Blue) == _mapImage.getPixel(i, k)) {
-				vZombies.push_back(Zombie(_zombie_health, sf::Vector2f((float)i, (float)k), *zombiesGroundMap));
+				vZombies.push_back(Zombie(sf::Vector2f((float)i, (float)k), *zombiesGroundMap));
 
 				vZombies.back().randsmallVelocity(); // losuje predkosc w poziomie
 			}

@@ -12,7 +12,7 @@ class Zombies
 {
 public:
 	Zombies();
-	Zombies(sf::RenderWindow &_oknoint, const int  &_zombie_health, sf::Image &_mapImage, GameMap &gameMap);
+	Zombies(sf::RenderWindow &_oknoint, sf::Image &_mapImage, GameMap &gameMap);
 	~Zombies();
 	void chaseThePlayer(Player &_player, float &frame_time);
 	bool zombieBitesPlayer(Player &_player);

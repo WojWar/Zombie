@@ -2,14 +2,14 @@
 #include "Zombie.h"
 
 
-Zombie::Zombie(int points_of_health, sf::Vector2f _pos, GameMap &gameMap) :
+Zombie::Zombie(sf::Vector2f _pos, GameMap &gameMap) :
 	RectangleShape(),
-	zombieGroundMap(&gameMap)
+	zombieGroundMap(&gameMap),
+	health(zombie_health)
 {
 	this->setSize(fsize_of_zombie);
 	this->setFillColor(sf::Color(255, 185, 0));
 	this->setOrigin(zombieOffset);
-	health = points_of_health;
 	bite = false;
 	ispixel = false;
 	pos_x = pos_y = 0;

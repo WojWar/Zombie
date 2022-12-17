@@ -13,7 +13,7 @@
 class Zombie: public sf::RectangleShape
 {
 public:
-	Zombie(int points_of_health, sf::Vector2f _pos, GameMap &gameMap);
+	Zombie(sf::Vector2f _pos, GameMap &gameMap);
 	~Zombie();
 public:
 	void randVelocity();
