@@ -1,6 +1,4 @@
 #pragma once
-
-//includes
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>

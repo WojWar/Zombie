@@ -21,8 +21,6 @@ private:
 	int wallsMapWidth;
 	int wallsMapHeight;
 
-	// 2D mapa scian ograniczajacych:
-	// wartosc 0 lub 1 czy jest sciana
 	std::vector<std::vector<bool>> map2d;
 };
 

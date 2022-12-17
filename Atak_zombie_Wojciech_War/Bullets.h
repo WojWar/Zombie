@@ -14,10 +14,6 @@ public:
 	void clearMemory();
 private:
 	GameMap* bulletsGroundMap;
-	//active bullets
 	std::vector <Bullet> vectorBullets;
-	//inactive bullets
-	std::forward_list <Bullet*> vectorWaitingBullets;
-	//std::unique_ptr<Bullet> unibull;
 };
 

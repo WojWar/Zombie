@@ -1,6 +1,5 @@
-//#include "stdafx.h"
-#include "Player.h"
 
+#include "Player.h"
 
 Player::Player(int points_of_health, GameMap &gameMap) :
 	health(points_of_health),
@@ -9,10 +8,7 @@ Player::Player(int points_of_health, GameMap &gameMap) :
 	this->setSize(playerSize);
 	this->setFillColor(sf::Color::Blue);
 	this->setPosition(startPosition);
-	this->setOrigin(playerOffset);
-
-	//groundMap.loadGround();
-	
+	this->setOrigin(playerOffset);	
 }
 
 Player::Player()
@@ -55,14 +51,14 @@ void Player::performMove(float frame_time)
 	sf::Vector2f newPosition = lastPosition + diffPosition;
 	this->move(diffPosition);
 
-	//jesli z gory
+	//from up
 	if (groundMap->isGround(newPosition.x, newPosition.y - 1.0f))
 	{
 		gravitySpeed = 0;
 		velocity.y = 0;
 	}
 
-	//jesli z dolu
+	//from down
 	if (groundMap->isGround(newPosition.x, newPosition.y + 1.0f))
 	{
 		gravitySpeed = 0;
@@ -75,13 +71,13 @@ void Player::performMove(float frame_time)
 		jump = false;
 	}
 
-	//jesli z lewej
+	//from left
 	//if (groundMap.isGround(thisPosition.x - 1, thisPosition.y))
 	//{
 	//	this->move(0, velocity.y * 1000 * frame_time);
 	//}
 
-	////jesli z prawej od playera jest kolizja
+	////from right
 	//if (groundMap.isGround(thisPosition.x + 1, thisPosition.y))
 	//{
 	//	this->move(0, velocity.y * 1000 * frame_time);
@@ -100,8 +96,6 @@ void Player::jumpRequest()
 
 void Player::areClose(const std::vector<Zombie*>& _Objects, float frame_time)
 {
-	//bool is = false;
-
 	for (unsigned int i = 0; i < _Objects.size(); i++) {
 
 		if ((_Objects[i]->getPosition().x - pos.x < 100) && (_Objects[i]->getPosition().x - pos.x > -100)) {
@@ -113,12 +107,9 @@ void Player::areClose(const std::vector<Zombie*>& _Objects, float frame_time)
 				{
 					_Objects[i]->race_to_right(frame_time);
 				}
-				//is = true;
 			}
 		}
-
-	} 
-	//return is;
+	}
 }
 
 bool Player::isAlive()

@@ -1,6 +1,4 @@
-//#include "stdafx.h"
 #include "Zombie.h"
-
 
 Zombie::Zombie(sf::Vector2f _pos, GameMap &gameMap) :
 	RectangleShape(),
@@ -18,7 +16,6 @@ Zombie::Zombie(sf::Vector2f _pos, GameMap &gameMap) :
 	nr = 0;
 }
 
-
 Zombie::~Zombie()
 {
 }
@@ -27,18 +24,14 @@ void Zombie::randVelocity()
 {
 	velocity.x = (float)(rand() % 20 - 10);
 	velocity.x = velocity.x / 100;
-
 }
+
 void Zombie::randsmallVelocity()
 {
 	velocity.x = (float)(rand() % 20 - 10);
 	velocity.x = velocity.x / 500;
-
 }
  
-
-
-
 void Zombie::collision(float fps_time)
 {
 	sf::Vector2f lastPosition = sf::Vector2f(this->getPosition());
@@ -60,13 +53,13 @@ void Zombie::collision(float fps_time)
 	sf::Vector2f newPosition = lastPosition + diffPosition;
 	this->move(diffPosition);
 
-	//jesli z gory
+	//from up
 	if (zombieGroundMap->isGround(newPosition.x, newPosition.y - 5.0f))
 	{
 		velocity.y = 0;
 	}
 
-	//jesli z dolu
+	//from down
 	if (zombieGroundMap->isGround(newPosition.x, newPosition.y + 5.0f))
 	{
 		velocity.y = 0;
@@ -100,6 +93,3 @@ void Zombie::race_to_right(float frame_time)
 {
 	velocity.x = movespeedZombie * 0.6f;// 600 * frame_time;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

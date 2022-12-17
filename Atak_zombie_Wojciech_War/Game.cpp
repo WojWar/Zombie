@@ -14,25 +14,22 @@ Game::~Game()
 
 void Game::play()
 {
-
-
 	srand((unsigned int)time(NULL));
 
-	sf::RenderTexture texture;//tekstura z calym podlozem (grunty)
-	sf::RenderTexture texture_health_of_player;//tekstura z paskiem zycia
-
-	//Parameters _parametry(player_health, zombie_health);
+	//texture with all grounds (the land)
+	sf::RenderTexture texture;
+	//texture with player health bar
+	sf::RenderTexture texture_health_of_player;
 
 	Player player(player_health, groundMap2);
 
-
-	/////////////make tab of keys//////////////
+	//make tab of keys (keyboard)
 	bool keys[256], keysReleased[256];
 	for (int j = 0; j < 256; j++) {
 		keys[j] = 0;
 	}
 
-	//////////////////////////draw the game world/////////////////////////////
+	//draw the game world
 	drawMap(texture);
 	createHealthBar(texture_health_of_player, player);
 
@@ -48,7 +45,7 @@ void Game::play()
 	sf::Sprite sprite2;
 
 	sprite_health_bar.move(437, 500);
-	std::cout << "Pozostalo punktow zycia:" << std::endl;
+	std::cout << "Player live points:" << std::endl;
 
 	okno->setFramerateLimit(30);
 
@@ -56,7 +53,7 @@ void Game::play()
 	///////////////////////////////////MAIN LOOP////////////////////////////////
 	while (okno->isOpen() && _zombies.areAlive() && player.isAlive())
 	{
-		//pomiar fps
+		//measaure fps
 		float ElapsedTime = clock.getElapsedTime().asSeconds();
 		clock.restart();
 
@@ -77,8 +74,8 @@ void Game::play()
 		okno->clear(sf::Color::White);
 		player.pos.x = player.getPosition().x;
 		player.pos.y = player.getPosition().y;
-		//sterowanie:
-
+		
+		//player controls:
 		if (keys[57] && keysReleased[57])
 		{
 			keysReleased[57] = false;
@@ -113,17 +110,12 @@ void Game::play()
 			player.jumpRequest();
 		}
 
-
 		//player:		 
-
 		player.performMove(ElapsedTime);
 
-
-
+		//take one point from heath bar
 		if (_zombies.zombieBitesPlayer(player))
 		{
-			//odjecie punktu zycia na pasku zycia:
-
 			texture_health_of_player.clear(sf::Color::White);
 
 			delete vectorHealth.back();
@@ -136,27 +128,21 @@ void Game::play()
 			texture_health_of_player.display();
 		}
 
-
 		//draw textures:
 		okno->draw(sprite);
 		okno->draw(sprite_health_bar);
 		okno->draw(player);
 
-
-
-
 		//zombie
 		_zombies.chaseThePlayer(player, ElapsedTime);
 		_zombies.moveAndDraw(ElapsedTime, *okno);
 
-
 		bullets.moveAndHit(_zombies, ElapsedTime, *okno);
 
 		okno->display();
+	}
 
-	} //while
-
-	////////////////////////////////////Ekrany koncowe:////////////////////////////
+	////////////////////////////////////Game ending:////////////////////////////
 
 	sf::Texture pTexture_you_win;
 	sf::Texture pTexture_game_over;
@@ -175,10 +161,10 @@ void Game::play()
 	}
 	else
 	{
-		if (!pTexture_you_win.loadFromFile("koniec_gry.png"))
+		if (!pTexture_you_win.loadFromFile("you_win.png"))
 		{
 			std::cout << "You Win!" << std::endl;
-			std::cout << "cant load from file: koniec_gry.png" << std::endl;
+			std::cout << "cant load from file: you_win.png" << std::endl;
 			system("pause");
 		}
 		pSprite_koniec_gry.setTexture(pTexture_you_win);
@@ -198,20 +184,19 @@ void Game::play()
 			delete i;
 		}
 
-		vectorHealth.clear();	//std::vector <RectangleShape*>
+		vectorHealth.clear();
 
-		bullets.clearMemory();	//std::forward_list <Bullet*>
+		bullets.clearMemory();
 
 		okno->draw(pSprite_koniec_gry);
 		okno->display();
 	}
-	//return 0;
 }
 
 
 void Game::drawMap(sf::RenderTexture &_textura) {
 
-	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
+	std::cout << std::endl << "Loading game map.." << std::endl;
 
 	if (!_mapImage.loadFromFile(map_name))
 	{
@@ -222,12 +207,6 @@ void Game::drawMap(sf::RenderTexture &_textura) {
 
 	sf::RectangleShape shape(sf::Vector2f(1.0f, 1.0f));
 	shape.setFillColor(sf::Color(139, 69, 19));
-
-	//for (unsigned int k = 0; k < (unsigned int)windowHeight; k++) {
-	//	for (unsigned int i = 0; i < (unsigned int)windowWidth; i++) {
-	//
-	//	}
-	//}
 
 	for (unsigned int k = 0; k < (unsigned int)windowHeight-1; k++) {
 		for (unsigned int i = 0; i < (unsigned int)windowWidth-1; i++) {
@@ -245,7 +224,7 @@ void Game::drawMap(sf::RenderTexture &_textura) {
 		}
 	}
 
-	std::cout << "Ladowanie mapy zakonczone. " << std::endl;
+	std::cout << "Loading map finished. " << std::endl;
 
 }
 

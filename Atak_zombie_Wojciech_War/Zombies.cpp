@@ -13,8 +13,8 @@ Zombies::Zombies(sf::RenderWindow &_oknoint, sf::Image &_mapImage, GameMap &game
 		for (int i = 0; i < windowWidth; i++) {
 			if ((sf::Color::Blue) == _mapImage.getPixel(i, k)) {
 				vZombies.push_back(Zombie(sf::Vector2f((float)i, (float)k), *zombiesGroundMap));
-
-				vZombies.back().randsmallVelocity(); // losuje predkosc w poziomie
+				//rand horizontal velocity of zombie
+				vZombies.back().randsmallVelocity();
 			}
 		}
 	}
@@ -47,7 +47,7 @@ void Zombies::chaseThePlayer(Player & _player, float & frame_time)
 
 void Zombies::randVelocity()
 {
-	//losowanie predkosci i kierunku zombie, co 0.15 sekundy kolejny zombie
+	//rand horizontal velocity of zombie, each 0.15 seconds next zombie
 	if (randVelocityClock.getElapsedTime().asMilliseconds() > 150) {
 		nr_zombie++;
 		if (!(nr_zombie < vZombies.size())) nr_zombie = 0;
@@ -79,12 +79,10 @@ void Zombies::moveAndDraw(float & _elapsedTime, sf::RenderWindow &_okno)
 			break;
 		}
 
-
-
-		//odbicia od czerwonych scian:
+		//red walls collision - keep zombie on platform
 		vZombies[i].collision_wall(bgWalls);
 
-		//kolizja z podlozem:
+		//ground collision and movement of zombie:
 		vZombies[i].collision(_elapsedTime);
 
 		_okno.draw(vZombies[i]);

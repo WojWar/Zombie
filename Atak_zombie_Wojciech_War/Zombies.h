@@ -25,7 +25,7 @@ private:
 	void randVelocity();
 	BgWalls bgWalls;
 	std::vector <Zombie> vZombies;
-	//licznik - zombie, ktorego predkosc jest losowana:
+	//counter - number of zombie to rand velocity:
 	unsigned int nr_zombie = 0;
 	sf::Clock randVelocityClock;
 };

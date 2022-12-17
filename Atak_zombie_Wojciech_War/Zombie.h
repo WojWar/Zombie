@@ -19,9 +19,7 @@ public:
 	void randVelocity();
 	void randsmallVelocity();
 	void collision(float fps_time);
-
 	void collision_wall(BgWalls &_walls);
-
 	void race_to_left(float frame_time);
 	void race_to_right(float frame_time);
 
@@ -41,8 +39,4 @@ private:
 	sf::Vector2f zombieOffset{ sf::Vector2f(3.0f, 5.0f) };
 	GameMap* zombieGroundMap;
 
-
 };
-
- 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

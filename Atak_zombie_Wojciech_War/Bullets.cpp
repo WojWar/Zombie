@@ -3,23 +3,20 @@
 Bullets::Bullets(GameMap &gameMap) :
 	bulletsGroundMap(&gameMap)
 {
-	
 }
 
 Bullets::~Bullets()
 {
+	clearMemory();
 }
 
 void Bullets::fireBullet(const Player &_player)
 {
-	//if new
 	vectorBullets.push_back(Bullet(_player));
-	//if there are waiting bullets in secondary vector then:
-	//move it to active vector
 }
 
 void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindow &_okno)
-{		//pociski    
+{    
 	if (!vectorBullets.empty()) {
 		int i = 0;
 		// vB_it - vectorBullets iterator
@@ -44,8 +41,5 @@ void Bullets::moveAndHit(Zombies &_zombies, float &_elapsedTime, sf::RenderWindo
 
 void Bullets::clearMemory()
 {
-	//for (auto &i : vectorBullets) {
-	//	delete &i;						smart pointers - dont need to delete anymore
-	//}
-	vectorBullets.clear();	//std::forward_list <Bullet*>
+	vectorBullets.clear();
 }
