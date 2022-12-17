@@ -32,9 +32,9 @@ void Game::play()
 		keys[j] = 0;
 	}
 
-	//////////////////////////tworzenie obiektow/////////////////////////////
-	objects_to_vector_and_texture(texture, map_name);
-	initialize_health_bar(*okno, texture_health_of_player, player);
+	//////////////////////////draw the game world/////////////////////////////
+	drawMap(texture);
+	createHealthBar(texture_health_of_player, player);
 
 	//make some zombies
 	Zombies _zombies(*okno, _mapImage, groundMap2);
@@ -209,11 +209,11 @@ void Game::play()
 }
 
 
-void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string &_map_name) {
+void Game::drawMap(sf::RenderTexture &_textura) {
 
 	std::cout << std::endl << "Trwa ladowanie mapy." << std::endl;
 
-	if (!_mapImage.loadFromFile(_map_name))
+	if (!_mapImage.loadFromFile(map_name))
 	{
 		std::cout << "Error occured during map loading" << std::endl;
 		system("pause");
@@ -249,7 +249,7 @@ void Game::objects_to_vector_and_texture(sf::RenderTexture &_textura, std::strin
 
 }
 
-void Game::initialize_health_bar(sf::RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player) {
+void Game::createHealthBar(sf::RenderTexture &_textura, const Player &_player) {
 
 	_textura.create(150, 15);
 

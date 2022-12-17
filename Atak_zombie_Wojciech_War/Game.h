@@ -27,8 +27,8 @@ public:
 	void play();
 
 private:
-	void objects_to_vector_and_texture(sf::RenderTexture &_textura, std::string &_map_name);
-	void initialize_health_bar(sf::RenderWindow &_okno, sf::RenderTexture &_textura, const Player &_player);
+	void drawMap(sf::RenderTexture &_textura);
+	void createHealthBar(sf::RenderTexture &_textura, const Player &_player);
 
 	sf::RenderWindow *okno;
 	std::vector <sf::RectangleShape*> vectorHealth;
