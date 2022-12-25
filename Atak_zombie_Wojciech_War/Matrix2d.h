@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <array>
+#include <vector>
 
 const int mwindowHeight = 576;
 const int mwindowWidth = 1024;
@@ -16,7 +16,7 @@ public:
 	bool getPoint(sf::Vector2f coords);
 	// getPointFast have no boundary checks!
 	bool getPointFast(unsigned int x, unsigned int y);
-	std::array<std::array<bool, mwindowWidth>, mwindowHeight> map2d{}; //zero initialized array
+	std::vector<std::vector<bool>> map2d;
 
 };
 

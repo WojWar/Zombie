@@ -16,6 +16,7 @@ public:
 	bool isGround(float x, float y);
 	void loadGround();
 private:
+	//returns a black pixel directly from image
 	bool imageGetPoint(unsigned int point_x, unsigned int point_y);
 
 	void setUp(unsigned int point_x, unsigned int point_y);

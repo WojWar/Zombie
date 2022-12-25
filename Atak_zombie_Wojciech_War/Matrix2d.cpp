@@ -2,7 +2,8 @@
 #include <iostream>
 #include "Matrix2d.h"
 
-Matrix2d::Matrix2d()
+Matrix2d::Matrix2d():
+	map2d(mwindowHeight, std::vector<bool>(mwindowWidth, false))
 {
 }
 
