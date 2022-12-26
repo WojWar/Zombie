@@ -1,5 +1,5 @@
-# Zombie
-The Zombie Attack Game
+# The Zombie Attack Game
+
 The goal of this project is to create a clone of a game called 'Grave diggers'. 
 It was available as one of the three mini-games in the "Journey Collector's Edition's" PS3 game.
 
