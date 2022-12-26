@@ -8,4 +8,5 @@ It was available as one of the three mini-games in the "Journey Collector's Edit
 More:
 
 https://www.youtube.com/watch?v=T8YpP-ILMHc
+
 https://www.polygon.com/gaming/2012/7/19/3169727/journey-collectors-edition-gravediggers-minigame
