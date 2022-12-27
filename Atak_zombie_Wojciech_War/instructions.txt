@@ -1,0 +1,7 @@
+Controls: WSAD
+Fire: spacebar
+
+In Globals.cpp you can set:
+-player health
+-zombie health
+-map file to be loaded (map_01.png, map_02.png, map_03.png)
