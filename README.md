@@ -1,4 +1,4 @@
-# The Zombie Attack Game
+# The *Zombie Attack* Game
 
 The goal of this project is to create a clone of a game called 'Grave diggers'. 
 
