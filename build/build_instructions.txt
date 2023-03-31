@@ -1,0 +1,15 @@
+step 1
+install sfml library with:
+sudo apt-get install libsfml-dev
+
+step 2
+give executable permissions to build.sh:
+chmod 777 build.sh
+
+step 3
+install g++
+sudo apt install g++
+
+step 4
+run build.sh
+./build.sh
