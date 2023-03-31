@@ -1,0 +1,25 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ linux-build ]
+  pull_request:
+    branches: [ linux-build ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install cppunit
+        run: sudo apt install -y libcppunit-dev
+      - name: configure
+        run: .github/workflows/configure
+      - name: apt-get update
+        run: sudo apt-get update
+      - name: install sfml
+        run: sudo apt-get install -y libsfml-dev
+      - name: build
+        run: |
+          chmod 777 build.sh
+          ./build.sh
