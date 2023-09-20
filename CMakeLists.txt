@@ -16,7 +16,7 @@ FetchContent_MakeAvailable(SFML)
 add_executable(ZombieAttack src/main.cpp src/BgWalls.cpp src/Bullet.cpp src/Bullets.cpp src/Game.cpp src/GameMap.cpp src/Globals.cpp src/Matrix2d.cpp src/Player.cpp src/Zombie.cpp src/Zombies.cpp)
 
 target_link_libraries(ZombieAttack PRIVATE sfml-graphics)
-target_compile_features(ZombieAttack PRIVATE cxx_std_17)
+target_compile_features(ZombieAttack PRIVATE cxx_std_20)
 
 if(WIN32)
     add_custom_command(
