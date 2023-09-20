@@ -23,7 +23,14 @@ if(WIN32)
         TARGET ZombieAttack
         COMMENT "Copy OpenAL DLL"
         PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<BOOL:${ARCH_64BITS}>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:ZombieAttack>
-        VERBATIM)
+        VERBATIM
+	)
+	add_custom_command(
+		TARGET ZombieAttack 
+		POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory 
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/img
+            $<TARGET_FILE_DIR:ZombieAttack>
+	)
 endif()
 
 install(TARGETS ZombieAttack)
